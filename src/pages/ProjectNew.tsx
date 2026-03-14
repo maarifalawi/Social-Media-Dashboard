@@ -64,7 +64,7 @@ const ProjectNew = () => {
     return (
       <AppLayout>
         <div className="flex items-center justify-center h-64">
-          <p className="text-muted-foreground">Loading...</p>
+          <p className="text-muted-foreground">Memuat...</p>
         </div>
       </AppLayout>
     );

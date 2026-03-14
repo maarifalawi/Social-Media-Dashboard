@@ -357,7 +357,7 @@ const RingkasanInsight = () => {
         {loading ? (
           <Card>
             <CardContent className="py-12 text-center text-muted-foreground">
-              Loading...
+              Memuat...
             </CardContent>
           </Card>
         ) : (

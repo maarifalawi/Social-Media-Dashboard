@@ -161,8 +161,8 @@ const Platform = () => {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Platform Management</h1>
-            <p className="text-sm sm:text-base text-muted-foreground mt-2">Kelola platform sosial media (Admin Only)</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Kelola Platform</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-2">Kelola platform sosial media (Khusus Admin)</p>
           </div>
           
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -245,16 +245,16 @@ const Platform = () => {
           </CardHeader>
           <CardContent>
             {loading ? (
-              <div className="text-center py-8 text-muted-foreground">Loading...</div>
+              <div className="text-center py-8 text-muted-foreground">Memuat...</div>
             ) : platforms.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">Belum ada platform</div>
             ) : (
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Display Name</TableHead>
-                    <TableHead>Color</TableHead>
+                    <TableHead>Kode</TableHead>
+                    <TableHead>Nama Platform</TableHead>
+                    <TableHead>Warna</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="text-right">Aksi</TableHead>
                   </TableRow>

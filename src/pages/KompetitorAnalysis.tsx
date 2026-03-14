@@ -141,7 +141,7 @@ const KompetitorAnalysis = () => {
     } catch (error) {
       console.error("Error fetching competitors:", error);
       toast({
-        title: "Error",
+        title: "Kesalahan",
         description: "Gagal memuat data kompetitor",
         variant: "destructive",
       });
@@ -211,7 +211,7 @@ const KompetitorAnalysis = () => {
     } catch (error) {
       console.error("Error saving competitor:", error);
       toast({
-        title: "Error",
+        title: "Kesalahan",
         description: "Gagal menyimpan kompetitor",
         variant: "destructive",
       });
@@ -233,7 +233,7 @@ const KompetitorAnalysis = () => {
     } catch (error) {
       console.error("Error deleting competitor:", error);
       toast({
-        title: "Error",
+        title: "Kesalahan",
         description: "Gagal menghapus kompetitor",
         variant: "destructive",
       });
@@ -299,7 +299,7 @@ const KompetitorAnalysis = () => {
     } catch (error) {
       console.error("Error saving competitor data:", error);
       toast({
-        title: "Error",
+        title: "Kesalahan",
         description: "Gagal menyimpan data kompetitor",
         variant: "destructive",
       });
@@ -414,7 +414,7 @@ const KompetitorAnalysis = () => {
 
         {loading ? (
           <div className="flex items-center justify-center min-h-[400px]">
-            <p className="text-muted-foreground">Loading...</p>
+            <p className="text-muted-foreground">Memuat...</p>
           </div>
         ) : competitors.length === 0 ? (
           <Card>
@@ -480,7 +480,7 @@ const KompetitorAnalysis = () => {
                           <span className="font-semibold">{competitor.latest_data.rata_rata_engagement_rate}%</span>
                         </div>
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Total Posts</span>
+                          <span className="text-muted-foreground">Total Postingan</span>
                           <span className="font-semibold">{competitor.latest_data.total_posts}</span>
                         </div>
                         <div className="text-xs text-muted-foreground mt-2">
@@ -550,7 +550,7 @@ const KompetitorAnalysis = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="posts">Total Posts</Label>
+                      <Label htmlFor="posts">Total Postingan</Label>
                       <Input
                         id="posts"
                         type="number"

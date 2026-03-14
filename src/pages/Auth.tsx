@@ -195,7 +195,7 @@ const Auth = () => {
         </Card>
 
         <p className="text-center text-xs text-muted-foreground mt-6">
-          © {new Date().getFullYear()} Analytics Sosmed. All rights reserved.
+          © {new Date().getFullYear()} Analytics Sosmed. Hak cipta dilindungi.
         </p>
       </div>
     </div>

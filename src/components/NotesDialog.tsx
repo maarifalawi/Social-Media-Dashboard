@@ -154,7 +154,7 @@ export const NotesDialog = ({ scope, scopeKey }: NotesDialogProps) => {
             <Label>Catatan Tersimpan</Label>
             <ScrollArea className="h-[300px] mt-2 border rounded-md p-4">
               {loading ? (
-                <div className="text-center text-muted-foreground">Loading...</div>
+                <div className="text-center text-muted-foreground">Memuat...</div>
               ) : notes.length === 0 ? (
                 <div className="text-center text-muted-foreground">Belum ada catatan</div>
               ) : (

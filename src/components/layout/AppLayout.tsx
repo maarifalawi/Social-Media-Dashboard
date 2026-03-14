@@ -290,7 +290,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive">
                       <LogOut className="mr-2 h-4 w-4" />
-                      Logout
+                      Keluar
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -397,7 +397,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                         className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors flex items-center gap-2"
                       >
                         <LogOut className="h-4 w-4" />
-                        Logout
+                        Keluar
                       </button>
                     </div>
                   </ScrollArea>
@@ -410,7 +410,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           {user && (
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 py-2.5 border-t border-border/50">
               <div className="flex items-center gap-2 min-w-0">
-                <span className="text-xs font-medium text-muted-foreground shrink-0 uppercase tracking-wider">Project</span>
+                <span className="text-xs font-medium text-muted-foreground shrink-0 uppercase tracking-wider">Proyek</span>
                 <Select
                   value={selectedProject?.id_proyek || ""}
                   onValueChange={(value) => {
@@ -419,7 +419,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                   }}
                 >
                   <SelectTrigger className="w-full sm:w-[200px] h-8 text-xs">
-                    <SelectValue placeholder="Pilih Project" />
+                    <SelectValue placeholder="Pilih Proyek" />
                   </SelectTrigger>
                   <SelectContent>
                     {projects.map((project) => (

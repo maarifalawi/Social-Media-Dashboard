@@ -226,9 +226,9 @@ const Performa = () => {
     const percentile = (index / sortedByER.length) * 100;
 
     if (percentile <= 10) {
-      return <Badge className="bg-success text-success-foreground">Top 10%</Badge>;
+      return <Badge className="bg-success text-success-foreground">Teratas 10%</Badge>;
     } else if (percentile >= 90) {
-      return <Badge variant="destructive">Bottom 10%</Badge>;
+      return <Badge variant="destructive">Terbawah 10%</Badge>;
     }
     return null;
   };
@@ -248,7 +248,7 @@ const Performa = () => {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Content Performance</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Performa Konten</h1>
             <p className="text-sm sm:text-base text-muted-foreground mt-2">Analisis performa setiap postingan</p>
           </div>
           <div className="flex gap-2 flex-wrap">
@@ -310,7 +310,7 @@ const Performa = () => {
                 <Input type="number" value={minReach} onChange={(e) => setMinReach(e.target.value)} placeholder="0" />
               </div>
               <div>
-                <Label>Search Caption</Label>
+                <Label>Cari Caption</Label>
                 <Input value={searchCaption} onChange={(e) => setSearchCaption(e.target.value)} placeholder="Cari caption..." />
               </div>
             </div>
@@ -396,7 +396,7 @@ const Performa = () => {
               </div>
               <Button onClick={handleExport} variant="outline">
                 <Download className="h-4 w-4 mr-2" />
-                Export CSV
+                Ekspor CSV
               </Button>
             </div>
           </CardContent>
@@ -406,7 +406,7 @@ const Performa = () => {
         <Card>
           <CardContent className="pt-6">
             {loading ? (
-              <div className="text-center py-8 text-muted-foreground">Loading...</div>
+              <div className="text-center py-8 text-muted-foreground">Memuat...</div>
             ) : filteredPosts.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">Tidak ada data</div>
             ) : (
@@ -414,14 +414,14 @@ const Performa = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Post ID</TableHead>
+                      <TableHead>ID Postingan</TableHead>
                       <TableHead>Platform</TableHead>
                       <TableHead>Tanggal</TableHead>
                       <TableHead>Tipe</TableHead>
                       <TableHead>Caption</TableHead>
                       <TableHead className="text-right">Reach</TableHead>
                       <TableHead className="text-right">Likes</TableHead>
-                      <TableHead className="text-right">Comments</TableHead>
+                      <TableHead className="text-right">Komentar</TableHead>
                       <TableHead className="text-right">Shares</TableHead>
                       <TableHead className="text-right">ER%</TableHead>
                       <TableHead></TableHead>

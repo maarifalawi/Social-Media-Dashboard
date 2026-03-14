@@ -211,8 +211,8 @@ const AdminTest = () => {
     <AppLayout>
       <div className="p-6 space-y-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold">Testing Data Generator</h1>
-          <p className="text-muted-foreground">Generate sample data untuk testing table</p>
+          <h1 className="text-2xl sm:text-3xl font-bold">Generator Data Pengujian</h1>
+          <p className="text-muted-foreground">Buat contoh data untuk pengujian tabel</p>
           <p className="text-sm text-muted-foreground mt-2">Proyek aktif: <span className="font-semibold">{selectedProject.nama_proyek}</span></p>
         </div>
 
@@ -220,7 +220,7 @@ const AdminTest = () => {
           <Card>
             <CardHeader>
               <CardTitle>Catatan</CardTitle>
-              <CardDescription>Generate catatan proyek dan dataset</CardDescription>
+              <CardDescription>Buat contoh catatan proyek dan dataset</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Button 
@@ -229,7 +229,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'catatan' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Generate Sample
+                Buat Contoh
               </Button>
               <Button 
                 onClick={() => clearTable('catatan')} 
@@ -238,7 +238,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'clear-catatan' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Clear Data
+                Hapus Data
               </Button>
             </CardContent>
           </Card>
@@ -246,7 +246,7 @@ const AdminTest = () => {
           <Card>
             <CardHeader>
               <CardTitle>Filter Tersimpan</CardTitle>
-              <CardDescription>Generate saved filters</CardDescription>
+              <CardDescription>Buat filter tersimpan</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Button 
@@ -255,7 +255,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'filter_tersimpan' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Generate Sample
+                Buat Contoh
               </Button>
               <Button 
                 onClick={() => clearTable('filter_tersimpan')} 
@@ -264,7 +264,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'clear-filter_tersimpan' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Clear Data
+                Hapus Data
               </Button>
             </CardContent>
           </Card>
@@ -272,7 +272,7 @@ const AdminTest = () => {
           <Card>
             <CardHeader>
               <CardTitle>Kampanye</CardTitle>
-              <CardDescription>Generate campaign data</CardDescription>
+              <CardDescription>Buat data kampanye</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Button 
@@ -281,7 +281,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'kampanye' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Generate Sample
+                Buat Contoh
               </Button>
               <Button 
                 onClick={() => clearTable('kampanye')} 
@@ -290,7 +290,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'clear-kampanye' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Clear Data
+                Hapus Data
               </Button>
             </CardContent>
           </Card>
@@ -298,7 +298,7 @@ const AdminTest = () => {
           <Card>
             <CardHeader>
               <CardTitle>Anggota Proyek</CardTitle>
-              <CardDescription>Generate project members</CardDescription>
+              <CardDescription>Buat anggota proyek</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Button 
@@ -307,7 +307,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'anggota_proyek' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Generate Sample
+                Buat Contoh
               </Button>
               <Button 
                 onClick={() => clearTable('anggota_proyek')} 
@@ -316,7 +316,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'clear-anggota_proyek' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Clear Data
+                Hapus Data
               </Button>
             </CardContent>
           </Card>
@@ -324,7 +324,7 @@ const AdminTest = () => {
           <Card>
             <CardHeader>
               <CardTitle>Target KPI</CardTitle>
-              <CardDescription>Generate KPI targets</CardDescription>
+              <CardDescription>Buat target KPI</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Button 
@@ -333,7 +333,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'target_kpi' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Generate Sample
+                Buat Contoh
               </Button>
               <Button 
                 onClick={() => clearTable('target_kpi')} 
@@ -342,7 +342,7 @@ const AdminTest = () => {
                 className="w-full"
               >
                 {loading === 'clear-target_kpi' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Clear Data
+                Hapus Data
               </Button>
             </CardContent>
           </Card>

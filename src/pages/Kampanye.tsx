@@ -222,7 +222,7 @@ const Kampanye = () => {
           </CardHeader>
           <CardContent>
             {loading ? (
-              <div className="text-center py-8 text-muted-foreground">Loading...</div>
+              <div className="text-center py-8 text-muted-foreground">Memuat...</div>
             ) : campaigns.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">Belum ada kampanye</div>
             ) : (

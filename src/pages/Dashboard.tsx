@@ -311,12 +311,12 @@ const Dashboard = () => {
               <DialogTrigger asChild>
                 <Button variant="outline" size="sm" className="h-8 text-xs">
                   <Settings className="h-3.5 w-3.5 mr-1.5" />
-                  Customize
+                  Sesuaikan
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Customize Dashboard</DialogTitle>
+                  <DialogTitle>Sesuaikan Dashboard</DialogTitle>
                   <DialogDescription>Pilih widget yang ingin ditampilkan di dashboard</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-3">
@@ -352,12 +352,12 @@ const Dashboard = () => {
         {widgetVisibility.kpi && (
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {[
-              { label: "Total Posts", value: kpiData.totalPosts.toString(), icon: TrendingUp },
-              { label: "Avg Engagement Rate", value: `${kpiData.avgER}%`, icon: Heart },
+              { label: "Total Postingan", value: kpiData.totalPosts.toString(), icon: TrendingUp },
+              { label: "Rata-rata Engagement Rate", value: `${kpiData.avgER}%`, icon: Heart },
               { label: "Followers", value: kpiData.followersNow.toLocaleString(), icon: Users },
               { label: "Median Reach", value: kpiData.medianReach.toLocaleString(), icon: Eye },
-              { label: "Save Rate", value: `${kpiData.saveRate}%`, icon: Bookmark },
-              { label: "Share Rate", value: `${kpiData.shareRate}%`, icon: Share2 },
+              { label: "Tingkat Simpan", value: `${kpiData.saveRate}%`, icon: Bookmark },
+              { label: "Tingkat Bagikan", value: `${kpiData.shareRate}%`, icon: Share2 },
             ].map((kpi) => (
               <Card key={kpi.label} className="hover:shadow-md transition-shadow">
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">

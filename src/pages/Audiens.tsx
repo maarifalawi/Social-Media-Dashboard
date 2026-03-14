@@ -115,12 +115,12 @@ const Audiens = () => {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Audience & Growth</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Audiens & Pertumbuhan</h1>
             <p className="text-sm sm:text-base text-muted-foreground mt-2">Analisis pertumbuhan audiens</p>
           </div>
           <SaveFilterDialog halaman="audiens" filterValues={{}} />
         </div>
-        {loading ? <Card><CardContent className="py-12 text-center text-muted-foreground">Loading...</CardContent></Card> : (
+        {loading ? <Card><CardContent className="py-12 text-center text-muted-foreground">Memuat...</CardContent></Card> : (
           <>
             <Card><CardHeader><CardTitle>Tren Followers Harian</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={300}><LineChart data={followersTrend}><CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" /><XAxis dataKey="date" stroke="hsl(var(--foreground))" tickFormatter={(d) => format(new Date(d), "dd MMM")} /><YAxis stroke="hsl(var(--foreground))" /><Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} /><Line type="monotone" dataKey="followers" stroke="hsl(var(--primary))" strokeWidth={2} /></LineChart></ResponsiveContainer></CardContent></Card>
             <Card><CardHeader><CardTitle>Frekuensi Posting Mingguan</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={300}><BarChart data={weeklyPosts}><CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" /><XAxis dataKey="week" stroke="hsl(var(--foreground))" /><YAxis stroke="hsl(var(--foreground))" /><Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} /><Bar dataKey="count" fill="hsl(var(--primary))" /></BarChart></ResponsiveContainer></CardContent></Card>
