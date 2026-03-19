@@ -162,9 +162,10 @@ const Dashboard = () => {
           // Platform Distribution
           const platformMap = new Map<string, number>();
           posts.forEach(p => {
-            const name = p.platform?.nama_platform || "Unknown";
+            const name = p.platform?.nama_platform || "Tidak Diketahui";
             platformMap.set(name, (platformMap.get(name) || 0) + 1);
           });
+
           const platforms = Array.from(platformMap.entries())
             .map(([name, count]) => ({ name, count }))
             .sort((a, b) => b.count - a.count);
@@ -173,7 +174,7 @@ const Dashboard = () => {
           // Content Type Distribution
           const contentTypeMap = new Map<string, number>();
           posts.forEach(p => {
-            const name = p.jenis_konten?.nama_jenis_konten || "Unknown";
+            const name = p.jenis_konten?.nama_jenis_konten || "Tidak Diketahui";
             contentTypeMap.set(name, (contentTypeMap.get(name) || 0) + 1);
           });
           const contentTypes = Array.from(contentTypeMap.entries())
@@ -311,12 +312,12 @@ const Dashboard = () => {
               <DialogTrigger asChild>
                 <Button variant="outline" size="sm" className="h-8 text-xs">
                   <Settings className="h-3.5 w-3.5 mr-1.5" />
-                  Sesuaikan
+                  Kustomisasi
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Sesuaikan Dashboard</DialogTitle>
+                   <DialogTitle>Kustomisasi Dashboard</DialogTitle>
                   <DialogDescription>Pilih widget yang ingin ditampilkan di dashboard</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-3">
@@ -327,8 +328,8 @@ const Dashboard = () => {
                         checked={visible}
                         onCheckedChange={() => toggleWidget(key as keyof typeof widgetVisibility)}
                       />
-                      <label htmlFor={key} className="text-sm font-medium capitalize cursor-pointer">
-                        {key.replace('_', ' ')}
+                      <label htmlFor={key} className="text-sm font-medium cursor-pointer">
+                        {{ kpi: 'KPI', trends: 'Tren', platforms: 'Platform', content_types: 'Tipe Konten', insights: 'Insight' }[key] || key}
                       </label>
                     </div>
                   ))}
@@ -353,11 +354,11 @@ const Dashboard = () => {
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {[
               { label: "Total Postingan", value: kpiData.totalPosts.toString(), icon: TrendingUp },
-              { label: "Rata-rata Engagement Rate", value: `${kpiData.avgER}%`, icon: Heart },
-              { label: "Followers", value: kpiData.followersNow.toLocaleString(), icon: Users },
-              { label: "Median Reach", value: kpiData.medianReach.toLocaleString(), icon: Eye },
-              { label: "Tingkat Simpan", value: `${kpiData.saveRate}%`, icon: Bookmark },
-              { label: "Tingkat Bagikan", value: `${kpiData.shareRate}%`, icon: Share2 },
+              { label: "Rata-rata ER", value: `${kpiData.avgER}%`, icon: Heart },
+              { label: "Pengikut", value: kpiData.followersNow.toLocaleString(), icon: Users },
+              { label: "Median Jangkauan", value: kpiData.medianReach.toLocaleString(), icon: Eye },
+              { label: "Rasio Simpan", value: `${kpiData.saveRate}%`, icon: Bookmark },
+              { label: "Rasio Bagikan", value: `${kpiData.shareRate}%`, icon: Share2 },
             ].map((kpi) => (
               <Card key={kpi.label} className="hover:shadow-md transition-shadow">
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
@@ -373,7 +374,8 @@ const Dashboard = () => {
         )}
 
         {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        <div className="space-y-4 sm:space-y-6">
+          {/* Tren ER — full width */}
           {widgetVisibility.trends && (
             <div ref={chartRef1}>
               <InteractiveLineChart
@@ -389,36 +391,39 @@ const Dashboard = () => {
             </div>
           )}
 
-          {widgetVisibility.platforms && (
-            <div ref={chartRef2}>
-              <InteractiveBarChart
-                data={platformDist}
-                dataKey="count"
-                nameKey="name"
-                title="Distribusi Platform"
-                layout="horizontal"
-                showPercentage={true}
-              />
-            </div>
-          )}
+          {/* Platform & Tipe Konten — side by side */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+            {widgetVisibility.platforms && (
+              <div ref={chartRef2}>
+                <InteractiveBarChart
+                  data={platformDist}
+                  dataKey="count"
+                  nameKey="name"
+                  title="Distribusi Platform"
+                  layout="horizontal"
+                  showPercentage={true}
+                />
+              </div>
+            )}
 
-          {widgetVisibility.content_types && (
-            <div ref={chartRef3}>
-              <InteractiveBarChart
-                data={contentTypeDist}
-                dataKey="count"
-                nameKey="name"
-                title="Distribusi Tipe Konten"
-                layout="horizontal"
-                showPercentage={true}
-              />
-            </div>
-          )}
+            {widgetVisibility.content_types && (
+              <div ref={chartRef3}>
+                <InteractiveBarChart
+                  data={contentTypeDist}
+                  dataKey="count"
+                  nameKey="name"
+                  title="Distribusi Tipe Konten"
+                  layout="horizontal"
+                  showPercentage={true}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Insights */}
         {widgetVisibility.insights && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {insights.erTrend && <InsightCard insight={insights.erTrend} title="Tren Engagement Rate" />}
             {insights.platform && <InsightCard insight={insights.platform} title="Distribusi Platform" />}
             {insights.contentType && <InsightCard insight={insights.contentType} title="Distribusi Tipe Konten" />}

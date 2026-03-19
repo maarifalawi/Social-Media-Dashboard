@@ -384,84 +384,91 @@ const WaktuTerbaik = () => {
               </Select>
               
               {period !== "all" && (
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 rounded-md border border-primary/30 bg-primary/5 px-3 py-2">
                   <Checkbox 
                     id="comparison" 
                     checked={showComparison}
                     onCheckedChange={(checked) => setShowComparison(checked as boolean)}
                   />
-                  <Label htmlFor="comparison" className="cursor-pointer">
+                  <Label htmlFor="comparison" className="cursor-pointer text-sm font-medium text-primary">
                     Bandingkan dengan periode sebelumnya
                   </Label>
                 </div>
               )}
             </div>
 
-            {/* Platform Filter */}
-            <div className="flex flex-wrap items-start gap-4">
-              <Label className="pt-2">Platform:</Label>
-              <div className="flex flex-wrap gap-3">
-                {platforms.map((platform) => (
-                  <div key={platform.id_platform} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`platform-${platform.id_platform}`}
-                      checked={selectedPlatforms.includes(platform.id_platform)}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          setSelectedPlatforms([...selectedPlatforms, platform.id_platform]);
-                        } else {
-                          setSelectedPlatforms(selectedPlatforms.filter(id => id !== platform.id_platform));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={`platform-${platform.id_platform}`} className="cursor-pointer">
-                      {platform.nama_platform}
-                    </Label>
-                  </div>
-                ))}
-                {selectedPlatforms.length > 0 && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => setSelectedPlatforms([])}
-                  >
-                    Reset
-                  </Button>
-                )}
+            {/* Platform & Content Type Filters */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label>Platform:</Label>
+                  {selectedPlatforms.length > 0 && (
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="h-7 text-xs px-2 text-destructive border-destructive/30 hover:bg-destructive/10"
+                      onClick={() => setSelectedPlatforms([])}
+                    >
+                      Reset Filter
+                    </Button>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {platforms.map((platform) => (
+                    <div key={platform.id_platform} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`platform-${platform.id_platform}`}
+                        checked={selectedPlatforms.includes(platform.id_platform)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setSelectedPlatforms([...selectedPlatforms, platform.id_platform]);
+                          } else {
+                            setSelectedPlatforms(selectedPlatforms.filter(id => id !== platform.id_platform));
+                          }
+                        }}
+                      />
+                      <Label htmlFor={`platform-${platform.id_platform}`} className="cursor-pointer">
+                        {platform.nama_platform}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Content Type Filter */}
-            <div className="flex flex-wrap items-start gap-4">
-              <Label className="pt-2">Jenis Konten:</Label>
-              <div className="flex flex-wrap gap-3">
-                {contentTypes.map((contentType) => (
-                  <div key={contentType.id_jenis_konten} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`content-${contentType.id_jenis_konten}`}
-                      checked={selectedContentTypes.includes(contentType.id_jenis_konten)}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          setSelectedContentTypes([...selectedContentTypes, contentType.id_jenis_konten]);
-                        } else {
-                          setSelectedContentTypes(selectedContentTypes.filter(id => id !== contentType.id_jenis_konten));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={`content-${contentType.id_jenis_konten}`} className="cursor-pointer">
-                      {contentType.nama_jenis_konten}
-                    </Label>
-                  </div>
-                ))}
-                {selectedContentTypes.length > 0 && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => setSelectedContentTypes([])}
-                  >
-                    Reset
-                  </Button>
-                )}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label>Jenis Konten:</Label>
+                  {selectedContentTypes.length > 0 && (
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="h-7 text-xs px-2 text-destructive border-destructive/30 hover:bg-destructive/10"
+                      onClick={() => setSelectedContentTypes([])}
+                    >
+                      Reset Filter
+                    </Button>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {contentTypes.map((contentType) => (
+                    <div key={contentType.id_jenis_konten} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`content-${contentType.id_jenis_konten}`}
+                        checked={selectedContentTypes.includes(contentType.id_jenis_konten)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setSelectedContentTypes([...selectedContentTypes, contentType.id_jenis_konten]);
+                          } else {
+                            setSelectedContentTypes(selectedContentTypes.filter(id => id !== contentType.id_jenis_konten));
+                          }
+                        }}
+                      />
+                      <Label htmlFor={`content-${contentType.id_jenis_konten}`} className="cursor-pointer">
+                        {contentType.nama_jenis_konten}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </CardContent>

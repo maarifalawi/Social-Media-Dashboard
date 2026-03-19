@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Upload, Link as LinkIcon, Database, FileSpreadsheet, Download, Eye, Trash2, AlertCircle } from "lucide-react";
+import { Upload, Link as LinkIcon, Database, FileSpreadsheet, Download, Eye, Trash2, AlertCircle, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -100,12 +100,12 @@ const Import = () => {
         }
       };
 
-      // Validate sample data
+      // Validate ALL data rows (not just sample)
       let validCount = 0;
       let invalidCount = 0;
       const errors: string[] = [];
 
-      for (let i = 1; i < Math.min(lines.length, 20); i++) {
+      for (let i = 1; i < lines.length; i++) {
         const values = lines[i].split(",");
         const platformName = values[getColumnIndex("platform")]?.trim().toLowerCase();
         const contentTypeName = values[getColumnIndex("content_type")]?.trim().toLowerCase();
@@ -117,7 +117,7 @@ const Import = () => {
           errors.push(`Baris ${i}: Platform "${platformName}" tidak ditemukan`);
           invalidCount++;
         } else if (!contentType) {
-          errors.push(`Baris ${i}: Content type "${contentTypeName}" tidak ditemukan`);
+          errors.push(`Baris ${i}: Tipe konten "${contentTypeName}" tidak ditemukan`);
           invalidCount++;
         } else {
           validCount++;
@@ -127,7 +127,7 @@ const Import = () => {
       preview.validationResults = {
         validRows: validCount,
         invalidRows: invalidCount,
-        errors: errors.slice(0, 5)
+        errors: errors.slice(0, 10)
       };
 
       setPreviewData(preview);
@@ -753,18 +753,71 @@ const Import = () => {
   };
 
   const handleDownloadTemplate = () => {
-    const template = `platform,content_type,post_id,posted_at,reach,likes,comments,shares,saved,views,followers,caption\ninstagram,reel,POST001,2025-01-15 10:30:00,5000,250,30,15,20,5500,1200,Contoh caption post\ntiktok,video,POST002,2025-01-15 14:00:00,8000,400,50,25,35,8500,1500,Contoh caption lainnya`;
+    const headers = "platform,content_type,post_id,posted_at,reach,likes,comments,shares,saved,views,followers,caption";
+    const examples = [
+      "instagram,image,POST001,2025-01-15 09:00:00,5200,420,35,28,45,5800,1200,Tips produktivitas pagi hari",
+      "instagram,reel,POST002,2025-01-15 14:30:00,12500,980,120,85,110,15000,1210,Tutorial makeup natural",
+      "instagram,carousel,POST003,2025-01-16 10:15:00,8300,650,55,42,78,9200,1215,Review produk skincare terbaik",
+      "instagram,story,POST004,2025-01-16 18:00:00,3200,180,12,8,15,3500,1220,Behind the scenes",
+      "instagram,video,POST005,2025-01-17 12:00:00,9800,720,88,65,92,11500,1225,Vlog weekend seru",
+      "tiktok,video,POST006,2025-01-17 20:00:00,25000,2100,350,420,180,28000,850,Dance challenge viral",
+    ];
+    const guide = [
+      "",
+      "# PANDUAN PENGISIAN TEMPLATE",
+      "# ============================================================",
+      "# platform       : instagram atau tiktok",
+      "# content_type    : image / reel / carousel / story / video",
+      "# post_id         : ID unik postingan (bebas, contoh: POST001)",
+      "# posted_at       : Tanggal & jam posting (format: YYYY-MM-DD HH:MM:SS)",
+      "# reach           : Jumlah akun yang dijangkau (angka)",
+      "# likes           : Jumlah likes (angka)",
+      "# comments        : Jumlah komentar (angka)",
+      "# shares          : Jumlah shares (angka)",
+      "# saved           : Jumlah saved/bookmark (angka)",
+      "# views           : Jumlah views/tayangan (angka)",
+      "# followers       : Jumlah followers saat posting (angka)",
+      "# caption         : Teks caption postingan",
+      "# ============================================================",
+      "# Hapus baris contoh di atas lalu ganti dengan data Anda.",
+      "# Baris yang diawali # akan diabaikan saat import.",
+    ];
+    const template = [headers, ...examples, ...guide].join("\n");
 
-    const blob = new Blob([template], { type: 'text/csv' });
+    const blob = new Blob([template], { type: 'text/csv;charset=utf-8' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'template_import.csv';
+    a.download = 'template_import_social_media.csv';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
-    toast.success("Template CSV berhasil didownload");
+    toast.success("Template CSV berhasil diunduh");
+  };
+
+  const handleOpenGoogleSheetsTemplate = () => {
+    const headers = ["platform","content_type","post_id","posted_at","reach","likes","comments","shares","saved","views","followers","caption"];
+    const exampleRows = [
+      ["instagram","image","POST001","2025-01-15 09:00:00","5200","420","35","28","45","5800","1200","Tips produktivitas pagi hari"],
+      ["instagram","reel","POST002","2025-01-15 14:30:00","12500","980","120","85","110","15000","1210","Tutorial makeup natural"],
+      ["tiktok","video","POST003","2025-01-17 20:00:00","25000","2100","350","420","180","28000","850","Dance challenge viral"],
+    ];
+    
+    // Build Google Sheets URL with prefilled data
+    const allRows = [headers, ...exampleRows];
+    const csvContent = allRows.map(row => row.join(",")).join("%0A");
+    
+    // Open blank Google Sheets - user can copy paste
+    window.open("https://docs.google.com/spreadsheets/create", "_blank");
+    
+    // Also copy template to clipboard for easy paste
+    const clipboardData = allRows.map(row => row.join("\t")).join("\n");
+    navigator.clipboard.writeText(clipboardData).then(() => {
+      toast.success("Template sudah di-copy ke clipboard! Paste (Ctrl+V) di Google Sheets yang baru dibuka.");
+    }).catch(() => {
+      toast.success("Google Sheets terbuka. Gunakan template CSV sebagai panduan kolom.");
+    });
   };
 
   const handleExportDataset = async (datasetId: string, datasetName: string) => {
@@ -845,8 +898,8 @@ const Import = () => {
     <AppLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Import Data</h1>
-          <p className="text-sm sm:text-base text-muted-foreground mt-2">Upload data dari CSV atau Google Sheets</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Impor Data</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">Unggah data dari CSV atau Google Sheets</p>
         </div>
 
         {/* Import Options */}
@@ -856,9 +909,9 @@ const Import = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Upload className="h-5 w-5" />
-                Upload CSV
+                Unggah CSV
               </CardTitle>
-              <CardDescription>Upload file CSV dengan format yang sesuai</CardDescription>
+              <CardDescription>Unggah file CSV dengan format yang sesuai</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Input 
@@ -874,10 +927,11 @@ const Import = () => {
                   className="flex-1"
                 >
                   <Eye className="h-4 w-4 mr-2" />
-                  Preview
+                   Pratinjau
                 </Button>
-                <Button onClick={handleDownloadTemplate} variant="ghost" size="icon">
+                <Button onClick={handleDownloadTemplate} variant="outline" size="sm" className="gap-1">
                   <Download className="h-4 w-4" />
+                  Template
                 </Button>
               </div>
             </CardContent>
@@ -898,15 +952,17 @@ const Import = () => {
                 value={sheetsUrl} 
                 onChange={(e) => setSheetsUrl(e.target.value)} 
               />
-              <Button 
-                onClick={handlePreviewSheets} 
-                disabled={!sheetsUrl || uploading}
-                variant="outline"
-                className="w-full"
-              >
-                <Eye className="h-4 w-4 mr-2" />
-                Preview
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={handlePreviewSheets} 
+                  disabled={!sheetsUrl || uploading}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                   Pratinjau
+                </Button>
+              </div>
             </CardContent>
           </Card>
 
@@ -1070,7 +1126,7 @@ const Import = () => {
                 onClick={previewSource === "csv" ? handleCsvUpload : handleSheetsImport}
                 disabled={uploading || (previewData?.validationResults?.validRows === 0)}
               >
-                {uploading ? "Importing..." : "Import Data"}
+                {uploading ? "Mengimpor..." : "Impor Data"}
               </Button>
             </DialogFooter>
           </DialogContent>

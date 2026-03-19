@@ -102,7 +102,7 @@ const Laporan = () => {
 
       const contentTypeMap = new Map<string, { totalER: number; count: number }>();
       posts.forEach(post => {
-        const name = post.jenis_konten?.nama_jenis_konten || "Unknown";
+        const name = post.jenis_konten?.nama_jenis_konten || "Tidak Diketahui";
         if (!contentTypeMap.has(name)) contentTypeMap.set(name, { totalER: 0, count: 0 });
         contentTypeMap.get(name)!.totalER += post.engagement_rate_persen || 0;
         contentTypeMap.get(name)!.count++;
@@ -152,17 +152,17 @@ const Laporan = () => {
     <AppLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Pembuat Laporan</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Generator Laporan</h1>
           <p className="text-sm sm:text-base text-muted-foreground mt-2">Buat laporan performa</p>
         </div>
 
         <Card>
-          <CardHeader><CardTitle>Generate Laporan</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Buat Laporan</CardTitle></CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
               <div><Label>Tanggal Mulai</Label><Input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} /></div>
               <div><Label>Tanggal Selesai</Label><Input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} /></div>
-              <Button onClick={generateReport} disabled={generating}><FileText className="h-4 w-4 mr-2" />{generating ? "Memproses..." : "Buat"}</Button>
+              <Button onClick={generateReport} disabled={generating}><FileText className="h-4 w-4 mr-2" />{generating ? "Membuat..." : "Buat Laporan"}</Button>
             </div>
           </CardContent>
         </Card>
@@ -180,11 +180,11 @@ const Laporan = () => {
                 <p className="text-xs text-muted-foreground">{reportData.generatedAt}</p>
               </div>
 
-              <Card><CardHeader><CardTitle>KPI</CardTitle></CardHeader><CardContent><div className="grid grid-cols-3 gap-4"><div><p className="text-sm text-muted-foreground">Total</p><p className="text-2xl font-bold">{reportData.totalPosts}</p></div><div><p className="text-sm text-muted-foreground">Avg ER</p><p className="text-2xl font-bold text-primary">{reportData.avgER}%</p></div><div><p className="text-sm text-muted-foreground">Reach</p><p className="text-2xl font-bold">{reportData.totalReach.toLocaleString()}</p></div></div></CardContent></Card>
+              <Card><CardHeader><CardTitle>KPI</CardTitle></CardHeader><CardContent><div className="grid grid-cols-3 gap-4"><div><p className="text-sm text-muted-foreground">Total</p><p className="text-2xl font-bold">{reportData.totalPosts}</p></div><div><p className="text-sm text-muted-foreground">Rata-rata ER</p><p className="text-2xl font-bold text-primary">{reportData.avgER}%</p></div><div><p className="text-sm text-muted-foreground">Jangkauan</p><p className="text-2xl font-bold">{reportData.totalReach.toLocaleString()}</p></div></div></CardContent></Card>
 
               <div className="grid md:grid-cols-2 gap-6">
-                <Card><CardHeader><CardTitle className="text-success">5 Teratas</CardTitle></CardHeader><CardContent><div className="space-y-3">{reportData.top5.map((p: any, i: number) => (<div key={p.id} className="border-b pb-2 last:border-0"><Badge>#{i+1}</Badge><p className="text-sm font-medium">{p.kode_postingan}</p><p className="text-lg font-bold text-primary">{(p.engagement_rate_persen||0).toFixed(2)}%</p></div>))}</div></CardContent></Card>
-                <Card><CardHeader><CardTitle className="text-destructive">5 Terbawah</CardTitle></CardHeader><CardContent><div className="space-y-3">{reportData.worst5.map((p: any) => (<div key={p.id} className="border-b pb-2 last:border-0"><p className="text-sm font-medium">{p.kode_postingan}</p><p className="text-lg font-bold">{(p.engagement_rate_persen||0).toFixed(2)}%</p></div>))}</div></CardContent></Card>
+                <Card><CardHeader><CardTitle className="text-success text-base">5 Postingan dengan Engagement Rate Tertinggi</CardTitle></CardHeader><CardContent><div className="space-y-3">{reportData.top5.map((p: any, i: number) => (<div key={p.id_postingan || i} className="border-b pb-2 last:border-0"><Badge>#{i+1}</Badge><p className="text-sm font-medium">{p.kode_postingan}</p><p className="text-lg font-bold text-primary">{(p.engagement_rate_persen||0).toFixed(2)}%</p></div>))}</div></CardContent></Card>
+                <Card><CardHeader><CardTitle className="text-destructive text-base">5 Postingan dengan Engagement Rate Terendah</CardTitle></CardHeader><CardContent><div className="space-y-3">{reportData.worst5.map((p: any, i: number) => (<div key={p.id_postingan || i} className="border-b pb-2 last:border-0"><p className="text-sm font-medium">{p.kode_postingan}</p><p className="text-lg font-bold">{(p.engagement_rate_persen||0).toFixed(2)}%</p></div>))}</div></CardContent></Card>
               </div>
 
               <Card><CardHeader><CardTitle>Waktu Terbaik</CardTitle></CardHeader><CardContent><div className="grid md:grid-cols-3 gap-4">{reportData.bestTimes.map((t: any, i: number) => (<div key={i} className="p-4 border rounded"><Badge>#{i+1}</Badge><p className="font-bold">{t.day}, {t.hour}</p><p className="text-sm">ER: {t.medianER.toFixed(2)}%</p></div>))}</div></CardContent></Card>

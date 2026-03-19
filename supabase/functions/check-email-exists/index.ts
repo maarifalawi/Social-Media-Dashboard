@@ -35,7 +35,7 @@ serve(async (req) => {
     }
 
     // Use GoTrue Admin API directly to avoid supabase-js typing differences in Deno.
-    const endpoint = `${url}/auth/v1/admin/users?email=${encodeURIComponent(normalizedEmail)}`;
+    const endpoint = `${url}/auth/v1/admin/users?page=1&per_page=50`;
 
     const resp = await fetch(endpoint, {
       method: "GET",
@@ -57,7 +57,8 @@ serve(async (req) => {
 
     const data = await resp.json();
     const users = Array.isArray(data?.users) ? data.users : Array.isArray(data) ? data : [];
-    const exists = users.length > 0;
+    // Exact match only — the API may return partial matches
+    const exists = users.some((u: any) => (u.email || "").toLowerCase() === normalizedEmail);
 
     return new Response(JSON.stringify({ exists }), {
       status: 200,

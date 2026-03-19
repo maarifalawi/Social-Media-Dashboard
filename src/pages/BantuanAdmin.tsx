@@ -39,6 +39,7 @@ const BantuanAdmin = () => {
   const [answer, setAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [filter, setFilter] = useState<"semua" | "menunggu" | "dijawab">("semua");
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
@@ -118,6 +119,7 @@ const BantuanAdmin = () => {
   const handleOpenDialog = (question: Question) => {
     setSelectedQuestion(question);
     setAnswer(question.jawaban || "");
+    setIsEditing(!question.jawaban);
   };
 
   const handleSubmitAnswer = async () => {
@@ -333,25 +335,34 @@ const BantuanAdmin = () => {
 
             <div>
               <p className="text-sm font-medium mb-2">Jawaban Admin:</p>
-              <Textarea
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-                placeholder="Tulis jawaban Anda di sini..."
-                rows={8}
-                maxLength={5000}
-              />
+              {isEditing ? (
+                <Textarea
+                  value={answer}
+                  onChange={(e) => setAnswer(e.target.value)}
+                  placeholder="Tulis jawaban Anda di sini..."
+                  rows={8}
+                  maxLength={5000}
+                />
+              ) : (
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap bg-muted p-4 rounded-lg">
+                  {answer || <span className="italic">Belum ada jawaban</span>}
+                </p>
+              )}
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setSelectedQuestion(null)}>
+            <Button variant="outline" onClick={() => { setSelectedQuestion(null); setIsEditing(false); }}>
               Batal
             </Button>
-            <Button onClick={handleSubmitAnswer} disabled={submitting}>
-              {submitting 
-                ? (selectedQuestion?.jawaban ? "Menyimpan..." : "Mengirim...") 
-                : (selectedQuestion?.jawaban ? "Edit Jawaban" : "Kirim Jawaban")
-              }
-            </Button>
+            {selectedQuestion?.jawaban && !isEditing ? (
+              <Button onClick={() => setIsEditing(true)}>
+                Edit Jawaban
+              </Button>
+            ) : (
+              <Button onClick={handleSubmitAnswer} disabled={submitting || !isEditing}>
+                {submitting ? "Menyimpan..." : "Kirim Jawaban"}
+              </Button>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>

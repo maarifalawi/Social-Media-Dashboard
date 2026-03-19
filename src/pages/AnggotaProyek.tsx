@@ -105,7 +105,7 @@ const AnggotaProyek = () => {
   // Add member dialog
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState("");
-  const [selectedRole, setSelectedRole] = useState<string>("viewer");
+  const selectedRole = "viewer";
   const [addingMember, setAddingMember] = useState(false);
   
   // Edit member dialog
@@ -243,7 +243,6 @@ const AnggotaProyek = () => {
       toast.success("Anggota berhasil ditambahkan");
       setIsAddDialogOpen(false);
       setSelectedUserId("");
-      setSelectedRole("viewer");
       fetchProjectData();
     } catch (error) {
       console.error("Error adding member:", error);
@@ -353,8 +352,8 @@ const AnggotaProyek = () => {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Tambah Anggota Baru</DialogTitle>
-                  <DialogDescription>
-                    Pilih pengguna yang sudah terdaftar dan tentukan peran dalam proyek ini.
+              <DialogDescription>
+                    Pilih pengguna yang sudah terdaftar untuk ditambahkan ke proyek ini.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
@@ -379,34 +378,7 @@ const AnggotaProyek = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <Label>Peran</Label>
-                    <Select value={selectedRole} onValueChange={setSelectedRole}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pilih peran" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="admin">
-                          <span className="flex items-center gap-2">
-                            <Shield className="h-4 w-4" />
-                            Admin - Dapat mengelola anggota
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="editor">
-                          <span className="flex items-center gap-2">
-                            <Edit className="h-4 w-4" />
-                            Editor - Dapat mengedit data
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="viewer">
-                          <span className="flex items-center gap-2">
-                            <Eye className="h-4 w-4" />
-                            Viewer - Hanya lihat
-                          </span>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <p className="text-sm text-muted-foreground">Anggota akan ditambahkan dengan peran <Badge variant="secondary">Viewer</Badge></p>
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>

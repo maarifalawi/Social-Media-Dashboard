@@ -465,7 +465,7 @@ const Bantuan = () => {
                           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                             <div className="flex items-center gap-1">
                               <span className="font-medium text-foreground">Ditanya oleh:</span>
-                              <span className="text-foreground font-semibold">{q.profil?.nama_lengkap || 'Unknown'}</span>
+                              <span className="text-foreground font-semibold">{q.profil?.nama_lengkap || 'Tidak diketahui'}</span>
                             </div>
                             <span>•</span>
                             <span>{format(new Date(q.created_at), "dd MMM yyyy HH:mm", { locale: id })}</span>
@@ -532,7 +532,7 @@ const Bantuan = () => {
                             <div className="border-t pt-3">
                               <div className="mb-2">
                                 <p className="text-sm font-semibold text-foreground">
-                                  Rating dari {q.profil?.nama_lengkap || 'Unknown'}:
+                                  Rating dari {q.profil?.nama_lengkap || 'Tidak diketahui'}:
                                 </p>
                                 {q.rating_at && (
                                   <p className="text-xs text-muted-foreground">

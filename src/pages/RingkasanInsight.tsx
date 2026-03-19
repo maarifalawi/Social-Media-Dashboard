@@ -121,7 +121,7 @@ const RingkasanInsight = () => {
     // 2. Platform Distribution Insight
     const platformMap = new Map<string, number>();
     posts.forEach(p => {
-      const name = p.platform?.nama_platform || "Unknown";
+      const name = p.platform?.nama_platform || "Tidak Diketahui";
       platformMap.set(name, (platformMap.get(name) || 0) + 1);
     });
 
@@ -157,7 +157,7 @@ const RingkasanInsight = () => {
     // 3. Content Type Insight
     const contentTypeMap = new Map<string, { count: number; totalER: number }>();
     posts.forEach(p => {
-      const name = p.jenis_konten?.nama_jenis_konten || "Unknown";
+      const name = p.jenis_konten?.nama_jenis_konten || "Tidak Diketahui";
       const current = contentTypeMap.get(name) || { count: 0, totalER: 0 };
       contentTypeMap.set(name, {
         count: current.count + 1,
@@ -357,7 +357,7 @@ const RingkasanInsight = () => {
         {loading ? (
           <Card>
             <CardContent className="py-12 text-center text-muted-foreground">
-              Memuat...
+              Loading...
             </CardContent>
           </Card>
         ) : (

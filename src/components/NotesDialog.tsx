@@ -60,7 +60,7 @@ export const NotesDialog = ({ scope, scopeKey }: NotesDialogProps) => {
 
   const handleAddNote = async () => {
     if (!selectedProject || !activeDataset) {
-      toast.error("Pilih project dan dataset terlebih dahulu");
+      toast.error("Pilih proyek dan dataset terlebih dahulu");
       return;
     }
 
@@ -72,7 +72,7 @@ export const NotesDialog = ({ scope, scopeKey }: NotesDialogProps) => {
     try {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) {
-        toast.error("User tidak terautentikasi");
+        toast.error("Pengguna tidak terautentikasi");
         return;
       }
 
@@ -120,13 +120,13 @@ export const NotesDialog = ({ scope, scopeKey }: NotesDialogProps) => {
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           <FileText className="h-4 w-4 mr-2" />
-          {scope === 'global' ? 'Project Notes' : 'Post Notes'}
+          {scope === 'global' ? 'Catatan Proyek' : 'Catatan Postingan'}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[80vh]">
         <DialogHeader>
           <DialogTitle>
-            {scope === 'global' ? 'Catatan Project' : 'Catatan Post'}
+            {scope === 'global' ? 'Catatan Proyek' : 'Catatan Postingan'}
           </DialogTitle>
           <DialogDescription>Tambah dan kelola catatan untuk analisis Anda</DialogDescription>
         </DialogHeader>

@@ -33,7 +33,7 @@ import { NavLink } from "@/components/NavLink";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { NotificationCenter } from "@/components/NotificationCenter";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
@@ -201,7 +201,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                 Dashboard
               </NavLink>
               <NavLink to="/import" className="px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" activeClassName="bg-accent text-foreground">
-                Import
+                Impor
               </NavLink>
               
               <NavDropdown 
@@ -225,10 +225,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
               />
 
               <NavDropdown 
-                label="Tools" 
+                label="Alat" 
                 paths={['/caption-generator', '/kompetitor-analysis']}
                 items={[
-                  { path: '/caption-generator', label: 'AI Caption' },
+                  { path: '/caption-generator', label: 'Caption AI' },
                   { path: '/kompetitor-analysis', label: 'Kompetitor' },
                 ]}
               />
@@ -269,7 +269,6 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 
             {/* Right side */}
             <div className="flex items-center gap-1">
-              <NotificationCenter />
               <ThemeToggle />
               
               {/* Desktop User Menu */}
@@ -325,7 +324,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                       <div className="space-y-0.5">
                         {[
                           { path: '/dashboard', label: 'Dashboard' },
-                          { path: '/import', label: 'Import Data' },
+                          { path: '/import', label: 'Impor Data' },
                         ].map(item => (
                           <button
                             key={item.path}
@@ -354,8 +353,8 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                           { path: '/target-kpi', label: 'Target KPI' },
                           { path: '/kampanye', label: 'Kampanye' },
                         ]} />
-                        <MobileNavGroup title="Tools" items={[
-                          { path: '/caption-generator', label: 'AI Caption' },
+                        <MobileNavGroup title="Alat" items={[
+                          { path: '/caption-generator', label: 'Caption AI' },
                           { path: '/kompetitor-analysis', label: 'Kompetitor' },
                         ]} />
                         <MobileNavGroup title="Laporan" items={[

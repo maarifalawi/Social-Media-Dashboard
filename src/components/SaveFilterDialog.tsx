@@ -64,7 +64,7 @@ export const SaveFilterDialog = ({ halaman, filterValues }: SaveFilterDialogProp
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           <Save className="h-4 w-4 mr-2" />
-          Save Filter
+          Simpan Filter
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md">
@@ -78,7 +78,7 @@ export const SaveFilterDialog = ({ halaman, filterValues }: SaveFilterDialogProp
             <Input
               value={filterName}
               onChange={(e) => setFilterName(e.target.value)}
-              placeholder="e.g., Filter Mei 2025"
+              placeholder="cth., Filter Mei 2025"
             />
           </div>
           <div className="flex justify-end space-x-2">

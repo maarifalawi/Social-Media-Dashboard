@@ -16,8 +16,8 @@ interface BreadcrumbConfig {
 }
 
 const breadcrumbMap: Record<string, BreadcrumbConfig> = {
-  "/": { label: "Home" },
-  "/import": { label: "Import" },
+  "/": { label: "Beranda" },
+  "/import": { label: "Impor" },
   "/dashboard": { label: "Dashboard" },
   "/performa": { label: "Performa", parent: "Analitik" },
   "/waktu-terbaik": { label: "Waktu Terbaik", parent: "Analitik" },
@@ -25,14 +25,14 @@ const breadcrumbMap: Record<string, BreadcrumbConfig> = {
   "/ringkasan-insight": { label: "Ringkasan Insight", parent: "Analitik" },
   "/target-kpi": { label: "Target KPI", parent: "Perencanaan" },
   "/kampanye": { label: "Kampanye", parent: "Perencanaan" },
-  "/caption-generator": { label: "AI Caption", parent: "Tools" },
-  "/kompetitor-analysis": { label: "Kompetitor", parent: "Tools" },
+  "/caption-generator": { label: "Caption AI", parent: "Alat" },
+  "/kompetitor-analysis": { label: "Kompetitor", parent: "Alat" },
   "/laporan": { label: "Laporan", parent: "Laporan" },
   "/perbandingan": { label: "Perbandingan", parent: "Laporan" },
   "/bantuan": { label: "Bantuan" },
   "/platform": { label: "Platform", parent: "Admin" },
   "/bantuan-admin": { label: "Kelola Q&A", parent: "Admin" },
-  "/projects/new": { label: "Buat Project Baru" },
+  "/projects/new": { label: "Buat Proyek Baru" },
 };
 
 export const Breadcrumbs = () => {
@@ -45,7 +45,7 @@ export const Breadcrumbs = () => {
   if (!config) return null;
 
   const breadcrumbs = [
-    { label: "Home", path: "/dashboard", isHome: true }
+    { label: "Beranda", path: "/dashboard", isHome: true }
   ];
 
   if (config.parent) {

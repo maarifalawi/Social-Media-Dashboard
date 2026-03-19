@@ -89,7 +89,7 @@ const Auth = () => {
           <CardContent>
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="login" className="text-sm">Login</TabsTrigger>
+                <TabsTrigger value="login" className="text-sm">Masuk</TabsTrigger>
                 <TabsTrigger value="signup" className="text-sm">Daftar</TabsTrigger>
               </TabsList>
 
@@ -127,7 +127,7 @@ const Auth = () => {
                   </div>
                   <Button type="submit" className="w-full h-10 font-medium transition-all hover:shadow-md" disabled={loading}>
                     {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-                    {loading ? "Memproses..." : "Login"}
+                    {loading ? "Memproses..." : "Masuk"}
                   </Button>
                 </form>
               </TabsContent>

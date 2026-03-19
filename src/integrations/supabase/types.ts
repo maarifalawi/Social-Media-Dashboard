@@ -223,54 +223,6 @@ export type Database = {
           },
         ]
       }
-      jadwal_konten: {
-        Row: {
-          created_at: string
-          custom_reminder_menit: number | null
-          deskripsi: string | null
-          email_sent: boolean
-          id: string
-          id_pengguna: string
-          id_proyek: string
-          judul_konten: string
-          platform: string
-          reminder_waktu: string
-          status: string
-          updated_at: string
-          waktu_posting: string
-        }
-        Insert: {
-          created_at?: string
-          custom_reminder_menit?: number | null
-          deskripsi?: string | null
-          email_sent?: boolean
-          id?: string
-          id_pengguna: string
-          id_proyek: string
-          judul_konten: string
-          platform: string
-          reminder_waktu?: string
-          status?: string
-          updated_at?: string
-          waktu_posting: string
-        }
-        Update: {
-          created_at?: string
-          custom_reminder_menit?: number | null
-          deskripsi?: string | null
-          email_sent?: boolean
-          id?: string
-          id_pengguna?: string
-          id_proyek?: string
-          judul_konten?: string
-          platform?: string
-          reminder_waktu?: string
-          status?: string
-          updated_at?: string
-          waktu_posting?: string
-        }
-        Relationships: []
-      }
       jenis_konten: {
         Row: {
           created_at: string
@@ -339,29 +291,36 @@ export type Database = {
           deskripsi_kompetitor: string | null
           handle_kompetitor: string | null
           id_kompetitor: string
+          id_platform: string | null
           id_proyek: string
           nama_kompetitor: string
-          platform_kompetitor: string
         }
         Insert: {
           created_at?: string
           deskripsi_kompetitor?: string | null
           handle_kompetitor?: string | null
           id_kompetitor?: string
+          id_platform?: string | null
           id_proyek: string
           nama_kompetitor: string
-          platform_kompetitor: string
         }
         Update: {
           created_at?: string
           deskripsi_kompetitor?: string | null
           handle_kompetitor?: string | null
           id_kompetitor?: string
+          id_platform?: string | null
           id_proyek?: string
           nama_kompetitor?: string
-          platform_kompetitor?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "kompetitor_id_platform_fkey"
+            columns: ["id_platform"]
+            isOneToOne: false
+            referencedRelation: "platform"
+            referencedColumns: ["id_platform"]
+          },
           {
             foreignKeyName: "kompetitor_id_proyek_fkey"
             columns: ["id_proyek"]
@@ -377,7 +336,6 @@ export type Database = {
           id_dataset: string
           id_log_impor: string
           jumlah_baris_tidak_valid: number
-          kolom_hilang: Json | null
           pesan: string | null
           status_impor: Database["public"]["Enums"]["import_status"]
         }
@@ -386,7 +344,6 @@ export type Database = {
           id_dataset: string
           id_log_impor?: string
           jumlah_baris_tidak_valid?: number
-          kolom_hilang?: Json | null
           pesan?: string | null
           status_impor?: Database["public"]["Enums"]["import_status"]
         }
@@ -395,7 +352,6 @@ export type Database = {
           id_dataset?: string
           id_log_impor?: string
           jumlah_baris_tidak_valid?: number
-          kolom_hilang?: Json | null
           pesan?: string | null
           status_impor?: Database["public"]["Enums"]["import_status"]
         }
@@ -476,6 +432,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "proyek"
             referencedColumns: ["id_proyek"]
+          },
+          {
+            foreignKeyName: "pertanyaan_dijawab_oleh_profil_fkey"
+            columns: ["dijawab_oleh"]
+            isOneToOne: false
+            referencedRelation: "profil"
+            referencedColumns: ["id_profil"]
+          },
+          {
+            foreignKeyName: "pertanyaan_dijawab_oleh_profil_fkey"
+            columns: ["dijawab_oleh"]
+            isOneToOne: false
+            referencedRelation: "user_display_info"
+            referencedColumns: ["id_profil"]
           },
         ]
       }
@@ -610,27 +580,21 @@ export type Database = {
       }
       profil: {
         Row: {
-          bahasa: string | null
           created_at: string
-          foto_profil_url: string | null
           id_profil: string
           nama_lengkap: string | null
           peran: Database["public"]["Enums"]["app_role"]
           preferensi_dashboard: Json | null
         }
         Insert: {
-          bahasa?: string | null
           created_at?: string
-          foto_profil_url?: string | null
           id_profil: string
           nama_lengkap?: string | null
           peran?: Database["public"]["Enums"]["app_role"]
           preferensi_dashboard?: Json | null
         }
         Update: {
-          bahasa?: string | null
           created_at?: string
-          foto_profil_url?: string | null
           id_profil?: string
           nama_lengkap?: string | null
           peran?: Database["public"]["Enums"]["app_role"]
@@ -665,7 +629,6 @@ export type Database = {
       riwayat_export: {
         Row: {
           created_at: string
-          filter_export: Json | null
           halaman_export: string
           id_pengguna: string
           id_proyek: string
@@ -675,7 +638,6 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          filter_export?: Json | null
           halaman_export: string
           id_pengguna: string
           id_proyek: string
@@ -685,7 +647,6 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          filter_export?: Json | null
           halaman_export?: string
           id_pengguna?: string
           id_proyek?: string

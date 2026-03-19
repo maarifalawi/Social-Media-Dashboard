@@ -102,14 +102,14 @@ export const ExportButton = ({
       await logExport('PDF', pdfFileName);
       
       toast({
-        title: "Export Berhasil",
+        title: "Ekspor Berhasil",
         description: "Laporan PDF berhasil diunduh",
       });
     } catch (error) {
       console.error("Error exporting PDF:", error);
       toast({
-        title: "Export Gagal",
-        description: "Terjadi kesalahan saat export PDF",
+        title: "Ekspor Gagal",
+        description: "Terjadi kesalahan saat ekspor PDF",
         variant: "destructive",
       });
     } finally {
@@ -140,14 +140,14 @@ export const ExportButton = ({
       await logExport('Excel', excelFileName);
       
       toast({
-        title: "Export Berhasil",
+        title: "Ekspor Berhasil",
         description: "Data Excel berhasil diunduh",
       });
     } catch (error) {
       console.error("Error exporting Excel:", error);
       toast({
-        title: "Export Gagal",
-        description: "Terjadi kesalahan saat export Excel",
+        title: "Ekspor Gagal",
+        description: "Terjadi kesalahan saat ekspor Excel",
         variant: "destructive",
       });
     } finally {
@@ -181,17 +181,17 @@ export const ExportButton = ({
           ) : (
             <Download className="h-4 w-4" />
           )}
-          Export Laporan
+          Ekspor Laporan
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem onClick={exportToPDF} disabled={isExporting}>
           <FileText className="mr-2 h-4 w-4" />
-          Export ke PDF
+          Ekspor ke PDF
         </DropdownMenuItem>
         <DropdownMenuItem onClick={exportToExcel} disabled={isExporting || !data || data.length === 0}>
           <FileSpreadsheet className="mr-2 h-4 w-4" />
-          Export ke Excel
+          Ekspor ke Excel
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

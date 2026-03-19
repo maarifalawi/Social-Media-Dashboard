@@ -10,7 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Download } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Download, ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -18,6 +19,117 @@ import { InsightCard } from "@/components/InsightCard";
 import { SaveFilterDialog } from "@/components/SaveFilterDialog";
 import { NotesDialog } from "@/components/NotesDialog";
 import { ExportButton } from "@/components/ExportButton";
+
+// Paginated Table Component
+const PaginatedPostTable = ({ posts, getPerformanceBadge }: { posts: any[]; getPerformanceBadge: (post: any) => React.ReactNode }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const totalPages = rowsPerPage === -1 ? 1 : Math.ceil(posts.length / rowsPerPage);
+  const displayedPosts = rowsPerPage === -1 ? posts : posts.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+
+  // Reset page when posts change
+  useEffect(() => { setCurrentPage(1); }, [posts.length, rowsPerPage]);
+
+  return (
+    <div className="space-y-4">
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID Postingan</TableHead>
+              <TableHead>Platform</TableHead>
+              <TableHead>Tanggal</TableHead>
+              <TableHead>Tipe</TableHead>
+              <TableHead>Caption</TableHead>
+              <TableHead className="text-right">Jangkauan</TableHead>
+              <TableHead className="text-right">Suka</TableHead>
+              <TableHead className="text-right">Komentar</TableHead>
+              <TableHead className="text-right">Bagikan</TableHead>
+              <TableHead className="text-right">ER%</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {displayedPosts.map((post) => (
+              <TableRow key={post.id_postingan}>
+                <TableCell className="font-medium">{post.kode_postingan}</TableCell>
+                <TableCell>{post.platform?.nama_platform}</TableCell>
+                <TableCell>{format(new Date(post.waktu_diposting), "dd/MM/yy HH:mm")}</TableCell>
+                <TableCell>{post.jenis_konten?.nama_jenis_konten}</TableCell>
+                <TableCell className="max-w-[200px] truncate">{post.teks_caption}</TableCell>
+                <TableCell className="text-right">{post.jumlah_reach.toLocaleString()}</TableCell>
+                <TableCell className="text-right">{post.jumlah_likes.toLocaleString()}</TableCell>
+                <TableCell className="text-right">{post.jumlah_komentar.toLocaleString()}</TableCell>
+                <TableCell className="text-right">{post.jumlah_shares.toLocaleString()}</TableCell>
+                <TableCell className="text-right">{(post.engagement_rate_persen || 0).toFixed(2)}%</TableCell>
+                <TableCell>{getPerformanceBadge(post)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      
+      {/* Pagination Controls */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span>Tampilkan</span>
+          <Select value={rowsPerPage.toString()} onValueChange={(val) => setRowsPerPage(parseInt(val))}>
+            <SelectTrigger className="w-[80px] h-8">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="25">25</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="-1">Semua</SelectItem>
+            </SelectContent>
+          </Select>
+          <span>dari {posts.length} baris</span>
+        </div>
+
+        {rowsPerPage !== -1 && totalPages > 1 && (
+          <div className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8"
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1)
+              .map((page, idx, arr) => (
+                <span key={page} className="flex items-center">
+                  {idx > 0 && arr[idx - 1] !== page - 1 && <span className="px-1 text-muted-foreground">...</span>}
+                  <Button
+                    variant={currentPage === page ? "default" : "outline"}
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </Button>
+                </span>
+              ))
+            }
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8"
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 type SortBy = "er" | "reach" | "engagement";
 
@@ -148,8 +260,8 @@ const Performa = () => {
     const contentTypeCount = new Map<string, number>();
     
     top5.forEach(post => {
-      const platform = post.platform?.nama_platform || "Unknown";
-      const contentType = post.jenis_konten?.nama_jenis_konten || "Unknown";
+      const platform = post.platform?.nama_platform || "Tidak Diketahui";
+      const contentType = post.jenis_konten?.nama_jenis_konten || "Tidak Diketahui";
       platformCount.set(platform, (platformCount.get(platform) || 0) + 1);
       contentTypeCount.set(contentType, (contentTypeCount.get(contentType) || 0) + 1);
     });
@@ -192,7 +304,7 @@ const Performa = () => {
 
   const handleExport = () => {
     const csv = [
-      ["Post ID", "Platform", "Tanggal", "Tipe", "Caption", "Reach", "Views", "Likes", "Comments", "Shares", "Saved", "Engagement", "ER%"],
+      ["ID Postingan", "Platform", "Tanggal", "Tipe", "Caption", "Jangkauan", "Tayangan", "Suka", "Komentar", "Bagikan", "Simpan", "Engagement", "ER%"],
       ...filteredPosts.map(p => [
         p.kode_postingan,
         p.platform?.nama_platform || "",
@@ -216,7 +328,7 @@ const Performa = () => {
     a.href = url;
     a.download = `performa-${format(new Date(), "yyyy-MM-dd")}.csv`;
     a.click();
-    toast.success("Data berhasil diexport");
+    toast.success("Data berhasil diekspor");
   };
 
   const getPerformanceBadge = (post: any) => {
@@ -226,9 +338,9 @@ const Performa = () => {
     const percentile = (index / sortedByER.length) * 100;
 
     if (percentile <= 10) {
-      return <Badge className="bg-success text-success-foreground">Teratas 10%</Badge>;
+      return <Badge className="bg-success text-success-foreground">Top 10%</Badge>;
     } else if (percentile >= 90) {
-      return <Badge variant="destructive">Terbawah 10%</Badge>;
+      return <Badge variant="destructive">Bottom 10%</Badge>;
     }
     return null;
   };
@@ -255,7 +367,7 @@ const Performa = () => {
             {selectedProject && filteredPosts.length > 0 && (
               <ExportButton
                 projectId={selectedProject.id_proyek}
-                pageName="Content Performance"
+                pageName="Performa Konten"
                 data={filteredPosts.map(p => ({
                   kode_postingan: p.kode_postingan,
                   waktu_diposting: format(new Date(p.waktu_diposting), "dd/MM/yyyy HH:mm"),
@@ -306,7 +418,7 @@ const Performa = () => {
                 <Input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
               </div>
               <div>
-                <Label>Reach Minimum</Label>
+                <Label>Jangkauan Minimum</Label>
                 <Input type="number" value={minReach} onChange={(e) => setMinReach(e.target.value)} placeholder="0" />
               </div>
               <div>
@@ -382,7 +494,7 @@ const Performa = () => {
                     onClick={() => setSortBy("reach")}
                     className="rounded-none border-x border-border"
                   >
-                    Reach
+                     Jangkauan
                   </Button>
                   <Button
                     variant={sortBy === "engagement" ? "default" : "ghost"}
@@ -410,42 +522,10 @@ const Performa = () => {
             ) : filteredPosts.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">Tidak ada data</div>
             ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>ID Postingan</TableHead>
-                      <TableHead>Platform</TableHead>
-                      <TableHead>Tanggal</TableHead>
-                      <TableHead>Tipe</TableHead>
-                      <TableHead>Caption</TableHead>
-                      <TableHead className="text-right">Reach</TableHead>
-                      <TableHead className="text-right">Likes</TableHead>
-                      <TableHead className="text-right">Komentar</TableHead>
-                      <TableHead className="text-right">Shares</TableHead>
-                      <TableHead className="text-right">ER%</TableHead>
-                      <TableHead></TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredPosts.map((post) => (
-                      <TableRow key={post.id_postingan}>
-                        <TableCell className="font-medium">{post.kode_postingan}</TableCell>
-                        <TableCell>{post.platform?.nama_platform}</TableCell>
-                        <TableCell>{format(new Date(post.waktu_diposting), "dd/MM/yy HH:mm")}</TableCell>
-                        <TableCell>{post.jenis_konten?.nama_jenis_konten}</TableCell>
-                        <TableCell className="max-w-[200px] truncate">{post.teks_caption}</TableCell>
-                        <TableCell className="text-right">{post.jumlah_reach.toLocaleString()}</TableCell>
-                        <TableCell className="text-right">{post.jumlah_likes.toLocaleString()}</TableCell>
-                        <TableCell className="text-right">{post.jumlah_komentar.toLocaleString()}</TableCell>
-                        <TableCell className="text-right">{post.jumlah_shares.toLocaleString()}</TableCell>
-                        <TableCell className="text-right">{(post.engagement_rate_persen || 0).toFixed(2)}%</TableCell>
-                        <TableCell>{getPerformanceBadge(post)}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+              <PaginatedPostTable 
+                posts={filteredPosts} 
+                getPerformanceBadge={getPerformanceBadge} 
+              />
             )}
           </CardContent>
         </Card>

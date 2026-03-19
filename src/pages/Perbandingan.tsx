@@ -71,7 +71,7 @@ const Perbandingan = () => {
 
             const platformMap = new Map<string, number>();
             posts.forEach(p => {
-              const name = p.platform?.nama_platform || "Unknown";
+              const name = p.platform?.nama_platform || "Tidak Diketahui";
               platformMap.set(name, (platformMap.get(name) || 0) + 1);
             });
             const platformDist = Array.from(platformMap.entries()).map(([name, count]) => ({
@@ -82,7 +82,7 @@ const Perbandingan = () => {
 
             const contentTypeMap = new Map<string, number>();
             posts.forEach(p => {
-              const name = p.jenis_konten?.nama_jenis_konten || "Unknown";
+              const name = p.jenis_konten?.nama_jenis_konten || "Tidak Diketahui";
               contentTypeMap.set(name, (contentTypeMap.get(name) || 0) + 1);
             });
             const contentTypeDist = Array.from(contentTypeMap.entries()).map(([name, count]) => ({
@@ -108,13 +108,13 @@ const Perbandingan = () => {
         setComparison(validComparisons);
 
         // Restructure data for grouped bar chart
-        const metrics = ["Avg ER (%)", "Median Reach", "Total Posts"];
+        const metrics = ["Rata-rata ER (%)", "Median Jangkauan", "Total Postingan"];
         const chart = metrics.map(metric => {
           const row: any = { metric };
           validComparisons.forEach(c => {
-            if (metric === "Avg ER (%)") row[c.datasetName] = c.avgER;
-            else if (metric === "Median Reach") row[c.datasetName] = c.medianReach;
-            else if (metric === "Total Posts") row[c.datasetName] = c.totalPosts;
+            if (metric === "Rata-rata ER (%)") row[c.datasetName] = c.avgER;
+            else if (metric === "Median Jangkauan") row[c.datasetName] = c.medianReach;
+            else if (metric === "Total Postingan") row[c.datasetName] = c.totalPosts;
           });
           return row;
         });
@@ -202,7 +202,7 @@ const Perbandingan = () => {
                       disabled={!selectedDatasets.includes(dataset.id_dataset) && selectedDatasets.length >= 3}
                     />
                     <label className="text-sm text-foreground">
-                      {dataset.nama_dataset} ({dataset.jumlah_baris_dataset} posts)
+                      {dataset.nama_dataset} ({dataset.jumlah_baris_dataset} postingan)
                       {dataset.dataset_aktif && <span className="ml-2 text-primary">(Aktif)</span>}
                     </label>
                   </div>
@@ -235,7 +235,7 @@ const Perbandingan = () => {
                   <CardContent className="space-y-4">
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm text-muted-foreground">Total Posts</span>
+                        <span className="text-sm text-muted-foreground">Total Postingan</span>
                         <Users className="h-4 w-4 text-muted-foreground" />
                       </div>
                       <p className="text-2xl font-bold text-foreground">{comp.totalPosts}</p>
@@ -243,7 +243,7 @@ const Perbandingan = () => {
 
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm text-muted-foreground">Avg ER</span>
+                        <span className="text-sm text-muted-foreground">Rata-rata ER</span>
                         <TrendingUp className="h-4 w-4 text-muted-foreground" />
                       </div>
                       <p className="text-2xl font-bold text-primary">{comp.avgER}%</p>
@@ -251,7 +251,7 @@ const Perbandingan = () => {
 
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm text-muted-foreground">Median Reach</span>
+                        <span className="text-sm text-muted-foreground">Median Jangkauan</span>
                         <Eye className="h-4 w-4 text-muted-foreground" />
                       </div>
                       <p className="text-2xl font-bold text-foreground">{comp.medianReach.toLocaleString()}</p>
@@ -290,7 +290,7 @@ const Perbandingan = () => {
               {/* Avg ER Chart */}
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">Avg Engagement Rate (%)</CardTitle>
+                  <CardTitle className="text-base">Rata-rata ER (%)</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={250}>
@@ -304,7 +304,7 @@ const Perbandingan = () => {
                           border: "1px solid hsl(var(--border))",
                           borderRadius: "0.5rem"
                         }}
-                        formatter={(value: number) => [`${value}%`, 'Avg ER']}
+                        formatter={(value: number) => [`${value}%`, 'Rata-rata ER']}
                         labelFormatter={(label, payload) => payload?.[0]?.payload?.fullName || label}
                       />
                       <Bar dataKey="value" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
@@ -316,7 +316,7 @@ const Perbandingan = () => {
               {/* Median Reach Chart */}
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">Median Reach</CardTitle>
+                  <CardTitle className="text-base">Median Jangkauan</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={250}>
@@ -330,7 +330,7 @@ const Perbandingan = () => {
                           border: "1px solid hsl(var(--border))",
                           borderRadius: "0.5rem"
                         }}
-                        formatter={(value: number) => [value.toLocaleString(), 'Median Reach']}
+                        formatter={(value: number) => [value.toLocaleString(), 'Median Jangkauan']}
                         labelFormatter={(label, payload) => payload?.[0]?.payload?.fullName || label}
                       />
                       <Bar dataKey="value" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
@@ -342,7 +342,7 @@ const Perbandingan = () => {
               {/* Total Posts Chart */}
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">Total Posts</CardTitle>
+                  <CardTitle className="text-base">Total Postingan</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={250}>
@@ -356,7 +356,7 @@ const Perbandingan = () => {
                           border: "1px solid hsl(var(--border))",
                           borderRadius: "0.5rem"
                         }}
-                        formatter={(value: number) => [value, 'Total Posts']}
+                        formatter={(value: number) => [value, 'Total Postingan']}
                         labelFormatter={(label, payload) => payload?.[0]?.payload?.fullName || label}
                       />
                       <Bar dataKey="value" fill="hsl(var(--chart-3))" radius={[4, 4, 0, 0]} />

@@ -28,12 +28,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+interface Platform {
+  id_platform: string;
+  nama_platform: string;
+  kode_platform: string;
+  warna_platform: string;
+}
+
 interface Competitor {
   id_kompetitor: string;
   nama_kompetitor: string;
   deskripsi_kompetitor: string;
-  platform_kompetitor: string;
+  id_platform: string;
   handle_kompetitor: string;
+  platform?: Platform;
 }
 
 interface CompetitorData {
@@ -60,6 +68,7 @@ const KompetitorAnalysis = () => {
   const { toast } = useToast();
   
   const [competitors, setCompetitors] = useState<CompetitorWithLatestData[]>([]);
+  const [platforms, setPlatforms] = useState<Platform[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingCompetitor, setEditingCompetitor] = useState<Competitor | null>(null);
@@ -68,12 +77,12 @@ const KompetitorAnalysis = () => {
   const [selectedCompetitorForData, setSelectedCompetitorForData] = useState<Competitor | null>(null);
   const [competitorDataForm, setCompetitorDataForm] = useState({
     tanggal_data: new Date().toISOString().split('T')[0],
-    jumlah_followers: 0,
-    rata_rata_engagement_rate: 0,
-    total_posts: 0,
-    rata_rata_likes: 0,
-    rata_rata_comments: 0,
-    rata_rata_shares: 0,
+    jumlah_followers: '' as string | number,
+    rata_rata_engagement_rate: '' as string | number,
+    total_posts: '' as string | number,
+    rata_rata_likes: '' as string | number,
+    rata_rata_comments: '' as string | number,
+    rata_rata_shares: '' as string | number,
   });
   
   const chartRef1 = useRef<HTMLDivElement>(null);
@@ -83,7 +92,7 @@ const KompetitorAnalysis = () => {
   const [formData, setFormData] = useState({
     nama_kompetitor: "",
     deskripsi_kompetitor: "",
-    platform_kompetitor: "instagram",
+    id_platform: "",
     handle_kompetitor: "",
   });
 
@@ -94,10 +103,23 @@ const KompetitorAnalysis = () => {
   }, [user, navigate]);
 
   useEffect(() => {
+    fetchPlatforms();
+  }, []);
+
+  useEffect(() => {
     if (selectedProject) {
       fetchCompetitors();
     }
   }, [selectedProject]);
+
+  const fetchPlatforms = async () => {
+    const { data } = await supabase
+      .from("platform")
+      .select("*")
+      .eq("platform_aktif", true)
+      .order("nama_platform");
+    if (data) setPlatforms(data);
+  };
 
   const fetchCompetitors = async () => {
     if (!selectedProject) return;
@@ -108,6 +130,12 @@ const KompetitorAnalysis = () => {
         .from("kompetitor")
         .select(`
           *,
+          platform:id_platform (
+            id_platform,
+            nama_platform,
+            kode_platform,
+            warna_platform
+          ),
           data_kompetitor (
             jumlah_followers,
             rata_rata_engagement_rate,
@@ -141,7 +169,7 @@ const KompetitorAnalysis = () => {
     } catch (error) {
       console.error("Error fetching competitors:", error);
       toast({
-        title: "Kesalahan",
+        title: "Error",
         description: "Gagal memuat data kompetitor",
         variant: "destructive",
       });
@@ -211,7 +239,7 @@ const KompetitorAnalysis = () => {
     } catch (error) {
       console.error("Error saving competitor:", error);
       toast({
-        title: "Kesalahan",
+        title: "Error",
         description: "Gagal menyimpan kompetitor",
         variant: "destructive",
       });
@@ -233,7 +261,7 @@ const KompetitorAnalysis = () => {
     } catch (error) {
       console.error("Error deleting competitor:", error);
       toast({
-        title: "Kesalahan",
+        title: "Error",
         description: "Gagal menghapus kompetitor",
         variant: "destructive",
       });
@@ -245,7 +273,7 @@ const KompetitorAnalysis = () => {
     setFormData({
       nama_kompetitor: competitor.nama_kompetitor,
       deskripsi_kompetitor: competitor.deskripsi_kompetitor || "",
-      platform_kompetitor: competitor.platform_kompetitor,
+      id_platform: competitor.id_platform || "",
       handle_kompetitor: competitor.handle_kompetitor || "",
     });
     setDialogOpen(true);
@@ -255,7 +283,7 @@ const KompetitorAnalysis = () => {
     setFormData({
       nama_kompetitor: "",
       deskripsi_kompetitor: "",
-      platform_kompetitor: "instagram",
+      id_platform: platforms[0]?.id_platform || "",
       handle_kompetitor: "",
     });
     setEditingCompetitor(null);
@@ -265,12 +293,12 @@ const KompetitorAnalysis = () => {
     setSelectedCompetitorForData(competitor);
     setCompetitorDataForm({
       tanggal_data: new Date().toISOString().split('T')[0],
-      jumlah_followers: 0,
-      rata_rata_engagement_rate: 0,
-      total_posts: 0,
-      rata_rata_likes: 0,
-      rata_rata_comments: 0,
-      rata_rata_shares: 0,
+      jumlah_followers: '',
+      rata_rata_engagement_rate: '',
+      total_posts: '',
+      rata_rata_likes: '',
+      rata_rata_comments: '',
+      rata_rata_shares: '',
     });
     setDataDialogOpen(true);
   };
@@ -284,7 +312,13 @@ const KompetitorAnalysis = () => {
         .from("data_kompetitor")
         .insert([{
           id_kompetitor: selectedCompetitorForData.id_kompetitor,
-          ...competitorDataForm,
+          tanggal_data: competitorDataForm.tanggal_data,
+          jumlah_followers: Number(competitorDataForm.jumlah_followers) || 0,
+          rata_rata_engagement_rate: Number(competitorDataForm.rata_rata_engagement_rate) || 0,
+          total_posts: Number(competitorDataForm.total_posts) || 0,
+          rata_rata_likes: Number(competitorDataForm.rata_rata_likes) || 0,
+          rata_rata_comments: Number(competitorDataForm.rata_rata_comments) || 0,
+          rata_rata_shares: Number(competitorDataForm.rata_rata_shares) || 0,
         }]);
 
       if (error) throw error;
@@ -299,7 +333,7 @@ const KompetitorAnalysis = () => {
     } catch (error) {
       console.error("Error saving competitor data:", error);
       toast({
-        title: "Kesalahan",
+        title: "Error",
         description: "Gagal menyimpan data kompetitor",
         variant: "destructive",
       });
@@ -365,18 +399,18 @@ const KompetitorAnalysis = () => {
                   <div>
                     <Label htmlFor="platform">Platform</Label>
                     <Select
-                      value={formData.platform_kompetitor}
-                      onValueChange={(value) => setFormData({ ...formData, platform_kompetitor: value })}
+                      value={formData.id_platform}
+                      onValueChange={(value) => setFormData({ ...formData, id_platform: value })}
                     >
                       <SelectTrigger>
-                        <SelectValue />
+                        <SelectValue placeholder="Pilih platform" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="instagram">Instagram</SelectItem>
-                        <SelectItem value="tiktok">TikTok</SelectItem>
-                        <SelectItem value="facebook">Facebook</SelectItem>
-                        <SelectItem value="youtube">YouTube</SelectItem>
-                        <SelectItem value="twitter">Twitter/X</SelectItem>
+                        {platforms.map((p) => (
+                          <SelectItem key={p.id_platform} value={p.id_platform}>
+                            {p.nama_platform}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -403,7 +437,7 @@ const KompetitorAnalysis = () => {
                       Batal
                     </Button>
                     <Button type="submit">
-                      {editingCompetitor ? "Update" : "Tambah"}
+                      {editingCompetitor ? "Perbarui" : "Tambah"}
                     </Button>
                   </div>
                 </form>
@@ -440,7 +474,7 @@ const KompetitorAnalysis = () => {
                       <div className="flex-1">
                         <CardTitle className="text-lg">{competitor.nama_kompetitor}</CardTitle>
                         <CardDescription className="capitalize">
-                          {competitor.platform_kompetitor}
+                          {competitor.platform?.nama_platform || "—"}
                           {competitor.handle_kompetitor && ` • ${competitor.handle_kompetitor}`}
                         </CardDescription>
                       </div>
@@ -472,7 +506,7 @@ const KompetitorAnalysis = () => {
                     {competitor.latest_data ? (
                       <div className="space-y-3">
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Followers</span>
+                          <span className="text-muted-foreground">Pengikut</span>
                           <span className="font-semibold">{competitor.latest_data.jumlah_followers.toLocaleString()}</span>
                         </div>
                         <div className="flex items-center justify-between text-sm">
@@ -484,7 +518,7 @@ const KompetitorAnalysis = () => {
                           <span className="font-semibold">{competitor.latest_data.total_posts}</span>
                         </div>
                         <div className="text-xs text-muted-foreground mt-2">
-                          Update: {new Date(competitor.latest_data.tanggal_data).toLocaleDateString('id-ID')}
+                          Diperbarui: {new Date(competitor.latest_data.tanggal_data).toLocaleDateString('id-ID')}
                         </div>
                       </div>
                     ) : (
@@ -529,12 +563,13 @@ const KompetitorAnalysis = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="followers">Followers</Label>
+                      <Label htmlFor="followers">Pengikut</Label>
                       <Input
                         id="followers"
                         type="number"
                         value={competitorDataForm.jumlah_followers}
-                        onChange={(e) => setCompetitorDataForm({ ...competitorDataForm, jumlah_followers: parseInt(e.target.value) || 0 })}
+                        placeholder="0"
+                        onChange={(e) => setCompetitorDataForm({ ...competitorDataForm, jumlah_followers: e.target.value })}
                       />
                     </div>
                     <div>
@@ -544,7 +579,8 @@ const KompetitorAnalysis = () => {
                         type="number"
                         step="0.01"
                         value={competitorDataForm.rata_rata_engagement_rate}
-                        onChange={(e) => setCompetitorDataForm({ ...competitorDataForm, rata_rata_engagement_rate: parseFloat(e.target.value) || 0 })}
+                        placeholder="0"
+                        onChange={(e) => setCompetitorDataForm({ ...competitorDataForm, rata_rata_engagement_rate: e.target.value })}
                       />
                     </div>
                   </div>
@@ -555,16 +591,18 @@ const KompetitorAnalysis = () => {
                         id="posts"
                         type="number"
                         value={competitorDataForm.total_posts}
-                        onChange={(e) => setCompetitorDataForm({ ...competitorDataForm, total_posts: parseInt(e.target.value) || 0 })}
+                        placeholder="0"
+                        onChange={(e) => setCompetitorDataForm({ ...competitorDataForm, total_posts: e.target.value })}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="likes">Rata-rata Likes</Label>
+                      <Label htmlFor="likes">Rata-rata Suka</Label>
                       <Input
                         id="likes"
                         type="number"
                         value={competitorDataForm.rata_rata_likes}
-                        onChange={(e) => setCompetitorDataForm({ ...competitorDataForm, rata_rata_likes: parseInt(e.target.value) || 0 })}
+                        placeholder="0"
+                        onChange={(e) => setCompetitorDataForm({ ...competitorDataForm, rata_rata_likes: e.target.value })}
                       />
                     </div>
                   </div>
@@ -589,24 +627,40 @@ const KompetitorAnalysis = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div ref={chartRef1} className="h-[300px]">
+                    <div ref={chartRef1} className="h-[350px]">
                       <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={comparisonData}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="date" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          {competitors.map((comp, idx) => (
-                            <Line
-                              key={comp.id_kompetitor}
-                              type="monotone"
-                              dataKey={`${comp.nama_kompetitor}_followers`}
-                              name={comp.nama_kompetitor}
-                              stroke={`hsl(${idx * 60}, 70%, 50%)`}
-                              strokeWidth={2}
-                            />
-                          ))}
+                        <LineChart data={comparisonData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                          <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                          <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                          <YAxis tickFormatter={(v) => v >= 1000 ? `${(v/1000).toFixed(0)}rb` : v} tick={{ fontSize: 12 }} />
+                          <Tooltip 
+                            contentStyle={{ borderRadius: '8px', border: '1px solid hsl(var(--border))', background: 'hsl(var(--background))' }}
+                            formatter={(value: number, name: string) => [value.toLocaleString(), name.replace('_followers', '')]}
+                            labelFormatter={(label) => `Tanggal: ${label}`}
+                          />
+                          <Legend 
+                            formatter={(value) => value.replace('_followers', '')}
+                            wrapperStyle={{ fontSize: '13px', paddingTop: '10px' }}
+                          />
+                          {competitors.map((comp, idx) => {
+                            const CHART_COLORS = [
+                              'hsl(210, 80%, 55%)', 'hsl(340, 75%, 55%)', 'hsl(160, 65%, 45%)',
+                              'hsl(45, 90%, 50%)', 'hsl(270, 65%, 55%)', 'hsl(15, 80%, 55%)'
+                            ];
+                            return (
+                              <Line
+                                key={comp.id_kompetitor}
+                                type="monotone"
+                                dataKey={`${comp.nama_kompetitor}_followers`}
+                                name={comp.nama_kompetitor}
+                                stroke={CHART_COLORS[idx % CHART_COLORS.length]}
+                                strokeWidth={2.5}
+                                dot={{ r: 4, strokeWidth: 2 }}
+                                activeDot={{ r: 6, strokeWidth: 2 }}
+                                animationDuration={800}
+                              />
+                            );
+                          })}
                         </LineChart>
                       </ResponsiveContainer>
                     </div>
@@ -621,22 +675,36 @@ const KompetitorAnalysis = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div ref={chartRef2} className="h-[300px]">
+                    <div ref={chartRef2} className="h-[350px]">
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={comparisonData}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="date" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          {competitors.map((comp, idx) => (
-                            <Bar
-                              key={comp.id_kompetitor}
-                              dataKey={`${comp.nama_kompetitor}_er`}
-                              name={`${comp.nama_kompetitor} ER%`}
-                              fill={`hsl(${idx * 60}, 70%, 50%)`}
-                            />
-                          ))}
+                        <BarChart data={comparisonData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                          <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                          <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                          <YAxis unit="%" tick={{ fontSize: 12 }} />
+                          <Tooltip 
+                            contentStyle={{ borderRadius: '8px', border: '1px solid hsl(var(--border))', background: 'hsl(var(--background))' }}
+                            formatter={(value: number, name: string) => [`${Number(value).toFixed(2)}%`, name.replace(' ER%', '')]}
+                            labelFormatter={(label) => `Tanggal: ${label}`}
+                          />
+                          <Legend 
+                            wrapperStyle={{ fontSize: '13px', paddingTop: '10px' }}
+                          />
+                          {competitors.map((comp, idx) => {
+                            const CHART_COLORS = [
+                              'hsl(210, 80%, 55%)', 'hsl(340, 75%, 55%)', 'hsl(160, 65%, 45%)',
+                              'hsl(45, 90%, 50%)', 'hsl(270, 65%, 55%)', 'hsl(15, 80%, 55%)'
+                            ];
+                            return (
+                              <Bar
+                                key={comp.id_kompetitor}
+                                dataKey={`${comp.nama_kompetitor}_er`}
+                                name={`${comp.nama_kompetitor} ER%`}
+                                fill={CHART_COLORS[idx % CHART_COLORS.length]}
+                                radius={[4, 4, 0, 0]}
+                                animationDuration={800}
+                              />
+                            );
+                          })}
                         </BarChart>
                       </ResponsiveContainer>
                     </div>

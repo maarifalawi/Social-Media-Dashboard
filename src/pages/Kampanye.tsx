@@ -10,7 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, CheckCircle2, Clock } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -23,6 +24,8 @@ const Kampanye = () => {
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingCampaign, setEditingCampaign] = useState<any>(null);
+  const [statusFilter, setStatusFilter] = useState<'all' | 'done' | 'pending'>('all');
+  const [campaignStatuses, setCampaignStatuses] = useState<Record<string, boolean>>({});
 
   // Form state
   const [namaKampanye, setNamaKampanye] = useState("");
@@ -179,7 +182,7 @@ const Kampanye = () => {
                   <Input 
                     value={namaKampanye} 
                     onChange={(e) => setNamaKampanye(e.target.value)} 
-                    placeholder="e.g., Ramadan Sale 2025"
+                    placeholder="cth., Promo Ramadan 2025"
                     required
                   />
                 </div>
@@ -209,11 +212,29 @@ const Kampanye = () => {
                   <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
                     Batal
                   </Button>
-                  <Button type="submit">{editingCampaign ? "Update" : "Simpan"}</Button>
+                  <Button type="submit">{editingCampaign ? "Perbarui" : "Simpan"}</Button>
                 </div>
               </form>
             </DialogContent>
           </Dialog>
+        </div>
+
+        {/* Status Filter */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <Label className="text-sm">Filter Status:</Label>
+          <div className="flex border border-border rounded-md">
+            <Button variant={statusFilter === 'all' ? 'default' : 'ghost'} size="sm" onClick={() => setStatusFilter('all')} className="rounded-r-none">
+              Semua
+            </Button>
+            <Button variant={statusFilter === 'done' ? 'default' : 'ghost'} size="sm" onClick={() => setStatusFilter('done')} className="rounded-none border-x border-border">
+              <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
+              Terlaksana
+            </Button>
+            <Button variant={statusFilter === 'pending' ? 'default' : 'ghost'} size="sm" onClick={() => setStatusFilter('pending')} className="rounded-l-none">
+              <Clock className="h-3.5 w-3.5 mr-1.5" />
+              Belum Terlaksana
+            </Button>
+          </div>
         </div>
 
         <Card>
@@ -230,6 +251,7 @@ const Kampanye = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead>Status</TableHead>
                       <TableHead>Nama Kampanye</TableHead>
                       <TableHead>Tanggal Mulai</TableHead>
                       <TableHead>Tanggal Selesai</TableHead>
@@ -238,34 +260,54 @@ const Kampanye = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {campaigns.map((campaign) => (
-                      <TableRow key={campaign.id_kampanye}>
-                        <TableCell className="font-medium">{campaign.nama_kampanye}</TableCell>
-                        <TableCell>
-                          {campaign.tanggal_mulai_kampanye 
-                            ? format(new Date(campaign.tanggal_mulai_kampanye), "dd MMM yyyy") 
-                            : "-"}
-                        </TableCell>
-                        <TableCell>
-                          {campaign.tanggal_selesai_kampanye 
-                            ? format(new Date(campaign.tanggal_selesai_kampanye), "dd MMM yyyy") 
-                            : "-"}
-                        </TableCell>
-                        <TableCell className="max-w-xs truncate" title={campaign.catatan_kampanye || ""}>
-                          {campaign.catatan_kampanye || "-"}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex space-x-2">
-                            <Button size="sm" variant="ghost" onClick={() => handleOpenDialog(campaign)}>
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                            <Button size="sm" variant="ghost" onClick={() => handleDelete(campaign.id_kampanye)}>
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    {campaigns
+                      .filter(c => {
+                        if (statusFilter === 'all') return true;
+                        const done = campaignStatuses[c.id_kampanye] === true;
+                        return statusFilter === 'done' ? done : !done;
+                      })
+                      .map((campaign) => {
+                        const isDone = campaignStatuses[campaign.id_kampanye] === true;
+                        return (
+                          <TableRow key={campaign.id_kampanye} className={isDone ? 'bg-green-50/50 dark:bg-green-950/20' : ''}>
+                            <TableCell>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className={`gap-1.5 text-xs font-medium ${isDone ? 'text-green-600 hover:text-green-700' : 'text-orange-500 hover:text-orange-600'}`}
+                                onClick={() => setCampaignStatuses(prev => ({ ...prev, [campaign.id_kampanye]: !prev[campaign.id_kampanye] }))}
+                              >
+                                {isDone ? <CheckCircle2 className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
+                                {isDone ? 'Terlaksana' : 'Belum'}
+                              </Button>
+                            </TableCell>
+                            <TableCell className="font-medium">{campaign.nama_kampanye}</TableCell>
+                            <TableCell>
+                              {campaign.tanggal_mulai_kampanye 
+                                ? format(new Date(campaign.tanggal_mulai_kampanye), "dd MMM yyyy") 
+                                : "-"}
+                            </TableCell>
+                            <TableCell>
+                              {campaign.tanggal_selesai_kampanye 
+                                ? format(new Date(campaign.tanggal_selesai_kampanye), "dd MMM yyyy") 
+                                : "-"}
+                            </TableCell>
+                            <TableCell className="max-w-xs truncate" title={campaign.catatan_kampanye || ""}>
+                              {campaign.catatan_kampanye || "-"}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex space-x-2">
+                                <Button size="sm" variant="ghost" onClick={() => handleOpenDialog(campaign)}>
+                                  <Pencil className="h-4 w-4" />
+                                </Button>
+                                <Button size="sm" variant="ghost" onClick={() => handleDelete(campaign.id_kampanye)}>
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
                   </TableBody>
                 </Table>
               </div>

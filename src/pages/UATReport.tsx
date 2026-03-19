@@ -22,7 +22,7 @@ const UATReport = () => {
       // Header rows
       const headerRows = [
         [documentInfo.title],
-        [`${documentInfo.project} - Role: ${documentInfo.role}`],
+        [`${documentInfo.project} - Peran: ${documentInfo.role}`],
         [`Versi: ${documentInfo.version}`],
         [`Tanggal: ${documentInfo.date}`],
         [`Total Skenario: ${documentInfo.totalScenarios}`],
@@ -112,11 +112,11 @@ const UATReport = () => {
           <div className="flex gap-2">
             <Button onClick={exportToExcel} className="gap-2" size="sm">
               <Download className="h-4 w-4" />
-              <span className="hidden sm:inline">Export Excel</span>
+              <span className="hidden sm:inline">Ekspor Excel</span>
             </Button>
             <Button variant="outline" onClick={handlePrint} className="gap-2" size="sm">
               <Printer className="h-4 w-4" />
-              <span className="hidden sm:inline">Print</span>
+              <span className="hidden sm:inline">Cetak</span>
             </Button>
           </div>
         </div>
@@ -133,7 +133,7 @@ const UATReport = () => {
             {documentInfo.project}
           </p>
           <p className="text-muted-foreground">
-            Role: {documentInfo.role}
+            Peran: {documentInfo.role}
           </p>
           <div className="mt-4 flex justify-center gap-8 text-sm text-muted-foreground print:gap-4">
             <span>Versi: {documentInfo.version}</span>
@@ -198,7 +198,7 @@ const UATReport = () => {
         <div className="mt-8 text-center text-sm text-muted-foreground print:mt-4">
           <p>Dokumen ini berisi {documentInfo.totalScenarios} skenario pengujian untuk role Pengguna.</p>
           <p className="mt-2">
-            Status diisi dengan: <strong>PASS</strong> / <strong>FAIL</strong> / <strong>PENDING</strong>
+            Status diisi dengan: <strong>LULUS</strong> / <strong>GAGAL</strong> / <strong>TERTUNDA</strong>
           </p>
         </div>
       </div>

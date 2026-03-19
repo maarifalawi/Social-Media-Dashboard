@@ -10,7 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, CheckCircle2, XCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -23,6 +24,8 @@ const TargetKPI = () => {
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingTarget, setEditingTarget] = useState<any>(null);
+  const [statusFilter, setStatusFilter] = useState<'all' | 'met' | 'not_met'>('all');
+  const [targetStatuses, setTargetStatuses] = useState<Record<string, boolean>>({});
 
   // Form state
   const [jenisPeriode, setJenisPeriode] = useState<'weekly' | 'monthly'>('monthly');
@@ -207,29 +210,47 @@ const TargetKPI = () => {
                 </div>
 
                 <div>
-                  <Label>Target Total Reach (opsional)</Label>
-                  <Input type="number" value={targetReach} onChange={(e) => setTargetReach(e.target.value)} placeholder="e.g., 100000" />
+                  <Label>Target Total Jangkauan (opsional)</Label>
+                  <Input type="number" value={targetReach} onChange={(e) => setTargetReach(e.target.value)} placeholder="cth., 100000" />
                 </div>
 
                 <div>
                   <Label>Target Rata-rata ER % (opsional)</Label>
-                  <Input type="number" step="0.01" value={targetER} onChange={(e) => setTargetER(e.target.value)} placeholder="e.g., 5.5" />
+                  <Input type="number" step="0.01" value={targetER} onChange={(e) => setTargetER(e.target.value)} placeholder="cth., 5.5" />
                 </div>
 
                 <div>
-                  <Label>Target Jumlah Followers (opsional)</Label>
-                  <Input type="number" value={targetFollowers} onChange={(e) => setTargetFollowers(e.target.value)} placeholder="e.g., 10000" />
+                  <Label>Target Jumlah Pengikut (opsional)</Label>
+                  <Input type="number" value={targetFollowers} onChange={(e) => setTargetFollowers(e.target.value)} placeholder="cth., 10000" />
                 </div>
 
                 <div className="flex justify-end space-x-2">
                   <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
                     Batal
                   </Button>
-                  <Button type="submit">{editingTarget ? "Update" : "Simpan"}</Button>
+                  <Button type="submit">{editingTarget ? "Perbarui" : "Simpan"}</Button>
                 </div>
               </form>
             </DialogContent>
           </Dialog>
+        </div>
+
+        {/* Status Filter */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <Label className="text-sm">Filter Status:</Label>
+          <div className="flex border border-border rounded-md">
+            <Button variant={statusFilter === 'all' ? 'default' : 'ghost'} size="sm" onClick={() => setStatusFilter('all')} className="rounded-r-none">
+              Semua
+            </Button>
+            <Button variant={statusFilter === 'met' ? 'default' : 'ghost'} size="sm" onClick={() => setStatusFilter('met')} className="rounded-none border-x border-border">
+              <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
+              Memenuhi
+            </Button>
+            <Button variant={statusFilter === 'not_met' ? 'default' : 'ghost'} size="sm" onClick={() => setStatusFilter('not_met')} className="rounded-l-none">
+              <XCircle className="h-3.5 w-3.5 mr-1.5" />
+              Tidak Memenuhi
+            </Button>
+          </div>
         </div>
 
         <Card>
@@ -246,36 +267,57 @@ const TargetKPI = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead>Status</TableHead>
                       <TableHead>Periode</TableHead>
                       <TableHead>Tanggal Mulai</TableHead>
                       <TableHead>Tanggal Selesai</TableHead>
-                      <TableHead className="text-right">Target Reach</TableHead>
+                      <TableHead className="text-right">Target Jangkauan</TableHead>
                       <TableHead className="text-right">Target ER %</TableHead>
-                      <TableHead className="text-right">Target Followers</TableHead>
+                      <TableHead className="text-right">Target Pengikut</TableHead>
                       <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {targets.map((target) => (
-                      <TableRow key={target.id_target_kpi}>
-                        <TableCell className="capitalize">{target.jenis_periode === 'weekly' ? 'Mingguan' : 'Bulanan'}</TableCell>
-                        <TableCell>{format(new Date(target.tanggal_mulai_periode), "dd MMM yyyy")}</TableCell>
-                        <TableCell>{format(new Date(target.tanggal_selesai_periode), "dd MMM yyyy")}</TableCell>
-                        <TableCell className="text-right">{target.target_total_jangkauan ? target.target_total_jangkauan.toLocaleString() : "-"}</TableCell>
-                        <TableCell className="text-right">{target.target_rata_rata_er ? target.target_rata_rata_er + "%" : "-"}</TableCell>
-                        <TableCell className="text-right">{target.target_jumlah_followers ? target.target_jumlah_followers.toLocaleString() : "-"}</TableCell>
-                        <TableCell>
-                          <div className="flex space-x-2">
-                            <Button size="sm" variant="ghost" onClick={() => handleOpenDialog(target)}>
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                            <Button size="sm" variant="ghost" onClick={() => handleDelete(target.id_target_kpi)}>
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    {targets
+                      .filter(t => {
+                        if (statusFilter === 'all') return true;
+                        const met = targetStatuses[t.id_target_kpi] === true;
+                        return statusFilter === 'met' ? met : !met;
+                      })
+                      .map((target) => {
+                        const isMet = targetStatuses[target.id_target_kpi] === true;
+                        return (
+                          <TableRow key={target.id_target_kpi} className={isMet ? 'bg-green-50/50 dark:bg-green-950/20' : ''}>
+                            <TableCell>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className={`gap-1.5 text-xs font-medium ${isMet ? 'text-green-600 hover:text-green-700' : 'text-orange-500 hover:text-orange-600'}`}
+                                onClick={() => setTargetStatuses(prev => ({ ...prev, [target.id_target_kpi]: !prev[target.id_target_kpi] }))}
+                              >
+                                {isMet ? <CheckCircle2 className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
+                                {isMet ? 'Memenuhi' : 'Belum Memenuhi'}
+                              </Button>
+                            </TableCell>
+                            <TableCell className="capitalize">{target.jenis_periode === 'weekly' ? 'Mingguan' : 'Bulanan'}</TableCell>
+                            <TableCell>{format(new Date(target.tanggal_mulai_periode), "dd MMM yyyy")}</TableCell>
+                            <TableCell>{format(new Date(target.tanggal_selesai_periode), "dd MMM yyyy")}</TableCell>
+                            <TableCell className="text-right">{target.target_total_jangkauan ? target.target_total_jangkauan.toLocaleString() : "-"}</TableCell>
+                            <TableCell className="text-right">{target.target_rata_rata_er ? target.target_rata_rata_er + "%" : "-"}</TableCell>
+                            <TableCell className="text-right">{target.target_jumlah_followers ? target.target_jumlah_followers.toLocaleString() : "-"}</TableCell>
+                            <TableCell>
+                              <div className="flex space-x-2">
+                                <Button size="sm" variant="ghost" onClick={() => handleOpenDialog(target)}>
+                                  <Pencil className="h-4 w-4" />
+                                </Button>
+                                <Button size="sm" variant="ghost" onClick={() => handleDelete(target.id_target_kpi)}>
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
                   </TableBody>
                 </Table>
               </div>

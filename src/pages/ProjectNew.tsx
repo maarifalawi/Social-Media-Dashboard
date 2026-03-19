@@ -64,7 +64,7 @@ const ProjectNew = () => {
     return (
       <AppLayout>
         <div className="flex items-center justify-center h-64">
-          <p className="text-muted-foreground">Memuat...</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </AppLayout>
     );
@@ -104,7 +104,7 @@ const ProjectNew = () => {
                 <Label htmlFor="description">Deskripsi (opsional)</Label>
                 <Textarea
                   id="description"
-                  placeholder="Deskripsi singkat tentang project ini..."
+                  placeholder="Deskripsi singkat tentang proyek ini..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={4}
@@ -113,7 +113,7 @@ const ProjectNew = () => {
 
               <div className="flex space-x-3">
                 <Button type="submit" disabled={loading}>
-                  {loading ? "Membuat..." : "Buat Project"}
+                  {loading ? "Membuat..." : "Buat Proyek"}
                 </Button>
                 <Button
                   type="button"

@@ -147,9 +147,9 @@ const CaptionGenerator = () => {
     <AppLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">AI Caption Generator</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Generator Caption AI</h1>
           <p className="text-muted-foreground mt-2">
-            Generate caption Instagram yang menarik dengan bantuan AI
+            Buat caption Instagram yang menarik dengan bantuan AI
           </p>
         </div>
 
@@ -186,17 +186,17 @@ const CaptionGenerator = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="formal">Formal</SelectItem>
-                  <SelectItem value="friendly">Friendly</SelectItem>
-                  <SelectItem value="casual">Casual</SelectItem>
-                  <SelectItem value="professional">Professional</SelectItem>
-                  <SelectItem value="confident">Confident</SelectItem>
-                  <SelectItem value="academic">Academic</SelectItem>
-                  <SelectItem value="simplified">Simplified</SelectItem>
-                  <SelectItem value="vivid">Vivid</SelectItem>
-                  <SelectItem value="empathetic">Empathetic</SelectItem>
-                  <SelectItem value="persuasive">Persuasive</SelectItem>
-                  <SelectItem value="direct">Direct</SelectItem>
-                  <SelectItem value="custom">Custom</SelectItem>
+                  <SelectItem value="friendly">Ramah</SelectItem>
+                  <SelectItem value="casual">Santai</SelectItem>
+                  <SelectItem value="professional">Profesional</SelectItem>
+                  <SelectItem value="confident">Percaya Diri</SelectItem>
+                  <SelectItem value="academic">Akademis</SelectItem>
+                  <SelectItem value="simplified">Sederhana</SelectItem>
+                  <SelectItem value="vivid">Deskriptif</SelectItem>
+                  <SelectItem value="empathetic">Empatik</SelectItem>
+                  <SelectItem value="persuasive">Persuasif</SelectItem>
+                  <SelectItem value="direct">Langsung</SelectItem>
+                  <SelectItem value="custom">Kustom</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -204,7 +204,7 @@ const CaptionGenerator = () => {
             {/* Custom Style (jika dipilih) */}
             {gayaBahasa === "custom" && (
               <div className="space-y-2">
-                <Label htmlFor="customStyle">Keterangan Custom Style</Label>
+                <Label htmlFor="customStyle">Keterangan Gaya Kustom</Label>
                 <Textarea
                   id="customStyle"
                   placeholder="Contoh: campur Indo-Inggris ala Gen Z, santai tapi tetap sopan"
@@ -317,12 +317,12 @@ const CaptionGenerator = () => {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating...
+                  Membuat...
                 </>
               ) : (
                 <>
                   <Sparkles className="mr-2 h-4 w-4" />
-                  Generate Caption dengan AI
+                  Buat Caption dengan AI
                 </>
               )}
             </Button>
