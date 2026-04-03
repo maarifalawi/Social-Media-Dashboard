@@ -1,0 +1,159 @@
+5 responses
+Nama
+5 responses
+Jihan Ardila
+Gilang Najwan
+Reyhan Dandi
+Azzahra Dania
+Riyan
+Tampilan antarmuka sistem mudah dipahami. (Desain visual bersih dan navigasi tidak membingungkan).
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+20%
+80%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	0
+4 = Setuju (S)	1
+5 = Sangat Setuju (SS)	4
+Proses login dan registrasi berjalan dengan lancar. (Tidak ada kendala teknis saat masuk ke sistem).
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+40%
+60%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	0
+4 = Setuju (S)	3
+5 = Sangat Setuju (SS)	2
+Fitur impor data CSV mudah digunakan.
+
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+20%
+40%
+40%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	1
+4 = Setuju (S)	2
+5 = Sangat Setuju (SS)	2
+Grafik dan visualisasi data mudah dibaca.(Informasi pada chart jelas dan informatif).
+
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+40%
+60%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	0
+4 = Setuju (S)	3
+5 = Sangat Setuju (SS)	2
+Fitur Caption Generator menghasilkan caption yang relevan.
+
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+60%
+40%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	0
+4 = Setuju (S)	2
+5 = Sangat Setuju (SS)	3
+Fitur analisis kompetitor membantu perbandingan performa.
+
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+20%
+80%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	0
+4 = Setuju (S)	1
+5 = Sangat Setuju (SS)	4
+Laporan yang dihasilkan sistem sesuai dengan kebutuhan.
+
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+40%
+60%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	0
+4 = Setuju (S)	3
+5 = Sangat Setuju (SS)	2
+Sistem secara keseluruhan membantu proses analisis media sosial.
+
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+40%
+60%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	0
+4 = Setuju (S)	3
+5 = Sangat Setuju (SS)	2
+Sistem berjalan dengan cepat dan responsif. (Loading data tidak memakan waktu lama).
+
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+20%
+60%
+20%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	1
+4 = Setuju (S)	1
+5 = Sangat Setuju (SS)	3
+Saya merekomendasikan sistem ini untuk digunakan oleh pelaku UMKM.
+
+5 responses
+1 = Sangat Tidak Setuju (STS)
+2 = Tidak Setuju (TS)
+3 = Netral (N)
+4 = Setuju (S)
+5 = Sangat Setuju (SS)
+20%
+40%
+40%
+1 = Sangat Tidak Setuju (STS)	0
+2 = Tidak Setuju (TS)	0
+3 = Netral (N)	1
+4 = Setuju (S)	2
+5 = Sangat Setuju (SS)	2
