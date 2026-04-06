@@ -904,32 +904,35 @@ const Import = () => {
 
         {/* Import Options */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {/* CSV Upload */}
-          <Card>
+          {/* CSV Upload - Hijau */}
+          <Card className="border-2 border-green-200 bg-green-50 dark:bg-green-950/20 dark:border-green-800">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Upload className="h-5 w-5" />
+              <CardTitle className="flex items-center gap-2 text-green-800 dark:text-green-300">
+                <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                  <Upload className="h-5 w-5 text-green-600 dark:text-green-400" />
+                </div>
                 Unggah CSV
               </CardTitle>
-              <CardDescription>Unggah file CSV dengan format yang sesuai</CardDescription>
+              <CardDescription className="text-green-700 dark:text-green-400">Unggah file CSV dengan format yang sesuai</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Input 
                 type="file" 
                 accept=".csv" 
-                onChange={(e) => setCsvFile(e.target.files?.[0] || null)} 
+                onChange={(e) => setCsvFile(e.target.files?.[0] || null)}
+                className="border-green-300 dark:border-green-700 bg-white dark:bg-green-950/40"
               />
               <div className="flex gap-2">
                 <Button 
                   onClick={handlePreviewCSV} 
                   disabled={!csvFile || uploading}
                   variant="outline"
-                  className="flex-1"
+                  className="flex-1 border-green-400 text-green-700 hover:bg-green-100 dark:text-green-300 dark:border-green-600 dark:hover:bg-green-900"
                 >
                   <Eye className="h-4 w-4 mr-2" />
                    Pratinjau
                 </Button>
-                <Button onClick={handleDownloadTemplate} variant="outline" size="sm" className="gap-1">
+                <Button onClick={handleDownloadTemplate} variant="outline" size="sm" className="gap-1 border-green-400 text-green-700 hover:bg-green-100 dark:text-green-300 dark:border-green-600 dark:hover:bg-green-900">
                   <Download className="h-4 w-4" />
                   Template
                 </Button>
@@ -937,27 +940,30 @@ const Import = () => {
             </CardContent>
           </Card>
 
-          {/* Google Sheets */}
-          <Card>
+          {/* Google Sheets - Pink */}
+          <Card className="border-2 border-pink-200 bg-pink-50 dark:bg-pink-950/20 dark:border-pink-800">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <LinkIcon className="h-5 w-5" />
+              <CardTitle className="flex items-center gap-2 text-pink-800 dark:text-pink-300">
+                <div className="p-2 bg-pink-100 dark:bg-pink-900 rounded-lg">
+                  <LinkIcon className="h-5 w-5 text-pink-600 dark:text-pink-400" />
+                </div>
                 Google Sheets
               </CardTitle>
-              <CardDescription>Import dari Google Sheets (pastikan publik)</CardDescription>
+              <CardDescription className="text-pink-700 dark:text-pink-400">Import dari Google Sheets (pastikan publik)</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Input 
                 placeholder="https://docs.google.com/spreadsheets/d/..." 
                 value={sheetsUrl} 
-                onChange={(e) => setSheetsUrl(e.target.value)} 
+                onChange={(e) => setSheetsUrl(e.target.value)}
+                className="border-pink-300 dark:border-pink-700 bg-white dark:bg-pink-950/40"
               />
               <div className="flex gap-2">
                 <Button 
                   onClick={handlePreviewSheets} 
                   disabled={!sheetsUrl || uploading}
                   variant="outline"
-                  className="flex-1"
+                  className="flex-1 border-pink-400 text-pink-700 hover:bg-pink-100 dark:text-pink-300 dark:border-pink-600 dark:hover:bg-pink-900"
                 >
                   <Eye className="h-4 w-4 mr-2" />
                    Pratinjau
@@ -966,20 +972,22 @@ const Import = () => {
             </CardContent>
           </Card>
 
-          {/* Sample Data */}
-          <Card>
+          {/* Sample Data - Kuning */}
+          <Card className="border-2 border-yellow-200 bg-yellow-50 dark:bg-yellow-950/20 dark:border-yellow-700">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Database className="h-5 w-5" />
+              <CardTitle className="flex items-center gap-2 text-yellow-800 dark:text-yellow-300">
+                <div className="p-2 bg-yellow-100 dark:bg-yellow-900 rounded-lg">
+                  <Database className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                </div>
                 Data Sample
               </CardTitle>
-              <CardDescription>Gunakan data contoh untuk mencoba fitur</CardDescription>
+              <CardDescription className="text-yellow-700 dark:text-yellow-500">Gunakan data contoh untuk mencoba fitur</CardDescription>
             </CardHeader>
             <CardContent>
               <Button 
                 onClick={handleUseSampleData} 
                 disabled={uploading}
-                className="w-full"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white dark:bg-yellow-600 dark:hover:bg-yellow-700"
               >
                 <FileSpreadsheet className="h-4 w-4 mr-2" />
                 Gunakan Data Sample

@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Trophy, TrendingUp, TrendingDown } from "lucide-react";
@@ -19,6 +19,23 @@ type MetricType = "er" | "engagement" | "reach";
 type PeriodType = "week" | "month" | "all";
 
 const DAYS = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+
+const DAY_COLORS: Record<number, { bg: string; border: string; text: string; badge: string; bar: string }> = {
+  0: { bg: "bg-red-50 dark:bg-red-950/20",    border: "border-red-300 dark:border-red-700",    text: "text-red-700 dark:text-red-300",    badge: "bg-red-500",    bar: "#ef4444" },
+  1: { bg: "bg-blue-50 dark:bg-blue-950/20",   border: "border-blue-300 dark:border-blue-700",   text: "text-blue-700 dark:text-blue-300",   badge: "bg-blue-500",   bar: "#3b82f6" },
+  2: { bg: "bg-green-50 dark:bg-green-950/20", border: "border-green-300 dark:border-green-700", text: "text-green-700 dark:text-green-300", badge: "bg-green-500", bar: "#22c55e" },
+  3: { bg: "bg-yellow-50 dark:bg-yellow-950/20", border: "border-yellow-300 dark:border-yellow-700", text: "text-yellow-700 dark:text-yellow-300", badge: "bg-yellow-500", bar: "#eab308" },
+  4: { bg: "bg-orange-50 dark:bg-orange-950/20", border: "border-orange-300 dark:border-orange-700", text: "text-orange-700 dark:text-orange-300", badge: "bg-orange-500", bar: "#f97316" },
+  5: { bg: "bg-purple-50 dark:bg-purple-950/20", border: "border-purple-300 dark:border-purple-700", text: "text-purple-700 dark:text-purple-300", badge: "bg-purple-500", bar: "#a855f7" },
+  6: { bg: "bg-pink-50 dark:bg-pink-950/20",   border: "border-pink-300 dark:border-pink-700",   text: "text-pink-700 dark:text-pink-300",   badge: "bg-pink-500",   bar: "#ec4899" },
+};
+
+const HOURLY_COLORS = [
+  "#6366f1","#8b5cf6","#a855f7","#ec4899","#ef4444","#f97316","#eab308",
+  "#22c55e","#14b8a6","#06b6d4","#3b82f6","#6366f1","#8b5cf6","#a855f7",
+  "#ec4899","#ef4444","#f97316","#eab308","#22c55e","#14b8a6","#06b6d4",
+  "#3b82f6","#6366f1","#8b5cf6"
+];
 
 const WaktuTerbaik = () => {
   const navigate = useNavigate();
@@ -486,30 +503,30 @@ const WaktuTerbaik = () => {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {topSlots.map((slot, index) => {
-              // Find comparison data
               const prevSlot = previousTopSlots.find(
                 ps => ps.day === slot.day && ps.hour === slot.hour
               );
               const change = prevSlot ? ((slot.value - prevSlot.value) / prevSlot.value) * 100 : null;
+              const dayColor = DAY_COLORS[slot.day] || DAY_COLORS[1];
 
               return (
-                <Card key={index} className={index === 0 ? "border-primary" : ""}>
+                <Card key={index} className={`border-2 ${dayColor.border} ${dayColor.bg} transition-all hover:shadow-md`}>
                   <CardContent className="pt-6">
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge variant={index === 0 ? "default" : "secondary"}>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-sm font-bold ${dayColor.badge}`}>
                         #{index + 1}
-                      </Badge>
+                      </span>
                       {index === 0 && <Trophy className="h-5 w-5 text-yellow-500" />}
                     </div>
-                    <h3 className="text-lg font-bold text-foreground">{slot.dayName}</h3>
-                    <p className="text-2xl font-bold text-primary">{slot.hourStr}</p>
+                    <h3 className={`text-xl font-bold ${dayColor.text}`}>{slot.dayName}</h3>
+                    <p className={`text-3xl font-bold mt-1 ${dayColor.text}`}>{slot.hourStr}</p>
                     <p className="text-sm text-muted-foreground mt-2">
                       {getMetricLabel()}: {metric === "er" ? `${slot.value.toFixed(2)}%` : slot.value.toLocaleString()}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       Berdasarkan {slot.count} post
                     </p>
-                    
+
                     {showComparison && change !== null && (
                       <div className={`flex items-center mt-2 text-sm ${change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                         {change >= 0 ? (
@@ -610,7 +627,11 @@ const WaktuTerbaik = () => {
                   <XAxis dataKey="hour" tick={{ fontSize: 10 }} />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="count" fill="hsl(var(--primary))" name="Jumlah Post" />
+                  <Bar dataKey="count" name="Jumlah Post">
+                  {hourlyData.map((_, idx) => (
+                    <Cell key={`cell-${idx}`} fill={HOURLY_COLORS[idx % HOURLY_COLORS.length]} />
+                  ))}
+                </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>

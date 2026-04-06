@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useApp } from "@/contexts/AppContext";
 import AppLayout from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { LineChart, Line, BarChart, Bar, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { LineChart, Line, BarChart, Bar, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -124,7 +124,38 @@ const Audiens = () => {
           <>
             <Card><CardHeader><CardTitle>Tren Followers Harian</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={300}><LineChart data={followersTrend}><CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" /><XAxis dataKey="date" stroke="hsl(var(--foreground))" tickFormatter={(d) => format(new Date(d), "dd MMM")} /><YAxis stroke="hsl(var(--foreground))" /><Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} /><Line type="monotone" dataKey="followers" stroke="hsl(var(--primary))" strokeWidth={2} /></LineChart></ResponsiveContainer></CardContent></Card>
             <Card><CardHeader><CardTitle>Frekuensi Posting Mingguan</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={300}><BarChart data={weeklyPosts}><CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" /><XAxis dataKey="week" stroke="hsl(var(--foreground))" /><YAxis stroke="hsl(var(--foreground))" /><Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} /><Bar dataKey="count" fill="hsl(var(--primary))" /></BarChart></ResponsiveContainer></CardContent></Card>
-            <Card><CardHeader><CardTitle>Korelasi Reach vs Engagement</CardTitle><CardDescription>R² = {correlation.toFixed(3)}</CardDescription></CardHeader><CardContent><ResponsiveContainer width="100%" height={400}><ScatterChart><CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" /><XAxis type="number" dataKey="reach" name="Reach" stroke="hsl(var(--foreground))" /><YAxis type="number" dataKey="engagement" name="Engagement" stroke="hsl(var(--foreground))" /><Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} /><Scatter data={scatterData} fill="hsl(var(--primary))" fillOpacity={0.6} /></ScatterChart></ResponsiveContainer></CardContent></Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Korelasi Reach vs Engagement</CardTitle>
+                <CardDescription>R² = {correlation.toFixed(3)}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-3 mb-4 text-xs">
+                  <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-3 rounded-full bg-sky-400"></span> Reach 0–2.500</span>
+                  <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-3 rounded-full bg-green-400"></span> Reach 2.500–5.000</span>
+                  <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-3 rounded-full bg-orange-400"></span> Reach 5.000–7.500</span>
+                  <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-3 rounded-full bg-red-400"></span> Reach &gt; 7.500</span>
+                </div>
+                <ResponsiveContainer width="100%" height={400}>
+                  <ScatterChart>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis type="number" dataKey="reach" name="Reach" stroke="hsl(var(--foreground))" />
+                    <YAxis type="number" dataKey="engagement" name="Engagement" stroke="hsl(var(--foreground))" />
+                    <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} cursor={{ strokeDasharray: "3 3" }} />
+                    <Scatter data={scatterData} fillOpacity={0.8}>
+                      {scatterData.map((entry, idx) => {
+                        const reach = entry.reach || 0;
+                        let color = "#38bdf8";
+                        if (reach > 7500) color = "#f87171";
+                        else if (reach > 5000) color = "#fb923c";
+                        else if (reach > 2500) color = "#4ade80";
+                        return <Cell key={`cell-${idx}`} fill={color} />;
+                      })}
+                    </Scatter>
+                  </ScatterChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
 
             <InsightCard insight={insight} />
           </>
