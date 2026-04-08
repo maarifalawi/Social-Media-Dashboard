@@ -1,0 +1,69 @@
+
+Sejak 2026
+Sejak 2025
+Sejak 2022
+Rentang khusus...
+Urutkan menurut relevansi
+Urutkan menurut tanggal
+Semua jenis
+Artikel kajian
+[PDF] ijsir.org
+A comparative analysis of artificial intelligence-integrated bi dashboards for real-time decision support in operations
+M Akter, SP Kudapa - International Journal of Scientific Interdisciplinary …, 2024 - ijsir.org
+… data architectures—such as cloud data warehouses, streaming platforms, and lakehouse
+integration—combine with predictive and prescriptive analytics to transform dashboards … , 2022)…
+Simpan Kutip Dirujuk 32 kali Artikel terkait 2 versi 
+[HTML] frontiersin.org
+[HTML] Digital dashboards visualizing public health data: a systematic review
+A Schulze, F Brand, J Geppert, GF Böl - Frontiers in Public Health, 2023 - frontiersin.org
+… dashboards that integrate data from diverse social media … data analysis (52). In line with
+this, the time needed to analyze visualized data may also pose a major challenge in dashboard …
+Simpan Kutip Dirujuk 75 kali Artikel terkait 5 versi 
+[PDF] researchgate.net
+[PDF] Harnessing marketing analytics for enhanced decision-making and performance in SMEs
+TI Ijomah, C Idemudia, NL Eyo-Udo… - World Journal Of …, 2024 - researchgate.net
+… analytics extends from traditional channels such as print and television to digital platforms
+such as websites, social media… analytics techniques include data visualization, dashboards, …
+Simpan Kutip Dirujuk 56 kali Artikel terkait 2 versi 
+[HTML] mdpi.com
+[HTML] A new social media-driven cyber threat intelligence
+F Sufi - Electronics, 2023 - mdpi.com
+… DL-based analysis of social media data has never been … 2022 to 27 December 2022.
+During these 75 days, global … are directly updated in the dashboard according to the selected …
+Simpan Kutip Dirujuk 41 kali Artikel terkait 4 versi 
+[PDF] researchgate.net
+[PDF] Capstone model for retention forecasting using business intelligence dashboards in graduate programs
+O Elebe, CC Imediegwu - … of Scientific Research in Science and …, 2024 - researchgate.net
+… explores the intersection of data analytics, business intelligence (BI) dashboards, and
+student … Developing a framework for leveraging social media as a strategic tool for growth in …
+Simpan Kutip Dirujuk 35 kali Artikel terkait 2 versi 
+[PDF] researchgate.net
+[PDF] Constructing organizational engagement dashboards for strategic communication in academic institutions
+FI Olinmah, O Abiola-Adams, BO Otokiti… - International Journal of …, 2023 - researchgate.net
+… The increasing availability of digital data from events and communication platforms has
+fueled the demand for integrated dashboards that combine event analytics with communication …
+Simpan Kutip Dirujuk 23 kali Artikel terkait 3 versi 
+[PDF] puiij.com
+Leveraging big data and sentiment analysis for actionable insights: A review of data mining approaches for social media
+AS George, T Baskar - Partners Universal International Innovation Journal, 2024 - puiij.com
+… Natively embedding sentiment listening dashboards within existing social media
+management workflows allows identifying niche opportunities and emerging risks through posts, …
+Simpan Kutip Dirujuk 38 kali Artikel terkait 3 versi 
+[HTML] sciencedirect.com
+[HTML] Big data challenge for monitoring quality in higher education institutions using business intelligence dashboards
+A Sorour, AS Atkins - Journal of Electronic Science and Technology, 2024 - Elsevier
+… the big data challenge associated with the substantial volume of data managed by HEIs’ QA
+… the developed system integrates big data from social media into the monitoring dashboard …
+Simpan Kutip Dirujuk 56 kali Artikel terkait 3 versi
+[PDF] learning-analytics.info
+Effectiveness of a learning analytics dashboard for increasing student engagement levels
+G Ramaswami, T Susnjak… - … of Learning Analytics, 2023 - learning-analytics.info
+… Learning Analytics Dashboards In recent years, LADs have rapidly evolved and have …
+predictive analytics components. Hellings and Haelermans (2022) designed a dashboard aiming …
+Simpan Kutip Dirujuk 55 kali Artikel terkait 9 versi 
+[PDF] sciencedirect.com
+Enhancing customer engagement in social media with AI–a higher education case study
+E Gołąb-Andrzejak - Procedia Computer Science, 2022 - Elsevier
+… by the estimate that “by 2023, 30% of customer service … of view and the related measurement
+method. In this study, … “From the Sprout Social dashboard, you can see and respond …
+Simpan Kutip Dirujuk 48 kali Artikel terkait 4 versi

@@ -1,0 +1,57 @@
+Implementation of Social Media Analytics Using Buffer Tool to Measure Business Instagram Content Performance
+Y Yohana, S Kosasi… - … Research and Its …, 2025 - csridjournal.potensi-utama.org
+… tool, provides a comprehensive analytics dashboard. It also enables businesses to gather
+… of Instagram insights over the past three months during August to October 2023, reveals …
+Simpan Kutip Dirujuk 1 kali Artikel terkait 
+[HTML] mdpi.com
+[HTML] Social Media Reporting: How to Do It Right for Strategic Decision Making
+AT Rimadewi, Y Azis, D Sari, I Soemaryani - Journalism and Media, 2025 - mdpi.com
+… (2023) highlighted that social media analytics often failed to influence strategy … social media
+analytics tools, each with distinct strengths. Fanpage Karma offers a user-friendly dashboard …
+Simpan Kutip Dirujuk 3 kali Artikel terkait 3 versi 
+[PDF] alhikam.net
+Social Media Analytics: Analyzing User Engagement and Marketing Strategies across Popular Platforms
+D Elango, Y Sithambalam - Journal of Research and Multidisciplinary, 2025 - alhikam.net
+… data from social media networks is known as social media analytics (Zachlod et al., 2022).
+This … Insights Dashboard provides data on post-level interaction, audience demographics, and …
+Simpan Kutip Dirujuk 2 kali Artikel terkait 6 versi 
+[PDF] academia.edu
+Forecasting social media engagement: an ARIMA-based approach
+S Abaddi - International Journal of Agile Systems and …, 2026 - inderscienceonline.com
+… Starting his publication journey in late 2022, he gained … framework for social media
+analytics and highlighting the … to develop predictive social media dashboards based on time…
+Simpan Kutip Dirujuk 2 kali Artikel terkait 4 versi
+[PDF] springer.com
+Social media marketing and performance measurement: does it take two to tango?
+I Ascani, C Ancillai - Review of Managerial Science, 2025 - Springer
+… in measuring social media marketing … measurement systems, we provide an integrative
+framework outlining the core activities in the social media marketing performance measurement …
+Simpan Kutip Dirujuk 6 kali Artikel terkait 4 versi
+Transforming Business Approaches with an Integrated Machine Learning and Algorithmic System, Guided by Visual Data Dashboards
+K Alfatmi, C Sharma, V Bittal, M Shahade… - … Conference on Recent …, 2023 - Springer
+… preprocessing steps undertaken ensure a clean, well-structured dataset for both social
+media insights and trend analysis dashboards. By discarding unnecessary columns, applying …
+Simpan Kutip Dirujuk 1 kali Artikel terkait
+[PDF] aclanthology.org
+TextBI: An interactive dashboard for visualizing multidimensional NLP annotations in social media data
+M Masson, C Sallaberry, MN Bessagnet… - Proceedings of the …, 2024 - aclanthology.org
+… , 2022) have addressed the visualization of NLP annotations in an independent manner. …
+dashboard offers a variety of features to facilitate the analysis of multilingual social media data …
+Simpan Kutip Dirujuk 2 kali Artikel terkait 4 versi 
+[PDF] arxiv.org
+A Dashboard Approach to Monitoring Mpox-Related Discourse and Misinformation on Social Media
+R Bhuvanagiri, B Gonzales, K Sharp… - arXiv preprint arXiv …, 2025 - arxiv.org
+… 2023, illustrating the rapid spread of health discourse across … most notably during the 2022
+multinational outbreak linked to … temporal and platform scope of analysis, future research can …
+Simpan Kutip Artikel terkait 2 versi 
+[HTML] frontiersin.org
+[HTML] Digital dashboards visualizing public health data: a systematic review
+A Schulze, F Brand, J Geppert, GF Böl - Frontiers in Public Health, 2023 - frontiersin.org
+… dashboards that integrate data from diverse social media … data analysis (52). In line with
+this, the time needed to analyze visualized data may also pose a major challenge in dashboard …
+Simpan Kutip Dirujuk 75 kali Artikel terkait 5 versi 
+Disinformation Analysis and Tracking Dashboard
+J Mandravickaitė, M Songailaitė… - 2023 International …, 2023 - ieeexplore.ieee.org
+… Since social media posts are usually relatively short, only news articles (from 2 files) were
+used for model training and the rest of the files with social media texts were used for testing the …
+Simpan Kutip Dirujuk 1 kali Artikel terkait
