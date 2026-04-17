@@ -15,6 +15,14 @@ import { Upload, Link as LinkIcon, Database, FileSpreadsheet, Download, Eye, Tra
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  parseCsvText,
+  validateRequiredColumns,
+  getCellValue,
+  getCellNumber,
+  REQUIRED_COLUMNS,
+} from "@/lib/csv";
+import { logAndToast, getErrorMessage } from "@/lib/errors";
 
 const Import = () => {
   const navigate = useNavigate();
@@ -35,46 +43,16 @@ const Import = () => {
     }
   }, [user, authLoading, navigate]);
 
-  // Parse CSV with flexible column matching
+  // Parse CSV using PapaParse for robust quoted/embedded-comma handling
   const parseCSV = (text: string) => {
-    const lines = text.split("\n").filter((line) => line.trim());
-    if (lines.length === 0) throw new Error("File CSV kosong");
-    
-    const headers = lines[0].split(",").map((h) => h.trim().toLowerCase());
-    
-    // Map common column name variations
-    const columnMap: Record<string, string[]> = {
-      platform: ["platform", "social_media", "media"],
-      content_type: ["content_type", "type", "content", "tipe"],
-      post_id: ["post_id", "id", "postid"],
-      posted_at: ["posted_at", "date", "tanggal", "timestamp"],
-      reach: ["reach", "jangkauan", "impressions"],
-      likes: ["likes", "like", "suka"],
-      comments: ["comments", "comment", "komentar"],
-      shares: ["shares", "share", "bagikan"],
-      saved: ["saved", "save", "simpan", "bookmark"],
-      views: ["views", "view", "tayangan"],
-      followers: ["followers", "follower", "pengikut"],
-      caption: ["caption", "text", "keterangan"]
-    };
-
-    const getColumnIndex = (columnKey: string): number => {
-      const variations = columnMap[columnKey];
-      for (const variation of variations) {
-        const index = headers.indexOf(variation);
-        if (index !== -1) return index;
-      }
-      return -1;
-    };
-
-    const requiredColumns = ["platform", "content_type", "post_id", "posted_at", "reach", "likes", "comments", "shares", "saved", "views", "followers"];
-    const missing = requiredColumns.filter(col => getColumnIndex(col) === -1);
-    
+    const parsed = parseCsvText(text);
+    const missing = validateRequiredColumns(parsed.headers);
     if (missing.length > 0) {
-      throw new Error(`Kolom yang hilang: ${missing.join(", ")}. Silakan download template untuk format yang benar.`);
+      throw new Error(
+        `Kolom yang hilang: ${missing.join(", ")}. Silakan download template untuk format yang benar.`
+      );
     }
-
-    return { lines, headers, getColumnIndex };
+    return parsed;
   };
 
   // Preview CSV before upload
@@ -83,58 +61,53 @@ const Import = () => {
 
     try {
       const text = await csvFile.text();
-      const { lines, getColumnIndex } = parseCSV(text);
-      
+      const { headers, rows } = parseCSV(text);
+
       const { data: platforms } = await supabase.from("platform").select("*");
       const { data: contentTypes } = await supabase.from("jenis_konten").select("*");
 
       const preview = {
         fileName: csvFile.name,
-        totalRows: lines.length - 1,
-        headers: lines[0],
-        sampleRows: lines.slice(1).map(line => line.split(",")),
-        validationResults: {
-          validRows: 0,
-          invalidRows: 0,
-          errors: [] as string[]
-        }
+        totalRows: rows.length,
+        headers: headers.join(","),
+        sampleRows: rows.slice(0, 10).map((row) => headers.map((h) => row[h] ?? "")),
+        validationResults: { validRows: 0, invalidRows: 0, errors: [] as string[] },
       };
 
-      // Validate ALL data rows (not just sample)
       let validCount = 0;
       let invalidCount = 0;
       const errors: string[] = [];
 
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(",");
-        const platformName = values[getColumnIndex("platform")]?.trim().toLowerCase();
-        const contentTypeName = values[getColumnIndex("content_type")]?.trim().toLowerCase();
-        
+      rows.forEach((row, idx) => {
+        const platformName = getCellValue(row, headers, "platform").toLowerCase();
+        const contentTypeName = getCellValue(row, headers, "content_type").toLowerCase();
         const platform = platforms?.find((p) => p.kode_platform.toLowerCase() === platformName);
-        const contentType = contentTypes?.find((c) => c.kode_jenis_konten.toLowerCase() === contentTypeName);
+        const contentType = contentTypes?.find(
+          (c) => c.kode_jenis_konten.toLowerCase() === contentTypeName
+        );
 
         if (!platform) {
-          errors.push(`Baris ${i}: Platform "${platformName}" tidak ditemukan`);
+          errors.push(`Baris ${idx + 1}: Platform "${platformName}" tidak ditemukan`);
           invalidCount++;
         } else if (!contentType) {
-          errors.push(`Baris ${i}: Tipe konten "${contentTypeName}" tidak ditemukan`);
+          errors.push(`Baris ${idx + 1}: Tipe konten "${contentTypeName}" tidak ditemukan`);
           invalidCount++;
         } else {
           validCount++;
         }
-      }
+      });
 
       preview.validationResults = {
         validRows: validCount,
         invalidRows: invalidCount,
-        errors: errors.slice(0, 10)
+        errors: errors.slice(0, 10),
       };
 
       setPreviewData(preview);
       setPreviewSource("csv");
       setShowPreview(true);
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error) {
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -151,9 +124,10 @@ const Import = () => {
     }
 
     setUploading(true);
+    let createdDatasetId: string | null = null;
     try {
       const text = await csvFile.text();
-      const { lines, getColumnIndex } = parseCSV(text);
+      const { headers, rows } = parseCSV(text);
 
       // Deactivate all existing datasets first
       await supabase
@@ -168,68 +142,69 @@ const Import = () => {
           id_proyek: selectedProject.id_proyek,
           nama_dataset: csvFile.name,
           jenis_sumber_dataset: "upload_csv",
-          jumlah_baris_dataset: lines.length - 1,
+          jumlah_baris_dataset: rows.length,
           dataset_aktif: true,
         })
         .select()
         .single();
 
       if (datasetError) throw datasetError;
+      createdDatasetId = dataset.id_dataset;
 
       const { data: platforms } = await supabase.from("platform").select("*");
       const { data: contentTypes } = await supabase.from("jenis_konten").select("*");
 
-      const posts = [];
-      const errors = [];
-      
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(",");
-        
-        const platformName = values[getColumnIndex("platform")]?.trim().toLowerCase();
-        const contentTypeName = values[getColumnIndex("content_type")]?.trim().toLowerCase();
-        
+      const posts: any[] = [];
+      const errors: string[] = [];
+
+      rows.forEach((row, idx) => {
+        const lineNo = idx + 1;
+        const platformName = getCellValue(row, headers, "platform").toLowerCase();
+        const contentTypeName = getCellValue(row, headers, "content_type").toLowerCase();
         const platform = platforms?.find((p) => p.kode_platform.toLowerCase() === platformName);
-        const contentType = contentTypes?.find((c) => c.kode_jenis_konten.toLowerCase() === contentTypeName);
+        const contentType = contentTypes?.find(
+          (c) => c.kode_jenis_konten.toLowerCase() === contentTypeName
+        );
 
         if (!platform) {
-          errors.push(`Baris ${i}: Platform "${platformName}" tidak ditemukan`);
-          continue;
+          errors.push(`Baris ${lineNo}: Platform "${platformName}" tidak ditemukan`);
+          return;
         }
-        
         if (!contentType) {
-          errors.push(`Baris ${i}: Content type "${contentTypeName}" tidak ditemukan`);
-          continue;
+          errors.push(`Baris ${lineNo}: Content type "${contentTypeName}" tidak ditemukan`);
+          return;
         }
 
-        const reach = parseInt(values[getColumnIndex("reach")]) || 0;
-        const likes = parseInt(values[getColumnIndex("likes")]) || 0;
-        const comments = parseInt(values[getColumnIndex("comments")]) || 0;
-        const shares = parseInt(values[getColumnIndex("shares")]) || 0;
-        const saved = parseInt(values[getColumnIndex("saved")]) || 0;
-        
-        // Calculate engagement metrics
-        const totalEngagement = likes + comments + shares + saved;
-        const engagementRate = reach > 0 ? (totalEngagement / reach) * 100 : 0;
+        const reach = getCellNumber(row, headers, "reach");
+        const likes = getCellNumber(row, headers, "likes");
+        const comments = getCellNumber(row, headers, "comments");
+        const shares = getCellNumber(row, headers, "shares");
+        const saved = getCellNumber(row, headers, "saved");
+
+        const postedAtRaw = getCellValue(row, headers, "posted_at");
+        const postedAt = new Date(postedAtRaw);
+        if (isNaN(postedAt.getTime())) {
+          errors.push(`Baris ${lineNo}: Tanggal "${postedAtRaw}" tidak valid`);
+          return;
+        }
 
         posts.push({
           id_proyek: selectedProject.id_proyek,
           id_dataset: dataset.id_dataset,
           id_platform: platform.id_platform,
           id_jenis_konten: contentType.id_jenis_konten,
-          kode_postingan: values[getColumnIndex("post_id")]?.trim() || `POST-${i}`,
-          waktu_diposting: new Date(values[getColumnIndex("posted_at")]?.trim()).toISOString(),
+          kode_postingan: getCellValue(row, headers, "post_id") || `POST-${lineNo}`,
+          waktu_diposting: postedAt.toISOString(),
           jumlah_reach: reach,
           jumlah_likes: likes,
           jumlah_komentar: comments,
           jumlah_shares: shares,
           jumlah_saved: saved,
-          jumlah_views: parseInt(values[getColumnIndex("views")]) || 0,
-          jumlah_followers: parseInt(values[getColumnIndex("followers")]) || 0,
-          teks_caption: values[getColumnIndex("caption")]?.trim() || "",
-
-
+          jumlah_views: getCellNumber(row, headers, "views"),
+          jumlah_followers: getCellNumber(row, headers, "followers"),
+          teks_caption: getCellValue(row, headers, "caption"),
         });
-      }
+      });
 
       if (posts.length === 0) {
         throw new Error("Tidak ada data valid yang bisa diimport. Periksa format CSV Anda.");
@@ -270,14 +245,19 @@ const Import = () => {
       await refreshDatasets();
       setCsvFile(null);
       setShowPreview(false);
-    } catch (error: any) {
-      console.error("CSV upload error:", error);
-      toast.error(`Error: ${error.message}`);
-      
-      // If dataset was created but posts failed, delete the empty dataset
-      if (error.message?.includes("Gagal menyimpan posts")) {
+    } catch (error) {
+      const msg = getErrorMessage(error);
+      logAndToast("CSV upload", error, "Error");
+
+      // If the dataset was created but posts failed, delete that exact dataset
+      // (scoped by id_dataset + project to avoid touching any other rows).
+      if (createdDatasetId && msg.includes("Gagal menyimpan posts")) {
         try {
-          await supabase.from("dataset").delete().eq("nama_dataset", csvFile?.name || "");
+          await supabase
+            .from("dataset")
+            .delete()
+            .eq("id_dataset", createdDatasetId)
+            .eq("id_proyek", selectedProject.id_proyek);
         } catch (cleanupError) {
           console.error("Failed to cleanup dataset:", cleanupError);
         }
@@ -303,11 +283,8 @@ const Import = () => {
       if (!response.ok) throw new Error("Gagal mengambil data. Pastikan sheet publik");
 
       const text = await response.text();
-      const lines = text.split("\n").filter((line) => line.trim());
-      const headers = lines[0].split(",").map((h) => h.trim().toLowerCase());
-
-      const required = ["platform", "content_type", "post_id", "posted_at", "reach", "likes", "comments", "shares", "saved", "views", "followers"];
-      const missing = required.filter((col) => !headers.includes(col));
+      const { headers, rows } = parseCsvText(text);
+      const missing = validateRequiredColumns(headers);
       if (missing.length > 0) throw new Error(`Kolom yang hilang: ${missing.join(", ")}`);
 
       const { data: platforms } = await supabase.from("platform").select("*");
@@ -315,57 +292,46 @@ const Import = () => {
 
       const preview = {
         fileName: "Google Sheets",
-        totalRows: lines.length - 1,
-        headers: lines[0],
-        sampleRows: lines.slice(1).map(line => line.split(",")),
-        validationResults: {
-          validRows: 0,
-          invalidRows: 0,
-          errors: [] as string[]
-        }
+        totalRows: rows.length,
+        headers: headers.join(","),
+        sampleRows: rows.slice(0, 10).map((row) => headers.map((h) => row[h] ?? "")),
+        validationResults: { validRows: 0, invalidRows: 0, errors: [] as string[] },
       };
 
-      // Validate ALL data (not just sample)
       let validCount = 0;
       let invalidCount = 0;
       const errors: string[] = [];
 
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(",");
-        if (values.length < headers.length) {
-          errors.push(`Baris ${i}: Data tidak lengkap (${values.length} kolom, dibutuhkan ${headers.length})`);
-          invalidCount++;
-          continue;
-        }
-
-        const platformName = values[headers.indexOf("platform")]?.trim().toLowerCase();
-        const contentTypeName = values[headers.indexOf("content_type")]?.trim().toLowerCase();
-        
+      rows.forEach((row, idx) => {
+        const platformName = getCellValue(row, headers, "platform").toLowerCase();
+        const contentTypeName = getCellValue(row, headers, "content_type").toLowerCase();
         const platform = platforms?.find((p) => p.kode_platform.toLowerCase() === platformName);
-        const contentType = contentTypes?.find((c) => c.kode_jenis_konten.toLowerCase() === contentTypeName);
+        const contentType = contentTypes?.find(
+          (c) => c.kode_jenis_konten.toLowerCase() === contentTypeName
+        );
 
         if (!platform) {
-          errors.push(`Baris ${i}: Platform "${platformName}" tidak ditemukan`);
+          errors.push(`Baris ${idx + 1}: Platform "${platformName}" tidak ditemukan`);
           invalidCount++;
         } else if (!contentType) {
-          errors.push(`Baris ${i}: Content type "${contentTypeName}" tidak ditemukan`);
+          errors.push(`Baris ${idx + 1}: Content type "${contentTypeName}" tidak ditemukan`);
           invalidCount++;
         } else {
           validCount++;
         }
-      }
+      });
 
       preview.validationResults = {
         validRows: validCount,
         invalidRows: invalidCount,
-        errors: errors.slice(0, 10)
+        errors: errors.slice(0, 10),
       };
 
       setPreviewData(preview);
       setPreviewSource("sheets");
       setShowPreview(true);
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error) {
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -392,11 +358,8 @@ const Import = () => {
       if (!response.ok) throw new Error("Gagal mengambil data. Pastikan sheet publik");
 
       const text = await response.text();
-      const lines = text.split("\n").filter((line) => line.trim());
-      const headers = lines[0].split(",").map((h) => h.trim().toLowerCase());
-
-      const required = ["platform", "content_type", "post_id", "posted_at", "reach", "likes", "comments", "shares", "saved", "views", "followers"];
-      const missing = required.filter((col) => !headers.includes(col));
+      const { headers, rows } = parseCsvText(text);
+      const missing = validateRequiredColumns(headers);
       if (missing.length > 0) throw new Error(`Kolom yang hilang: ${missing.join(", ")}`);
 
       // Deactivate all existing datasets first
@@ -413,7 +376,7 @@ const Import = () => {
           nama_dataset: `Google Sheets - ${new Date().toLocaleDateString()}`,
           jenis_sumber_dataset: "google_sheet",
           lokasi_berkas_dataset: sheetsUrl,
-          jumlah_baris_dataset: lines.length - 1,
+          jumlah_baris_dataset: rows.length,
           dataset_aktif: true,
         })
         .select()
@@ -438,57 +401,54 @@ const Import = () => {
         throw new Error("Gagal memuat data jenis konten");
       }
 
-      const posts = [];
-      const errors = [];
-      
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(",");
-        if (values.length < headers.length) {
-          errors.push(`Baris ${i}: Data tidak lengkap`);
-          continue;
-        }
+      const posts: any[] = [];
+      const errors: string[] = [];
 
-        const platform = platforms?.find((p) => p.kode_platform.toLowerCase() === values[headers.indexOf("platform")]?.trim().toLowerCase());
-        const contentType = contentTypes?.find((c) => c.kode_jenis_konten.toLowerCase() === values[headers.indexOf("content_type")]?.trim().toLowerCase());
-        
+      rows.forEach((row, idx) => {
+        const lineNo = idx + 1;
+        const platform = platforms?.find(
+          (p) =>
+            p.kode_platform.toLowerCase() === getCellValue(row, headers, "platform").toLowerCase()
+        );
+        const contentType = contentTypes?.find(
+          (c) =>
+            c.kode_jenis_konten.toLowerCase() ===
+            getCellValue(row, headers, "content_type").toLowerCase()
+        );
+
         if (!platform?.id_platform) {
-          errors.push(`Baris ${i}: Platform tidak ditemukan`);
-          continue;
+          errors.push(`Baris ${lineNo}: Platform tidak ditemukan`);
+          return;
         }
         if (!contentType?.id_jenis_konten) {
-          errors.push(`Baris ${i}: Content type tidak ditemukan`);
-          continue;
+          errors.push(`Baris ${lineNo}: Content type tidak ditemukan`);
+          return;
         }
 
-        const reach = parseInt(values[headers.indexOf("reach")]) || 0;
-        const likes = parseInt(values[headers.indexOf("likes")]) || 0;
-        const comments = parseInt(values[headers.indexOf("comments")]) || 0;
-        const shares = parseInt(values[headers.indexOf("shares")]) || 0;
-        const saved = parseInt(values[headers.indexOf("saved")]) || 0;
-        
-        // Calculate engagement metrics
-        const totalEngagement = likes + comments + shares + saved;
-        const engagementRate = reach > 0 ? (totalEngagement / reach) * 100 : 0;
+        const postedAtRaw = getCellValue(row, headers, "posted_at");
+        const postedAt = new Date(postedAtRaw);
+        if (isNaN(postedAt.getTime())) {
+          errors.push(`Baris ${lineNo}: Tanggal "${postedAtRaw}" tidak valid`);
+          return;
+        }
 
         posts.push({
           id_proyek: selectedProject.id_proyek,
           id_dataset: dataset.id_dataset,
           id_platform: platform.id_platform,
           id_jenis_konten: contentType.id_jenis_konten,
-          kode_postingan: values[headers.indexOf("post_id")]?.trim() || `POST-${i}`,
-          waktu_diposting: new Date(values[headers.indexOf("posted_at")]?.trim()).toISOString(),
-          jumlah_reach: reach,
-          jumlah_likes: likes,
-          jumlah_komentar: comments,
-          jumlah_shares: shares,
-          jumlah_saved: saved,
-          jumlah_views: parseInt(values[headers.indexOf("views")]) || 0,
-          jumlah_followers: parseInt(values[headers.indexOf("followers")]) || 0,
-          teks_caption: values[headers.indexOf("caption")]?.trim() || "",
-
-
+          kode_postingan: getCellValue(row, headers, "post_id") || `POST-${lineNo}`,
+          waktu_diposting: postedAt.toISOString(),
+          jumlah_reach: getCellNumber(row, headers, "reach"),
+          jumlah_likes: getCellNumber(row, headers, "likes"),
+          jumlah_komentar: getCellNumber(row, headers, "comments"),
+          jumlah_shares: getCellNumber(row, headers, "shares"),
+          jumlah_saved: getCellNumber(row, headers, "saved"),
+          jumlah_views: getCellNumber(row, headers, "views"),
+          jumlah_followers: getCellNumber(row, headers, "followers"),
+          teks_caption: getCellValue(row, headers, "caption"),
         });
-      }
+      });
 
       if (posts.length === 0) {
         throw new Error("Tidak ada data valid yang bisa diimport dari Google Sheets");
@@ -510,9 +470,8 @@ const Import = () => {
       toast.success(`Berhasil import ${posts.length} posts dari Google Sheets!${errors.length > 0 ? ` (${errors.length} baris dilewati)` : ""}`);
       await refreshDatasets();
       setSheetsUrl("");
-    } catch (error: any) {
-      console.error("Google Sheets import error:", error);
-      toast.error(`Error: ${error.message}`);
+    } catch (error) {
+      logAndToast("Google Sheets import", error, "Error");
     } finally {
       setUploading(false);
     }

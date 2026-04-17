@@ -33,7 +33,8 @@ const PaginatedPostTable = ({ posts, getPerformanceBadge }: { posts: any[]; getP
 
   return (
     <div className="space-y-4">
-      <div className="overflow-x-auto">
+      {/* Desktop / tablet: table */}
+      <div className="hidden md:block overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -68,6 +69,58 @@ const PaginatedPostTable = ({ posts, getPerformanceBadge }: { posts: any[]; getP
             ))}
           </TableBody>
         </Table>
+      </div>
+
+      {/* Mobile: card list */}
+      <div className="md:hidden space-y-3">
+        {displayedPosts.map((post) => (
+          <div
+            key={post.id_postingan}
+            className="rounded-lg border border-border bg-card p-3 shadow-sm space-y-2"
+          >
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <p className="font-medium text-sm text-foreground truncate">
+                  {post.kode_postingan}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {post.platform?.nama_platform} • {post.jenis_konten?.nama_jenis_konten}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {format(new Date(post.waktu_diposting), "dd/MM/yy HH:mm")}
+                </p>
+              </div>
+              <div className="text-right shrink-0">
+                <p className="text-xs text-muted-foreground">ER</p>
+                <p className="text-base font-bold text-primary">
+                  {(post.engagement_rate_persen || 0).toFixed(2)}%
+                </p>
+                {getPerformanceBadge(post)}
+              </div>
+            </div>
+            {post.teks_caption && (
+              <p className="text-xs text-muted-foreground line-clamp-2">{post.teks_caption}</p>
+            )}
+            <div className="grid grid-cols-4 gap-2 text-xs pt-1 border-t border-border">
+              <div>
+                <p className="text-muted-foreground">Jangkauan</p>
+                <p className="font-medium text-foreground">{post.jumlah_reach.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Suka</p>
+                <p className="font-medium text-foreground">{post.jumlah_likes.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Komentar</p>
+                <p className="font-medium text-foreground">{post.jumlah_komentar.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Bagikan</p>
+                <p className="font-medium text-foreground">{post.jumlah_shares.toLocaleString()}</p>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
       
       {/* Pagination Controls */}

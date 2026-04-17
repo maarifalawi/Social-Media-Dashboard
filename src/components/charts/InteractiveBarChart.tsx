@@ -90,6 +90,8 @@ export const InteractiveBarChart = ({
               data={data}
               layout={layout}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              role="img"
+              aria-label={`Diagram batang ${title}. ${data.length} kategori dengan total ${total} data.`}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.5} />
               {layout === "vertical" ? (

@@ -123,7 +123,12 @@ export const InteractiveLineChart = ({
           <p className="text-muted-foreground text-center py-8">Tidak ada data</p>
         ) : (
           <ResponsiveContainer width="100%" height={300} minWidth={0}>
-            <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+            <LineChart
+              data={data}
+              margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+              role="img"
+              aria-label={`Diagram garis ${title}. Tren ${trend.direction === "up" ? "naik" : trend.direction === "down" ? "turun" : "stabil"} ${trend.percentage.toFixed(1)} persen. Rata-rata ${average.toFixed(2)}${unit}.`}
+            >
               <defs>
                 <linearGradient id={`gradient-${dataKey}`} x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor={color} stopOpacity={0.3} />

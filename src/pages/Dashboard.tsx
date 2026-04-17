@@ -17,6 +17,13 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Checkbox } from "@/components/ui/checkbox";
 import { InteractiveLineChart } from "@/components/charts/InteractiveLineChart";
 import { InteractiveBarChart } from "@/components/charts/InteractiveBarChart";
+import {
+  computeKpi,
+  weeklyEngagementTrend,
+  platformDistribution,
+  contentTypeDistribution,
+} from "@/lib/analytics";
+import { logAndToast } from "@/lib/errors";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -110,84 +117,21 @@ const Dashboard = () => {
         if (error) throw error;
 
         if (posts && posts.length > 0) {
-          const totalPosts = posts.length;
-          const avgER = posts.reduce((sum, p) => sum + (p.engagement_rate_persen || 0), 0) / totalPosts;
-          const sortedReach = [...posts].map(p => p.jumlah_reach).sort((a, b) => a - b);
-          const medianReach = sortedReach[Math.floor(sortedReach.length / 2)] || 0;
-          const latestPost = posts.reduce((latest, post) => 
-            new Date(post.waktu_diposting) > new Date(latest.waktu_diposting) ? post : latest
-          );
-          const followersNow = latestPost.jumlah_followers || 0;
-          const totalReach = posts.reduce((sum, p) => sum + Math.max(p.jumlah_reach, 1), 0);
-          const totalSaves = posts.reduce((sum, p) => sum + p.jumlah_saved, 0);
-          const totalShares = posts.reduce((sum, p) => sum + p.jumlah_shares, 0);
-          const saveRate = (totalSaves / totalReach) * 100;
-          const shareRate = (totalShares / totalReach) * 100;
+          setKpiData(computeKpi(posts as any));
 
-          setKpiData({
-            totalPosts,
-            avgER: Number(avgER.toFixed(2)),
-            medianReach,
-            followersNow,
-            saveRate: Number(saveRate.toFixed(2)),
-            shareRate: Number(shareRate.toFixed(2))
-          });
-
-          // Weekly ER Trend
-          const weeklyMap = new Map<string, { totalER: number; count: number; postCount: number }>();
-          posts.forEach(post => {
-            const date = new Date(post.waktu_diposting);
-            const weekStart = new Date(date);
-            weekStart.setDate(date.getDate() - date.getDay());
-            const weekKey = format(weekStart, "yyyy-MM-dd");
-            
-            if (!weeklyMap.has(weekKey)) {
-              weeklyMap.set(weekKey, { totalER: 0, count: 0, postCount: 0 });
-            }
-            const week = weeklyMap.get(weekKey)!;
-            week.totalER += post.engagement_rate_persen || 0;
-            week.count++;
-            week.postCount++;
-          });
-
-          const weeklyTrend = Array.from(weeklyMap.entries())
-            .map(([week, data]) => ({
-              week: format(new Date(week), "dd MMM"),
-              avgER: Number((data.totalER / data.count).toFixed(2)),
-              posts: data.postCount
-            }))
-            .sort((a, b) => a.week.localeCompare(b.week));
+          const weeklyTrend = weeklyEngagementTrend(posts as any);
           setWeeklyERTrend(weeklyTrend);
 
-          // Platform Distribution
-          const platformMap = new Map<string, number>();
-          posts.forEach(p => {
-            const name = p.platform?.nama_platform || "Tidak Diketahui";
-            platformMap.set(name, (platformMap.get(name) || 0) + 1);
-          });
-
-          const platforms = Array.from(platformMap.entries())
-            .map(([name, count]) => ({ name, count }))
-            .sort((a, b) => b.count - a.count);
+          const platforms = platformDistribution(posts as any);
           setPlatformDist(platforms);
 
-          // Content Type Distribution
-          const contentTypeMap = new Map<string, number>();
-          posts.forEach(p => {
-            const name = p.jenis_konten?.nama_jenis_konten || "Tidak Diketahui";
-            contentTypeMap.set(name, (contentTypeMap.get(name) || 0) + 1);
-          });
-          const contentTypes = Array.from(contentTypeMap.entries())
-            .map(([name, count]) => ({ name, count }))
-            .sort((a, b) => b.count - a.count);
+          const contentTypes = contentTypeDistribution(posts as any);
           setContentTypeDist(contentTypes);
-          
-          // Generate insights
+
           generateInsights(posts, weeklyTrend, platforms, contentTypes);
         }
       } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-        toast.error("Gagal memuat data dashboard");
+        logAndToast("Dashboard fetch", error, "Gagal memuat data dashboard");
       }
     };
 
