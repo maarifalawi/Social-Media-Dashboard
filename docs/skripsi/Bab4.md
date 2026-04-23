@@ -123,3 +123,97 @@ Hasil analisis kebutuhan data mengidentifikasi entitas-entitas utama yang harus 
 | 10 | riwayat_export | Menyimpan riwayat aktivitas ekspor laporan untuk keperluan audit. |
 
 Sepuluh entitas utama tersebut kemudian dijabarkan lebih lanjut pada tahap perancangan basis data dengan menambahkan atribut, kunci primer, kunci asing, dan relasi antar entitas. Penjabaran detail atribut setiap entitas dipaparkan pada bagian hasil perancangan sistem.
+
+## 4.3 Hasil Perancangan Sistem
+
+Bagian ini memaparkan hasil tahap perancangan yang dilakukan sebagai tindak lanjut atas hasil analisis kebutuhan pada bagian sebelumnya. Hasil perancangan dibagi menjadi lima bagian, yaitu perancangan arsitektur sistem, perancangan proses bisnis dalam bentuk diagram alir kerja, perancangan basis data dalam bentuk diagram entitas relasi, perancangan struktur navigasi, dan perancangan antarmuka pengguna. Hasil perancangan ini menjadi acuan utama pada tahap implementasi dan pengujian pada bagian berikutnya.
+
+### 4.3.1 Hasil Perancangan Arsitektur Sistem
+
+Arsitektur sistem dirancang menggunakan pendekatan tiga lapis yang terdiri dari lapisan antarmuka pengguna, lapisan logika aplikasi, dan lapisan layanan basis data. Lapisan antarmuka pengguna dijalankan di sisi peramban pengguna menggunakan kerangka kerja React, sedangkan lapisan logika aplikasi dijalankan di sisi peramban dan sebagian di sisi peladen melalui *Edge Function* yang berjalan pada lingkungan Deno. Lapisan layanan basis data dijalankan pada layanan terkelola Supabase yang menggunakan PostgreSQL sebagai sistem manajemen basis data.
+
+Komunikasi antar lapisan dilakukan melalui protokol HTTPS dengan mekanisme otentikasi berbasis token JSON Web Token. Lapisan antarmuka pengguna mengirimkan permintaan ke lapisan basis data melalui *client* resmi Supabase yang secara otomatis menyertakan token otentikasi pada setiap permintaan. Untuk fitur ringkasan *insight* yang membutuhkan model bahasa Gemini, lapisan antarmuka pengguna mengirimkan permintaan ke *Edge Function* yang kemudian meneruskan permintaan ke layanan Gemini milik Google dengan menyertakan kunci API yang disimpan secara aman di sisi peladen.
+
+**Gambar 4.1** Diagram arsitektur sistem tiga lapis yang menggambarkan hubungan antara peramban pengguna, layanan terkelola Supabase, dan layanan model bahasa Gemini.
+
+### 4.3.2 Hasil Perancangan Proses Bisnis
+
+Hasil perancangan proses bisnis disajikan dalam bentuk diagram kasus penggunaan dan diagram aktivitas yang menggambarkan alur kerja utama pengguna pada sistem. Diagram kasus penggunaan menggambarkan interaksi antara aktor pemilik proyek dan aktor anggota proyek dengan modul-modul utama sistem. Aktor pemilik proyek memiliki akses ke seluruh modul, sedangkan aktor anggota proyek memiliki akses terbatas sesuai peran yang diberikan. Daftar kasus penggunaan utama disajikan pada Tabel 4.7.
+
+**Tabel 4.7** Daftar Kasus Penggunaan Utama Sistem
+
+| Kode | Kasus Penggunaan | Aktor |
+|------|------------------|-------|
+| UC-01 | Mendaftar dan masuk ke sistem | Pemilik proyek, anggota proyek |
+| UC-02 | Membuat proyek analisis | Pemilik proyek |
+| UC-03 | Mengundang anggota ke proyek | Pemilik proyek |
+| UC-04 | Membuat dataset baru | Pemilik proyek, anggota proyek |
+| UC-05 | Mengimpor berkas data | Pemilik proyek, anggota proyek |
+| UC-06 | Melihat *dashboard* ringkasan | Pemilik proyek, anggota proyek |
+| UC-07 | Menelaah performa konten | Pemilik proyek, anggota proyek |
+| UC-08 | Membaca ringkasan *insight* | Pemilik proyek, anggota proyek |
+| UC-09 | Membuat catatan tindak lanjut | Pemilik proyek, anggota proyek |
+| UC-10 | Menyusun dan mengekspor laporan | Pemilik proyek |
+
+**Gambar 4.2** Diagram kasus penggunaan sistem yang menggambarkan interaksi antara aktor pemilik proyek dan anggota proyek dengan sepuluh kasus penggunaan utama.
+
+Alur kerja yang dilakukan pengguna sejak pertama kali masuk ke sistem hingga menghasilkan laporan analisis dijelaskan secara berurutan melalui diagram aktivitas. Pengguna memulai dari proses masuk ke sistem, memilih atau membuat proyek, membuat dataset baru, mengimpor berkas berisi data unggahan media sosial, melihat ringkasan pada *dashboard*, menelaah performa konten secara detail, membaca ringkasan *insight* berbasis kecerdasan buatan, membuat catatan rencana tindak lanjut, dan menyusun laporan untuk diekspor. Setiap aktivitas memiliki kondisi keberhasilan dan kegagalan yang ditangani sistem dengan pesan yang jelas kepada pengguna.
+
+**Gambar 4.3** Diagram aktivitas alur kerja utama pengguna mulai dari masuk ke sistem hingga menghasilkan laporan analisis.
+
+### 4.3.3 Hasil Perancangan Basis Data
+
+Hasil perancangan basis data disajikan dalam bentuk diagram entitas relasi yang menggambarkan sepuluh entitas utama beserta hubungan antar entitas. Setiap entitas memiliki kunci primer berupa pengidentifikasi universal unik yang dihasilkan secara otomatis oleh basis data, serta kunci asing yang menghubungkan entitas dengan entitas lain yang berelasi. Daftar relasi antar entitas utama disajikan pada Tabel 4.8.
+
+**Tabel 4.8** Daftar Relasi Antar Entitas Utama
+
+| No | Entitas Pertama | Relasi | Entitas Kedua | Kardinalitas |
+|----|-----------------|--------|---------------|--------------|
+| 1 | profil | memiliki | proyek | satu ke banyak |
+| 2 | proyek | memiliki | dataset | satu ke banyak |
+| 3 | proyek | memiliki | anggota_proyek | satu ke banyak |
+| 4 | profil | menjadi | anggota_proyek | satu ke banyak |
+| 5 | dataset | berisi | postingan | satu ke banyak |
+| 6 | platform | merujuk | postingan | satu ke banyak |
+| 7 | jenis_konten | merujuk | postingan | satu ke banyak |
+| 8 | dataset | memiliki | catatan | satu ke banyak |
+| 9 | dataset | menghasilkan | log_impor | satu ke banyak |
+| 10 | dataset | menghasilkan | riwayat_export | satu ke banyak |
+
+Setiap entitas memiliki sekumpulan atribut yang dirancang untuk menyimpan seluruh informasi yang dibutuhkan oleh modul fungsional. Entitas postingan menjadi entitas dengan jumlah atribut terbanyak karena harus menyimpan dua belas kolom data dari setiap unggahan, antara lain pengidentifikasi unggahan asal platform, waktu unggah, jumlah jangkauan, jumlah suka, jumlah komentar, jumlah bagikan, jumlah simpan, jumlah tayangan, jumlah pengikut saat unggah, serta teks keterangan unggahan. Atribut tambahan berupa tingkat keterlibatan dihitung secara dinamis pada lapisan logika aplikasi tanpa disimpan di basis data agar tetap konsisten ketika ada pembaruan data.
+
+**Gambar 4.4** Diagram entitas relasi sistem yang menggambarkan sepuluh entitas utama beserta atribut, kunci primer, kunci asing, dan kardinalitas relasi antar entitas.
+
+### 4.3.4 Hasil Perancangan Struktur Navigasi
+
+Struktur navigasi sistem dirancang dengan pola hirarkis berakar pada halaman *dashboard* sebagai titik pusat navigasi setelah pengguna berhasil masuk. Dari halaman *dashboard*, pengguna dapat berpindah ke halaman performa konten, ringkasan *insight*, laporan, catatan, manajemen proyek, manajemen dataset, manajemen anggota, dan pengaturan akun melalui menu navigasi yang tersedia di sisi kiri layar pada perangkat komputer atau melalui menu *hamburger* pada perangkat bergerak. Struktur navigasi ini bertujuan agar pengguna selalu dapat kembali ke titik pusat dengan satu kali sentuhan dari halaman manapun.
+
+**Gambar 4.5** Diagram struktur navigasi sistem yang menggambarkan hubungan hirarkis antara halaman *dashboard* sebagai titik pusat dengan seluruh halaman fungsional lainnya.
+
+### 4.3.5 Hasil Perancangan Antarmuka Pengguna
+
+Hasil perancangan antarmuka pengguna disajikan dalam bentuk *wireframe* yang menggambarkan tata letak setiap halaman utama sistem. Perancangan dilakukan dengan pendekatan *mobile first* agar tata letak tetap optimal pada layar berukuran kecil dan kemudian diadaptasi untuk layar berukuran besar. Skema warna utama yang digunakan adalah kombinasi warna biru dan putih yang memberikan kesan profesional dan tenang, sedangkan tipografi yang digunakan adalah keluarga huruf *sans-serif* yang memberikan keterbacaan optimal pada layar. Daftar halaman utama beserta komponen kunci di dalamnya disajikan pada Tabel 4.9.
+
+**Tabel 4.9** Daftar Halaman Utama dan Komponen Kunci
+
+| No | Nama Halaman | Komponen Kunci |
+|----|--------------|----------------|
+| 1 | Halaman Masuk | Formulir surel dan kata sandi, tautan pendaftaran, tautan lupa kata sandi. |
+| 2 | Halaman *Dashboard* | Empat kartu indikator kinerja utama, dua grafik tren, daftar lima konten teratas. |
+| 3 | Halaman Performa Konten | Tabel performa unggahan dengan dukungan pengurutan dan penyaringan, tampilan kartu untuk perangkat bergerak. |
+| 4 | Halaman Ringkasan *Insight* | Area ringkasan naratif, tombol pembuatan ulang ringkasan, indikator status pemrosesan. |
+| 5 | Halaman Laporan | Pratinjau laporan, tombol ekspor ke dokumen *PDF* dan *Microsoft Excel*. |
+| 6 | Halaman Impor Data | Area pengunggahan berkas, area pratinjau lima baris pertama, tombol konfirmasi impor. |
+| 7 | Halaman Manajemen Proyek | Daftar proyek dalam bentuk kartu, tombol tambah proyek baru, menu aksi pada setiap kartu. |
+| 8 | Halaman Catatan | Daftar catatan per dataset, formulir tambah catatan, tombol ubah dan hapus catatan. |
+| 9 | Halaman Pengaturan | Formulir profil pengguna, formulir ubah kata sandi, tombol keluar dari sistem. |
+
+**Gambar 4.6** *Wireframe* halaman *dashboard* yang menampilkan tata letak empat kartu indikator kinerja utama di bagian atas, dua grafik tren di bagian tengah, dan daftar lima konten teratas di bagian bawah.
+
+**Gambar 4.7** *Wireframe* halaman performa konten yang menampilkan tata letak tabel pada perangkat komputer dan tata letak kartu pada perangkat bergerak.
+
+**Gambar 4.8** *Wireframe* halaman ringkasan *insight* yang menampilkan tata letak area ringkasan naratif dengan dukungan pemformatan teks ringan.
+
+**Gambar 4.9** *Wireframe* halaman laporan yang menampilkan tata letak pratinjau laporan beserta tombol ekspor ke berkas *PDF* dan *Microsoft Excel*.
+
+Seluruh hasil perancangan antarmuka pengguna kemudian diimplementasikan menggunakan kerangka kerja React dengan pustaka komponen *shadcn-ui* dan kerangka pemformatan *Tailwind CSS*. Pemilihan kerangka pemformatan ini bertujuan agar pengembangan antarmuka dapat dilakukan dengan cepat tanpa menulis berkas pemformatan terpisah, sekaligus memastikan konsistensi visual pada seluruh halaman.
