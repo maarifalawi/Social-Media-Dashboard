@@ -13,6 +13,16 @@ import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { InsightCard } from "@/components/InsightCard";
+import { EmptyState } from "@/components/EmptyState";
+import {
+  weeklyEngagementTrend,
+  platformDistribution,
+  contentTypePerformance,
+  bestPostingTimes,
+  followersTimeline,
+  type PostLike,
+} from "@/lib/analytics";
+import { Inbox } from "lucide-react";
 
 const RingkasanInsight = () => {
   const navigate = useNavigate();
@@ -77,34 +87,15 @@ const RingkasanInsight = () => {
     }
   };
 
-  const generateAllInsights = (posts: any[]) => {
+  const generateAllInsights = (posts: PostLike[]) => {
     // 1. ER Trend Insight
-    const weeklyMap = new Map<string, { totalER: number; count: number }>();
-    posts.forEach(post => {
-      const date = new Date(post.waktu_diposting);
-      const weekStart = new Date(date);
-      weekStart.setDate(date.getDate() - date.getDay());
-      const weekKey = format(weekStart, "yyyy-MM-dd");
-      const current = weeklyMap.get(weekKey) || { totalER: 0, count: 0 };
-      weeklyMap.set(weekKey, {
-        totalER: current.totalER + (post.engagement_rate_persen || 0),
-        count: current.count + 1,
-      });
-    });
-
-    const weeklyData = Array.from(weeklyMap.entries())
-      .map(([week, data]) => ({
-        week,
-        avgER: data.totalER / data.count,
-      }))
-      .sort((a, b) => a.week.localeCompare(b.week));
-
+    const weeklyData = weeklyEngagementTrend(posts);
     let erTrendInsight = "";
     if (weeklyData.length >= 2) {
       const erFirst = weeklyData[0].avgER;
       const erLast = weeklyData[weeklyData.length - 1].avgER;
-      const deltaPercent = erFirst > 0 ? ((erLast - erFirst) / erFirst * 100) : 0;
-      
+      const deltaPercent = erFirst > 0 ? ((erLast - erFirst) / erFirst) * 100 : 0;
+
       let trendCategory = "relatif stabil";
       let suggestion = "Pertahankan pola konten saat ini";
       if (deltaPercent > 10) {
@@ -115,147 +106,73 @@ const RingkasanInsight = () => {
         suggestion = "Evaluasi konten dan mulai eksperimen dengan format atau jadwal baru";
       }
 
-      erTrendInsight = `Engagement rate menunjukkan ${trendCategory} dari ${erFirst.toFixed(2)}% di minggu pertama menjadi ${erLast.toFixed(2)}% di minggu terakhir (${deltaPercent > 0 ? '+' : ''}${deltaPercent.toFixed(1)}%). ${suggestion}.`;
+      erTrendInsight = `Engagement rate menunjukkan ${trendCategory} dari ${erFirst.toFixed(2)}% di minggu pertama menjadi ${erLast.toFixed(2)}% di minggu terakhir (${deltaPercent > 0 ? "+" : ""}${deltaPercent.toFixed(1)}%). ${suggestion}.`;
     }
 
     // 2. Platform Distribution Insight
-    const platformMap = new Map<string, number>();
-    posts.forEach(p => {
-      const name = p.platform?.nama_platform || "Tidak Diketahui";
-      platformMap.set(name, (platformMap.get(name) || 0) + 1);
-    });
-
-    const platformDist = Array.from(platformMap.entries())
-      .map(([name, count]) => ({
-        name,
-        count,
-        percentage: (count / posts.length * 100),
-      }))
-      .sort((a, b) => b.percentage - a.percentage);
-
+    const platformDist = platformDistribution(posts);
     let platformInsight = "";
     if (platformDist.length > 0) {
       const dominant = platformDist[0];
       const second = platformDist[1];
-      
+
       platformInsight = `Platform ${dominant.name} mendominasi dengan ${dominant.percentage.toFixed(1)}% dari total post. `;
-      
       if (dominant.percentage > 50) {
         platformInsight += `Strategi saat ini sangat fokus di ${dominant.name}. `;
       }
-      
       if (second && Math.abs(dominant.percentage - second.percentage) < 10) {
         platformInsight += `Distribusi dengan ${second.name} relatif merata. `;
       }
-      
-      const smallPlatforms = platformDist.filter(p => p.percentage < 10);
+      const smallPlatforms = platformDist.filter((p) => p.percentage < 10);
       if (smallPlatforms.length > 0) {
-        platformInsight += `Platform ${smallPlatforms.map(p => p.name).join(", ")} masih belum terlalu dieksplor.`;
+        platformInsight += `Platform ${smallPlatforms.map((p) => p.name).join(", ")} masih belum terlalu dieksplor.`;
       }
     }
 
     // 3. Content Type Insight
-    const contentTypeMap = new Map<string, { count: number; totalER: number }>();
-    posts.forEach(p => {
-      const name = p.jenis_konten?.nama_jenis_konten || "Tidak Diketahui";
-      const current = contentTypeMap.get(name) || { count: 0, totalER: 0 };
-      contentTypeMap.set(name, {
-        count: current.count + 1,
-        totalER: current.totalER + (p.engagement_rate_persen || 0),
-      });
-    });
-
-    const contentTypeDist = Array.from(contentTypeMap.entries())
-      .map(([name, data]) => ({
-        name,
-        count: data.count,
-        percentage: (data.count / posts.length * 100),
-        avgER: data.totalER / data.count,
-      }))
-      .sort((a, b) => b.percentage - a.percentage);
-
+    const contentTypeDist = contentTypePerformance(posts);
     let contentTypeInsight = "";
     if (contentTypeDist.length > 0) {
       const mostUsed = contentTypeDist[0];
       const mostEffective = [...contentTypeDist].sort((a, b) => b.avgER - a.avgER)[0];
-      
+
       contentTypeInsight = `Tipe konten ${mostUsed.name} paling sering digunakan (${mostUsed.percentage.toFixed(1)}%). `;
-      
       if (mostEffective.name !== mostUsed.name && mostEffective.percentage < 30) {
         contentTypeInsight += `Namun, ${mostEffective.name} memiliki rata-rata ER tertinggi (${mostEffective.avgER.toFixed(2)}%) meskipun porsinya masih kecil. Tipe ini potensial dan layak dinaikkan porsinya. `;
       }
-      
       contentTypeInsight += `Kombinasi tipe terbanyak (${mostUsed.name}) vs tipe paling efektif (${mostEffective.name}) menunjukkan peluang optimasi konten.`;
     }
 
     // 4. Best Time Insight
-    const timeSlotMap = new Map<string, { totalER: number; count: number }>();
-    posts.forEach(post => {
-      const date = new Date(post.waktu_diposting);
-      const day = date.getDay();
-      const hour = date.getHours();
-      const key = `${day}-${hour}`;
-      const current = timeSlotMap.get(key) || { totalER: 0, count: 0 };
-      timeSlotMap.set(key, {
-        totalER: current.totalER + (post.engagement_rate_persen || 0),
-        count: current.count + 1,
-      });
-    });
-
-    const bestTimes = Array.from(timeSlotMap.entries())
-      .map(([key, data]) => {
-        const [day, hour] = key.split("-").map(Number);
-        const dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-        return {
-          day: dayNames[day],
-          hour: `${hour.toString().padStart(2, "0")}:00`,
-          medianER: data.totalER / data.count,
-          count: data.count,
-        };
-      })
-      .sort((a, b) => b.medianER - a.medianER);
-
+    const bestTimes = bestPostingTimes(posts);
     let bestTimeInsight = "";
     if (bestTimes.length > 0) {
       const best = bestTimes[0];
       bestTimeInsight = `Waktu terbaik untuk posting adalah ${best.day} pukul ${best.hour} dengan median ER ${best.medianER.toFixed(2)}%. `;
-      
       if (bestTimes.length >= 2) {
         const second = bestTimes[1];
         if (Math.abs(best.medianER - second.medianER) < 2) {
           bestTimeInsight += `${second.day} pukul ${second.hour} juga merupakan alternatif kuat dengan ER ${second.medianER.toFixed(2)}%. `;
         }
       }
-      
       if (best.count < 3) {
         bestTimeInsight += `Namun, sampel di slot ini masih kecil (${best.count} post) dan perlu diuji lagi untuk konfirmasi.`;
       }
     }
 
     // 5. Audience Growth Insight
-    const followersTrend = Array.from(
-      posts.reduce((map, post) => {
-        const date = format(new Date(post.waktu_diposting), "yyyy-MM-dd");
-        if (!map.has(date)) map.set(date, []);
-        map.get(date)!.push(post.jumlah_followers);
-        return map;
-      }, new Map<string, number[]>())
-    ).map(([date, followers]) => ({
-      date,
-      followers: Math.round(followers.reduce((a, b) => a + b, 0) / followers.length),
-    }));
-
+    const followersTrend = followersTimeline(posts);
     let audienceInsight = "";
     if (followersTrend.length >= 2) {
       const firstFollowers = followersTrend[0].followers;
       const lastFollowers = followersTrend[followersTrend.length - 1].followers;
-      const growthPercent = firstFollowers > 0 ? ((lastFollowers - firstFollowers) / firstFollowers * 100) : 0;
-      
+      const growthPercent = firstFollowers > 0 ? ((lastFollowers - firstFollowers) / firstFollowers) * 100 : 0;
+
       let growthStatus = "relatif stabil";
       if (growthPercent > 5) growthStatus = "bertumbuh positif";
       else if (growthPercent < -5) growthStatus = "mengalami penurunan";
 
-      audienceInsight = `Jumlah followers ${growthStatus} dari ${firstFollowers.toLocaleString()} menjadi ${lastFollowers.toLocaleString()} (${growthPercent > 0 ? '+' : ''}${growthPercent.toFixed(1)}%) dalam periode ini.`;
+      audienceInsight = `Jumlah followers ${growthStatus} dari ${firstFollowers.toLocaleString()} menjadi ${lastFollowers.toLocaleString()} (${growthPercent > 0 ? "+" : ""}${growthPercent.toFixed(1)}%) dalam periode ini.`;
     }
 
     setInsights({
@@ -266,6 +183,8 @@ const RingkasanInsight = () => {
       audience: audienceInsight,
     });
   };
+
+  const hasAnyInsight = Object.values(insights).some((v) => v && v.length > 0);
 
   if (!selectedProject) {
     return (
@@ -360,6 +279,12 @@ const RingkasanInsight = () => {
               Loading...
             </CardContent>
           </Card>
+        ) : !hasAnyInsight ? (
+          <EmptyState
+            icon={<Inbox className="h-10 w-10" />}
+            title="Belum ada insight untuk periode ini"
+            description="Pilih rentang tanggal yang berisi data postingan, atau import data terlebih dahulu."
+          />
         ) : (
           <div className="space-y-4">
             <Card>

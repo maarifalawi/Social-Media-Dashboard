@@ -19,6 +19,8 @@ import { InsightCard } from "@/components/InsightCard";
 import { SaveFilterDialog } from "@/components/SaveFilterDialog";
 import { NotesDialog } from "@/components/NotesDialog";
 import { ExportButton } from "@/components/ExportButton";
+import { EmptyState } from "@/components/EmptyState";
+import { Inbox } from "lucide-react";
 
 // Paginated Table Component
 const PaginatedPostTable = ({ posts, getPerformanceBadge }: { posts: any[]; getPerformanceBadge: (post: any) => React.ReactNode }) => {
@@ -573,7 +575,20 @@ const Performa = () => {
             {loading ? (
               <div className="text-center py-8 text-muted-foreground">Memuat...</div>
             ) : filteredPosts.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">Tidak ada data</div>
+              <EmptyState
+                icon={<Inbox className="h-10 w-10" />}
+                title={posts.length === 0 ? "Belum ada postingan" : "Tidak ada data sesuai filter"}
+                description={
+                  posts.length === 0
+                    ? "Import data postingan ke dataset aktif terlebih dahulu."
+                    : "Coba longgarkan filter tanggal, jangkauan minimum, atau kata kunci caption."
+                }
+                action={
+                  posts.length === 0
+                    ? { label: "Import Data", onClick: () => navigate("/import") }
+                    : undefined
+                }
+              />
             ) : (
               <PaginatedPostTable 
                 posts={filteredPosts} 

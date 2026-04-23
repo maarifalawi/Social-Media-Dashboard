@@ -93,6 +93,42 @@ export const platformDistribution = (posts: PostLike[]) =>
 export const contentTypeDistribution = (posts: PostLike[]) =>
   distributionBy(posts, (p) => p.jenis_konten?.nama_jenis_konten || "Tidak Diketahui");
 
+export function contentTypePerformance(posts: PostLike[]) {
+  const map = new Map<string, { count: number; totalER: number }>();
+  posts.forEach((p) => {
+    const name = p.jenis_konten?.nama_jenis_konten || "Tidak Diketahui";
+    const cur = map.get(name) || { count: 0, totalER: 0 };
+    map.set(name, {
+      count: cur.count + 1,
+      totalER: cur.totalER + (p.engagement_rate_persen || 0),
+    });
+  });
+  return Array.from(map.entries())
+    .map(([name, d]) => ({
+      name,
+      count: d.count,
+      percentage: posts.length > 0 ? (d.count / posts.length) * 100 : 0,
+      avgER: d.count > 0 ? d.totalER / d.count : 0,
+    }))
+    .sort((a, b) => b.count - a.count);
+}
+
+export function followersTimeline(posts: PostLike[]) {
+  const map = new Map<string, number[]>();
+  posts.forEach((post) => {
+    const date = format(new Date(post.waktu_diposting), "yyyy-MM-dd");
+    const list = map.get(date) || [];
+    list.push(post.jumlah_followers || 0);
+    map.set(date, list);
+  });
+  return Array.from(map.entries())
+    .map(([date, followers]) => ({
+      date,
+      followers: Math.round(followers.reduce((a, b) => a + b, 0) / followers.length),
+    }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
 export function bestPostingTimes(posts: PostLike[], minSamples = 1) {
   const map = new Map<string, { values: number[] }>();
   posts.forEach((post) => {

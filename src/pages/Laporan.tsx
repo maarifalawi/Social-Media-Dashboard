@@ -12,6 +12,9 @@ import { FileText, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { computeKpi, bestPostingTimes, contentTypePerformance, type PostLike } from "@/lib/analytics";
+import { EmptyState } from "@/components/EmptyState";
+import { FileSearch } from "lucide-react";
 
 const Laporan = () => {
   const navigate = useNavigate();
@@ -55,18 +58,11 @@ const Laporan = () => {
         return;
       }
 
-      const totalPosts = posts.length;
-      const avgER = posts.reduce((sum, p) => sum + (p.engagement_rate_persen || 0), 0) / totalPosts;
+      const kpi = computeKpi(posts as PostLike[]);
       const totalReach = posts.reduce((sum, p) => sum + p.jumlah_reach, 0);
-      const latestFollowers = posts.reduce((latest, post) => 
-        new Date(post.waktu_diposting) > new Date(latest.waktu_diposting) ? post : latest
-      ).jumlah_followers;
-      
-      const totalSaves = posts.reduce((sum, p) => sum + p.jumlah_saved, 0);
-      const totalShares = posts.reduce((sum, p) => sum + p.jumlah_shares, 0);
-      const saveRate = (totalSaves / Math.max(totalReach, 1)) * 100;
-      const shareRate = (totalShares / Math.max(totalReach, 1)) * 100;
+      const latestFollowers = kpi.followersNow;
 
+      // Quartile filter to keep top/worst5 fair (exclude bottom 25% reach outliers)
       const sortedReach = [...posts].map(p => p.jumlah_reach).sort((a, b) => a - b);
       const q1Index = Math.floor(sortedReach.length * 0.25);
       const q1Reach = sortedReach[q1Index] || 0;
@@ -75,53 +71,21 @@ const Laporan = () => {
       const top5 = [...fairPosts].sort((a, b) => (b.engagement_rate_persen || 0) - (a.engagement_rate_persen || 0)).slice(0, 5);
       const worst5 = [...fairPosts].sort((a, b) => (a.engagement_rate_persen || 0) - (b.engagement_rate_persen || 0)).slice(0, 5);
 
-      const slotMap = new Map<string, { values: number[]; count: number }>();
-      posts.forEach(post => {
-        const date = new Date(post.waktu_diposting);
-        const key = `${date.getDay()}-${date.getHours()}`;
-        if (!slotMap.has(key)) slotMap.set(key, { values: [], count: 0 });
-        slotMap.get(key)!.values.push(post.engagement_rate_persen || 0);
-        slotMap.get(key)!.count++;
-      });
+      const bestTimes = bestPostingTimes(posts as PostLike[], 2).slice(0, 3);
 
-      const DAYS = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-      const bestTimes = Array.from(slotMap.entries())
-        .filter(([_, slot]) => slot.count >= 2)
-        .map(([key, slot]) => {
-          const [day, hour] = key.split("-").map(Number);
-          const sorted = [...slot.values].sort((a, b) => a - b);
-          return {
-            day: DAYS[day],
-            hour: `${hour.toString().padStart(2, "0")}:00`,
-            medianER: sorted[Math.floor(sorted.length / 2)] || 0,
-            count: slot.count
-          };
-        })
-        .sort((a, b) => b.medianER - a.medianER)
-        .slice(0, 3);
-
-      const contentTypeMap = new Map<string, { totalER: number; count: number }>();
-      posts.forEach(post => {
-        const name = post.jenis_konten?.nama_jenis_konten || "Tidak Diketahui";
-        if (!contentTypeMap.has(name)) contentTypeMap.set(name, { totalER: 0, count: 0 });
-        contentTypeMap.get(name)!.totalER += post.engagement_rate_persen || 0;
-        contentTypeMap.get(name)!.count++;
-      });
-
-      const medianER = avgER;
-      const bestContentTypes = Array.from(contentTypeMap.entries())
-        .map(([name, data]) => ({ name, avgER: data.totalER / data.count }))
-        .filter(ct => ct.avgER > medianER)
+      const contentTypeStats = contentTypePerformance(posts as PostLike[]);
+      const bestContentTypes = contentTypeStats
+        .filter(ct => ct.avgER > kpi.avgER)
         .sort((a, b) => b.avgER - a.avgER);
 
       setReportData({
         period: `${format(new Date(dateFrom), "dd MMM yyyy")} - ${format(new Date(dateTo), "dd MMM yyyy")}`,
-        totalPosts,
-        avgER: avgER.toFixed(2),
+        totalPosts: kpi.totalPosts,
+        avgER: kpi.avgER.toFixed(2),
         totalReach,
         latestFollowers,
-        saveRate: saveRate.toFixed(2),
-        shareRate: shareRate.toFixed(2),
+        saveRate: kpi.saveRate.toFixed(2),
+        shareRate: kpi.shareRate.toFixed(2),
         top5,
         worst5,
         bestTimes,

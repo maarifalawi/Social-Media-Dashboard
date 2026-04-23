@@ -24,6 +24,8 @@ import {
   contentTypeDistribution,
 } from "@/lib/analytics";
 import { logAndToast } from "@/lib/errors";
+import { EmptyState } from "@/components/EmptyState";
+import { Inbox } from "lucide-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -50,6 +52,7 @@ const Dashboard = () => {
     platform: "",
     contentType: ""
   });
+  const [hasPosts, setHasPosts] = useState<boolean | null>(null);
   const [widgetVisibility, setWidgetVisibility] = useState({
     kpi: true,
     trends: true,
@@ -116,6 +119,7 @@ const Dashboard = () => {
 
         if (error) throw error;
 
+        setHasPosts(!!posts && posts.length > 0);
         if (posts && posts.length > 0) {
           setKpiData(computeKpi(posts as any));
 
@@ -360,6 +364,15 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {hasPosts === false ? (
+          <EmptyState
+            icon={<Inbox className="h-10 w-10" />}
+            title="Belum ada postingan di dataset ini"
+            description="Import data postingan ke dataset aktif untuk melihat ringkasan performa."
+            action={{ label: "Import Data", onClick: () => navigate("/import") }}
+          />
+        ) : (
+        <>
         {/* KPI Cards */}
         {widgetVisibility.kpi && (
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -439,6 +452,8 @@ const Dashboard = () => {
             {insights.platform && <InsightCard insight={insights.platform} title="Distribusi Platform" />}
             {insights.contentType && <InsightCard insight={insights.contentType} title="Distribusi Tipe Konten" />}
           </div>
+        )}
+        </>
         )}
       </div>
     </AppLayout>
