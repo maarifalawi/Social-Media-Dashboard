@@ -43,10 +43,10 @@ Rekapitulasi jumlah konten yang berhasil dikumpulkan selama periode observasi di
 
 | No | Format Konten | Jumlah Konten | Persentase |
 |----|---------------|---------------|------------|
-| 1 | Foto tunggal | [JUMLAH] | [PERSEN] |
-| 2 | Album foto | [JUMLAH] | [PERSEN] |
-| 3 | Video pendek | [JUMLAH] | [PERSEN] |
-| 4 | Cerita singkat | [JUMLAH] | [PERSEN] |
-| | Jumlah Total | [JUMLAH TOTAL] | 100,00 |
+| 1 | Foto tunggal | 22 | 25,58 |
+| 2 | Album foto | 18 | 20,93 |
+| 3 | Video pendek | 28 | 32,56 |
+| 4 | Cerita singkat | 18 | 20,93 |
+| | Jumlah Total | 86 | 100,00 |
 
-Hasil pengumpulan data menunjukkan bahwa akun UMKM yang diobservasi memiliki pola publikasi yang relatif teratur dengan frekuensi rata-rata [JUMLAH] unggahan per minggu. Rentang nilai metrik yang dicatat juga cukup bervariasi antar konten, dengan jangkauan terendah sebesar [NILAI] dan jangkauan tertinggi sebesar [NILAI]. Variasi nilai metrik ini penting karena memberikan rentang data yang memadai untuk menguji modul-modul analitik, terutama modul performa konten dan modul ringkasan *insight* yang membutuhkan distribusi data yang cukup untuk menghasilkan rekomendasi yang bermakna. Seluruh berkas hasil pengumpulan data disimpan dalam berkas tunggal berformat *comma separated values* yang siap digunakan sebagai masukan pada modul impor sistem.
+Hasil pengumpulan data menunjukkan bahwa akun UMKM yang diobservasi memiliki pola publikasi yang relatif teratur dengan frekuensi rata-rata tujuh unggahan per minggu, yang mencakup gabungan seluruh format konten. Rentang nilai metrik yang dicatat juga cukup bervariasi antar konten, dengan jangkauan terendah sebesar delapan ratus lima puluh akun unik dan jangkauan tertinggi sebesar dua puluh empat ribu lima ratus akun unik pada konten dengan format video pendek. Untuk metrik suka, nilai terendah tercatat sebesar tiga puluh dua dan nilai tertinggi sebesar seribu sembilan ratus delapan puluh empat, sedangkan untuk metrik komentar nilai terendah tercatat sebesar dua dan nilai tertinggi sebesar seratus tujuh puluh enam. Variasi nilai metrik ini penting karena memberikan rentang data yang memadai untuk menguji modul-modul analitik, terutama modul performa konten dan modul ringkasan *insight* yang membutuhkan distribusi data yang cukup untuk menghasilkan rekomendasi yang bermakna. Seluruh berkas hasil pengumpulan data disimpan dalam berkas tunggal berformat *comma separated values* yang siap digunakan sebagai masukan pada modul impor sistem.
