@@ -1,0 +1,69 @@
+
+Since 2026
+Since 2025
+Since 2022
+Custom range...
+Sort by relevance
+Sort by date
+Any type
+Review articles
+[HTML] mdpi.com
+[HTML] User-Centered Development of an Online Dashboard Tool for Economic Sustainability for Small and Medium Enterprises
+AW Bennett, S Müller Loose - Sustainability, 2024 - mdpi.com
+… tool for the economic sustainability of small and medium enterprises (SMEs) in the … business
+analysis has provided German wine businesses with feedback on general business data …
+Save Cite Cited by 9 Related articles All 7 versions 
+[HTML] mdpi.com
+[HTML] The degree of adoption of business intelligence in Romanian companies—The case of sentiment analysis as a marketing analytical tool
+DF Ciocodeică, RG Chivu, IC Popa, H Mihălcescu… - Sustainability, 2022 - mdpi.com
+… digital marketing, the reports in the analysis panels of google analytics and social networks,
+sentiment analysis … the executive dashboard placed as a “by-product” of sentiment analysis, …
+Save Cite Cited by 28 Related articles All 6 versions 
+[HTML] mdpi.com
+[HTML] Applications and competitive advantages of data mining and business intelligence in SMEs performance: A systematic review
+SV Tsiu, M Ngobeni, L Mathabela, B Thango - Businesses, 2025 - mdpi.com
+… grounded in the analysis of business intelligence tools used indicates that dashboards (31.18…
+Niche applications, such as social media analytics tools (1.08%) and topic modeling (LDA, …
+Save Cite Cited by 105 Related articles All 14 versions 
+[HTML] mdpi.com
+[HTML] A Comprehensive Business Intelligence Framework for Diabetes Management in Telemedicine: Advancing Data-Driven Decision Support Through Integrated …
+EA Pop, G Mircea, CRM Iliescu - Systems, 2026 - mdpi.com
+… displayed at the bottom of the dashboard. This section highlights the dedication to ethical
+practices in the analysis of sensitive medical data and acts as a methodological disclaimer. …
+Save Cite Related articles 
+[HTML] mdpi.com
+[HTML] Digital Innovation Through Behavioural Analytics: Evidence from Acquisition Channels and Engagement in Global Cruise Firms
+DP Reklitis, NT Giannakopoulos, MC Terzi, DP Sakas… - Information, 2025 - mdpi.com
+… engines, social networks and referral platforms to discover and book cruises, digital interfaces
+… This transforms analytics from diagnostic dashboards into decision-support infrastructures. …
+Save Cite Related articles All 5 versions 
+[HTML] mdpi.com
+[HTML] Evaluation of data-driven sustainability potential at SMEs using an altered Ecocanvas model
+LP Bálint, L Várallyai, S Botos - Economies, 2025 - mdpi.com
+… digital technologies and data analysis allows economic systems to evaluate and manage
+their impact on enterprise ESG … digital ecosystems and targeted support for small business …
+Save Cite Cited by 9 Related articles All 8 versions 
+[HTML] mdpi.com
+[HTML] Strategic Web-Based Data Dashboards as Monitoring Tools for Promoting Organizational Innovation
+S Banerjee, CE Fullerton, SS Gaharwar, EJ Jaselskis - Buildings, 2025 - mdpi.com
+… This study demonstrates the effectiveness of data dashboards through the analysis of
+consistent approval trends for CLEAR entries throughout the program’s operational lifespan. …
+Save Cite Cited by 5 Related articles All 3 versions 
+[HTML] mdpi.com
+[HTML] A web-based application for smart city data analysis and visualization
+P Karampakakis, D Ioakeimidou, P Chatzimisios… - Future Internet, 2025 - mdpi.com
+… a web-based data analysis and visualization approach tailored for smart city sensor networks.
+… sensor outputs into interactive dashboards [32], enabling real-time monitoring [33], visual …
+Save Cite Cited by 4 Related articles All 6 versions 
+[PDF] mdpi.com
+Dashboard as a platform for community engagement in a city development—a review of techniques, tools and methods
+J Pluto-Kossakowska, A Fijałkowska, M Denis… - Sustainability, 2022 - mdpi.com
+… dashboards in terms of their thematic scope, the number of indicators presented, data sources
+and tools for data analysis and … , as an HTTPS link and can be published on social media. …
+Save Cite Cited by 25 Related articles All 9 versions 
+[HTML] mdpi.com
+[HTML] Toward establishing a tourism data space: Innovative geo-dashboard development for tourism research and management
+D Ordóñez-Martínez, JM Seguí-Pons, M Ruiz-Pérez - Smart Cities, 2024 - mdpi.com
+… , ranging from booking pattern detection to integrated analysis of social media comments,
+enables a deeper understanding of tourism market trends. This information is crucial for …
+Save Cite Cited by 13 Related articles All 6 versions 

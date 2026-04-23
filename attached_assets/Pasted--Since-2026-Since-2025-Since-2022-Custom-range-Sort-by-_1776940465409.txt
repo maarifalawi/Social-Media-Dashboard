@@ -1,0 +1,69 @@
+
+Since 2026
+Since 2025
+Since 2022
+Custom range...
+Sort by relevance
+Sort by date
+Any type
+Review articles
+[HTML] mdpi.com
+[HTML] … decision making in UK Small and Medium-sized Enterprises: Case studies and lessons learnt from the analysis of 85 Small and Medium-sized Enterprises
+ARH Tawil, M Mohamed, X Schmoor… - Big Data and Cognitive …, 2024 - mdpi.com
+… examines how small businesses can take advantage of data-… Second, the use of social
+media (SM) platforms for digital … in monitoring KPIs of SMEs through interactive dashboards with …
+Save Cite Cited by 54 Related articles All 5 versions 
+[HTML] mdpi.com
+[HTML] Harnessing Digital Marketing Analytics for Knowledge-Driven Digital Transformation in the Hospitality Industry
+DP Reklitis, MC Terzi, DP Sakas, P Reklitis - Information, 2025 - mdpi.com
+… journeys through the websites; and social media analytics, abandonment rates at different
+… The study found that embedding analytics dashboards into daily operations, supported by …
+Save Cite Cited by 6 Related articles All 3 versions 
+[HTML] mdpi.com
+[HTML] Foodborne event detection based on social media mining: a systematic review
+S Salaris, H Ocagli, A Casamento, C Lanera, D Gregori - Foods, 2025 - mdpi.com
+… to detect and manage foodborne illnesses using social media or online review platforms, …
+a business. In particular, this review aimed to assess the effectiveness of social media analysis …
+Save Cite Cited by 14 Related articles All 10 versions 
+[HTML] mdpi.com
+[HTML] Modeling Perceived Social Media Performance as an Information Driver of Consumer Decision-Making in Grocery Retail
+T Tarnanidis, M Vlachopoulou, J Papathanasiou… - Information, 2026 - mdpi.com
+… The data analysis process was divided into three stages. The first step in analyzing …
+performance should be done through consumer-centric dashboards that capture perceived value, …
+Save Cite Related articles All 3 versions 
+[HTML] mdpi.com
+[HTML] A data-driven framework for digital transformation in smart cities: integrating AI, dashboards, and IoT readiness
+Á Lloret, J Peral, A Ferrández, M Auladell, R Muñoz - Sensors, 2025 - mdpi.com
+… AI techniques, real-time data analysis, sensor readiness, and dashboards—can serve as a
+… integration of additional data sources—such as open data portals, social media content, or …
+Save Cite Cited by 17 Related articles All 17 versions 
+[HTML] mdpi.com
+[HTML] AI-Powered Advisory Platforms for Sustainable Marketing Innovation in SMEs: Empirical Evidence from Underserved US Markets
+C Cagiza, M Faustino, I Cagiza, A Cajiza - Sustainability, 2025 - mdpi.com
+… designed for large enterprises with in-house analytics teams, … disparities in digital readiness
+among small firms. … Transparent benchmarking and peer-based dashboards appeared to …
+Save Cite Cited by 16 Related articles All 10 versions 
+[HTML] mdpi.com
+[HTML] Platform-Enabled Destination Management: KPI Dashboards and DEA Benchmarking in the Peloponnese
+G Tsoupros, I Anastasopoulos, S Varelas… - Platforms, 2025 - mdpi.com
+… social license [3,4]. This logic underpins “smart governance” in tourism, where digital
+infrastructures and analytics … tools, such as KPI dashboards and data analytics, become not only …
+Save Cite Related articles All 2 versions 
+[HTML] mdpi.com
+[HTML] Agroeconomic indexes and big data: digital marketing analytics implications for enhanced decision making with artificial intelligence-based modeling
+NT Giannakopoulos, MC Terzi, DP Sakas, N Kanellos… - Information, 2024 - mdpi.com
+… , big data analytics, and digital … , social media, food quality assessment, and safety. This
+study, noteworthy for considering social media as a crucial source of user-generated big data, …
+Save Cite Cited by 36 Related articles All 4 versions 
+[HTML] mdpi.com
+[HTML] Social media analytics as a tool for cultural spaces—The case of Twitter trending topics
+V Poulopoulos, M Wallace - Big Data and Cognitive Computing, 2022 - mdpi.com
+… Visualization is achieved with the help of Grafana, in which a dashboard including different
+kinds of real-time information is set up, and the API, which is provided with the help of a …
+Save Cite Cited by 7 Related articles All 3 versions 
+[HTML] mdpi.com
+[HTML] An Interactive and Open Dashboard for BIM-Based Participatory Urban Neighborhood Management
+D Andritsou, K Lazaridis, C Potsiou - Land, 2026 - mdpi.com
+… This approach showcases ArcGIS Pro workflows for spatial analysis … the dashboard has
+used existing data. As a future improvement, the dashboard can be enhanced with real-time data …
+Save Cite Related articles All 6 versions 
