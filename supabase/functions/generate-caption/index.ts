@@ -142,41 +142,73 @@ INSTRUKSI OUTPUT:
 - Pastikan caption natural, tidak kaku, dan enak dibaca
 - JANGAN membuat harga, angka promo, atau klaim yang tidak ada di deskripsi`;
 
-    console.log('Calling Gemini API...');
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${geminiApiKey}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                { text: fullPrompt }
-              ]
-            }
-          ],
-          generationConfig: {
-            temperature: 1,
-            maxOutputTokens: 2048
-          }
-        }),
+    const requestBody = JSON.stringify({
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            { text: fullPrompt }
+          ]
+        }
+      ],
+      generationConfig: {
+        temperature: 1,
+        maxOutputTokens: 2048
       }
-    );
+    });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Gemini API error:', response.status, errorText);
+    const modelsToTry = [
+      'gemini-flash-latest',
+      'gemini-2.5-flash',
+      'gemini-2.0-flash',
+      'gemini-flash-lite-latest',
+    ];
+
+    const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
+    let response: Response | null = null;
+    let lastError: { status: number; text: string } | null = null;
+
+    outer: for (const model of modelsToTry) {
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        console.log(`Calling Gemini API (model=${model}, attempt=${attempt})...`);
+        const r = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: requestBody,
+          }
+        );
+
+        if (r.ok) {
+          response = r;
+          break outer;
+        }
+
+        const errorText = await r.text();
+        lastError = { status: r.status, text: errorText };
+        console.error(`Gemini API error (model=${model}, attempt=${attempt}):`, r.status, errorText);
+
+        // 503/429 = overload/rate-limit → retry; 4xx lain = stop retry untuk model ini
+        if (r.status !== 503 && r.status !== 429) break;
+
+        // Exponential backoff: 1s, 2s, 4s
+        await sleep(1000 * Math.pow(2, attempt - 1));
+      }
+    }
+
+    if (!response) {
+      const isOverload = lastError?.status === 503 || lastError?.status === 429;
+      const userMessage = isOverload
+        ? 'Server AI sedang ramai. Coba lagi 1-2 menit, ya.'
+        : 'Gagal menghubungi AI. Silakan coba lagi sebentar lagi.';
+
       return new Response(
-        JSON.stringify({ 
-          error: 'Gagal menghubungi AI. Silakan coba lagi sebentar lagi.' 
-        }), 
-        { 
-          status: 500, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        JSON.stringify({ error: userMessage }),
+        {
+          status: isOverload ? 503 : 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         }
       );
     }

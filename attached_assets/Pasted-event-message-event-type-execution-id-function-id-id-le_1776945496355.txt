@@ -1,0 +1,141 @@
+event_message,event_type,execution_id,function_id,id,level,timestamp
+shutdown,Shutdown,132bd2ca-cea2-484a-9467-d2693d8f9795,6085dae9-7976-41e8-b25a-5f270f869c5c,1bab760b-2657-4632-a0b5-1d54ace914ed,log,1776945451887000
+shutdown,Shutdown,95bd3f77-91ca-42bb-a20b-b39c362007bb,6085dae9-7976-41e8-b25a-5f270f869c5c,7a649bce-62c4-42d0-8d63-c884c36784f4,log,1776945451749000
+shutdown,Shutdown,f1ff7bd8-6e9f-4505-a7c8-ea1e22315bf3,6085dae9-7976-41e8-b25a-5f270f869c5c,66774e57-6c96-47d0-a0a8-05dc740927d9,log,1776945384582000
+shutdown,Shutdown,faf4961e-f4b6-4f7d-8d83-49773bcf998b,6085dae9-7976-41e8-b25a-5f270f869c5c,95bd4a59-b046-41c2-8751-5e124a0063dc,log,1776945384382000
+"Gemini API error: 503 {
+  ""error"": {
+    ""code"": 503,
+    ""message"": ""This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."",
+    ""status"": ""UNAVAILABLE""
+  }
+}
+
+",Log,132bd2ca-cea2-484a-9467-d2693d8f9795,6085dae9-7976-41e8-b25a-5f270f869c5c,6184d57d-ddfa-437c-b6e1-457d241f0b88,error,1776945377636000
+"Calling Gemini API...
+",Log,132bd2ca-cea2-484a-9467-d2693d8f9795,6085dae9-7976-41e8-b25a-5f270f869c5c,945063f0-d28d-45b5-b078-bba6289f60e4,info,1776945376875000
+"Request received: {
+  deskripsi: ""buatin caption ramadhan"",
+  gaya_bahasa: ""friendly"",
+  panjang_caption: ""sedang"",
+  opsi_hashtag: ""seperlunya"",
+  opsi_emoji: ""sedikit"",
+  tujuan_caption: ""none""
+}
+",Log,132bd2ca-cea2-484a-9467-d2693d8f9795,6085dae9-7976-41e8-b25a-5f270f869c5c,60c3fd42-3464-43af-b4c2-5b86366b6882,info,1776945376875000
+"Listening on http://localhost:9999/
+",Log,132bd2ca-cea2-484a-9467-d2693d8f9795,6085dae9-7976-41e8-b25a-5f270f869c5c,8208e9be-dc8a-4620-b092-5542bb75a6f8,info,1776945376871000
+booted (time: 22ms),Boot,132bd2ca-cea2-484a-9467-d2693d8f9795,6085dae9-7976-41e8-b25a-5f270f869c5c,a52db170-6453-491f-82e5-45cbf0208030,log,1776945376868000
+"Listening on http://localhost:9999/
+",Log,95bd3f77-91ca-42bb-a20b-b39c362007bb,6085dae9-7976-41e8-b25a-5f270f869c5c,8cc83ace-61fa-4ee6-b3a4-580a480568f1,info,1776945376722000
+booted (time: 26ms),Boot,95bd3f77-91ca-42bb-a20b-b39c362007bb,6085dae9-7976-41e8-b25a-5f270f869c5c,7c548fe1-fa0b-4818-814f-05227b055482,log,1776945376718000
+shutdown,Shutdown,ac8bcddf-e969-4ef2-ab6c-2c2ab8527fdd,6085dae9-7976-41e8-b25a-5f270f869c5c,0f4a4d45-7fbd-4d75-a48b-f74325045f0f,log,1776945370211000
+shutdown,Shutdown,c3c5b6b6-5034-4b95-b97d-e6bfc1cb727d,6085dae9-7976-41e8-b25a-5f270f869c5c,4fd021aa-7fe6-4064-99f8-3a3214883ec2,log,1776945368706000
+"Gemini API error: 503 {
+  ""error"": {
+    ""code"": 503,
+    ""message"": ""This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."",
+    ""status"": ""UNAVAILABLE""
+  }
+}
+
+",Log,f1ff7bd8-6e9f-4505-a7c8-ea1e22315bf3,6085dae9-7976-41e8-b25a-5f270f869c5c,4fd77b7e-9ce8-4e6a-8b6b-40bc87f175e8,error,1776945315459000
+"Calling Gemini API...
+",Log,f1ff7bd8-6e9f-4505-a7c8-ea1e22315bf3,6085dae9-7976-41e8-b25a-5f270f869c5c,b472d21f-2ecf-4d41-967f-edf319348962,info,1776945309570000
+"Request received: {
+  deskripsi: ""buatkan caption ramadhan"",
+  gaya_bahasa: ""friendly"",
+  panjang_caption: ""sedang"",
+  opsi_hashtag: ""seperlunya"",
+  opsi_emoji: ""sedikit"",
+  tujuan_caption: ""none""
+}
+",Log,f1ff7bd8-6e9f-4505-a7c8-ea1e22315bf3,6085dae9-7976-41e8-b25a-5f270f869c5c,9e859745-867c-4f8e-98ac-651d02cb40a1,info,1776945309570000
+"Listening on http://localhost:9999/
+",Log,f1ff7bd8-6e9f-4505-a7c8-ea1e22315bf3,6085dae9-7976-41e8-b25a-5f270f869c5c,219b3e2d-9528-4b15-a307-14c29fcc77bd,info,1776945309562000
+booted (time: 45ms),Boot,f1ff7bd8-6e9f-4505-a7c8-ea1e22315bf3,6085dae9-7976-41e8-b25a-5f270f869c5c,6df1e152-7573-4b5b-ba60-dcc1597fc8e2,log,1776945309554000
+"Listening on http://localhost:9999/
+",Log,faf4961e-f4b6-4f7d-8d83-49773bcf998b,6085dae9-7976-41e8-b25a-5f270f869c5c,d4589deb-2b68-4dce-8c41-d72d5244fd7b,info,1776945309368000
+booted (time: 22ms),Boot,faf4961e-f4b6-4f7d-8d83-49773bcf998b,6085dae9-7976-41e8-b25a-5f270f869c5c,9986e3c9-df8a-4896-a4a9-8f8e6242a218,log,1776945309363000
+"Gemini API error: 503 {
+  ""error"": {
+    ""code"": 503,
+    ""message"": ""This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."",
+    ""status"": ""UNAVAILABLE""
+  }
+}
+
+",Log,ac8bcddf-e969-4ef2-ab6c-2c2ab8527fdd,6085dae9-7976-41e8-b25a-5f270f869c5c,fe71968b-e9db-47d2-92f7-e4e5f4461f49,error,1776945301033000
+"Request received: {
+  deskripsi: ""buatkan caption ramadhan"",
+  gaya_bahasa: ""friendly"",
+  panjang_caption: ""sedang"",
+  opsi_hashtag: ""seperlunya"",
+  opsi_emoji: ""sedikit"",
+  tujuan_caption: ""none""
+}
+",Log,ac8bcddf-e969-4ef2-ab6c-2c2ab8527fdd,6085dae9-7976-41e8-b25a-5f270f869c5c,5b632727-30d3-47ba-869e-f115dc73a898,info,1776945295200000
+"Calling Gemini API...
+",Log,ac8bcddf-e969-4ef2-ab6c-2c2ab8527fdd,6085dae9-7976-41e8-b25a-5f270f869c5c,6fa54b55-8790-434a-8472-b9ddbd88b7ac,info,1776945295200000
+"Listening on http://localhost:9999/
+",Log,ac8bcddf-e969-4ef2-ab6c-2c2ab8527fdd,6085dae9-7976-41e8-b25a-5f270f869c5c,6908a198-81c8-4862-b32e-eb2744a432cb,info,1776945295197000
+booted (time: 21ms),Boot,ac8bcddf-e969-4ef2-ab6c-2c2ab8527fdd,6085dae9-7976-41e8-b25a-5f270f869c5c,febf4970-751a-44d4-95bb-9241217ed4a0,log,1776945295193000
+"Listening on http://localhost:9999/
+",Log,c3c5b6b6-5034-4b95-b97d-e6bfc1cb727d,6085dae9-7976-41e8-b25a-5f270f869c5c,cd2ddcb9-d6d6-412d-8bdf-32d06cb8ae7f,info,1776945293689000
+booted (time: 28ms),Boot,c3c5b6b6-5034-4b95-b97d-e6bfc1cb727d,6085dae9-7976-41e8-b25a-5f270f869c5c,381a041e-f058-4ebb-92df-16e8e11a1232,log,1776945293684000
+shutdown,Shutdown,c77208fd-7dc1-4404-b601-e442d769f5f6,6085dae9-7976-41e8-b25a-5f270f869c5c,c0707490-03f8-4bd4-8cb7-fab1412e8165,log,1776945185677000
+shutdown,Shutdown,95e31bf3-9913-4551-a2fd-92b4c279367d,6085dae9-7976-41e8-b25a-5f270f869c5c,fb7d9eb7-1a59-41a9-b5e7-279bf6240cd9,log,1776945183941000
+"Gemini API error: 503 {
+  ""error"": {
+    ""code"": 503,
+    ""message"": ""This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."",
+    ""status"": ""UNAVAILABLE""
+  }
+}
+
+",Log,c77208fd-7dc1-4404-b601-e442d769f5f6,6085dae9-7976-41e8-b25a-5f270f869c5c,c50cf7dd-6471-4b23-ace2-e450948edb6f,error,1776945111583000
+"Request received: {
+  deskripsi: ""buatkan caption ramadhan"",
+  gaya_bahasa: ""friendly"",
+  panjang_caption: ""sedang"",
+  opsi_hashtag: ""seperlunya"",
+  opsi_emoji: ""sedikit"",
+  tujuan_caption: ""none""
+}
+",Log,c77208fd-7dc1-4404-b601-e442d769f5f6,6085dae9-7976-41e8-b25a-5f270f869c5c,f4d37059-408d-4b88-ad76-6f2273f90dc2,info,1776945110670000
+"Calling Gemini API...
+",Log,c77208fd-7dc1-4404-b601-e442d769f5f6,6085dae9-7976-41e8-b25a-5f270f869c5c,5fcb67db-e114-41bf-b564-ac4642fc4882,info,1776945110670000
+"Listening on http://localhost:9999/
+",Log,c77208fd-7dc1-4404-b601-e442d769f5f6,6085dae9-7976-41e8-b25a-5f270f869c5c,d01ff7a4-6cac-47d6-b768-76b18cea8ce6,info,1776945110664000
+booted (time: 28ms),Boot,c77208fd-7dc1-4404-b601-e442d769f5f6,6085dae9-7976-41e8-b25a-5f270f869c5c,4e778290-a8bf-44b6-9658-a42296193269,log,1776945110654000
+"Listening on http://localhost:9999/
+",Log,95e31bf3-9913-4551-a2fd-92b4c279367d,6085dae9-7976-41e8-b25a-5f270f869c5c,ec8a5f2e-4243-42ea-85a7-3cb3e4936c25,info,1776945108923000
+booted (time: 27ms),Boot,95e31bf3-9913-4551-a2fd-92b4c279367d,6085dae9-7976-41e8-b25a-5f270f869c5c,563223ab-be76-4225-8bd3-6ec0d82d0d10,log,1776945108919000
+shutdown,Shutdown,6ea74e6e-f0a7-476a-a1be-ee87ee13b8d2,6085dae9-7976-41e8-b25a-5f270f869c5c,ea0a30ad-45f3-43e4-aedf-f3f7032060c2,log,1776944691937000
+shutdown,Shutdown,22508fee-c41c-40c7-aa9a-02646d2ffa81,6085dae9-7976-41e8-b25a-5f270f869c5c,59d5f476-c86c-43b8-a43c-65c16cf93e47,log,1776944691765000
+"Gemini API error: 503 {
+  ""error"": {
+    ""code"": 503,
+    ""message"": ""This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."",
+    ""status"": ""UNAVAILABLE""
+  }
+}
+
+",Log,6ea74e6e-f0a7-476a-a1be-ee87ee13b8d2,6085dae9-7976-41e8-b25a-5f270f869c5c,ed9f6f3a-cba8-4535-a680-81b4efcb5b60,error,1776944619419000
+"Calling Gemini API...
+",Log,6ea74e6e-f0a7-476a-a1be-ee87ee13b8d2,6085dae9-7976-41e8-b25a-5f270f869c5c,badf3daa-0045-4854-b2ea-51a3c06742d2,info,1776944616926000
+"Request received: {
+  deskripsi: ""buatkan caption untuk ramdhan"",
+  gaya_bahasa: ""friendly"",
+  panjang_caption: ""sedang"",
+  opsi_hashtag: ""seperlunya"",
+  opsi_emoji: ""sedikit"",
+  tujuan_caption: ""none""
+}
+",Log,6ea74e6e-f0a7-476a-a1be-ee87ee13b8d2,6085dae9-7976-41e8-b25a-5f270f869c5c,5c7b78eb-1d5a-4fb8-9a04-e66e0fe346fa,info,1776944616926000
+"Listening on http://localhost:9999/
+",Log,6ea74e6e-f0a7-476a-a1be-ee87ee13b8d2,6085dae9-7976-41e8-b25a-5f270f869c5c,f6155c4b-7908-4c00-ab90-2f27aa13eab6,info,1776944616923000
+booted (time: 21ms),Boot,6ea74e6e-f0a7-476a-a1be-ee87ee13b8d2,6085dae9-7976-41e8-b25a-5f270f869c5c,7609c4e3-f1d3-4190-b571-49a5f7e3d18c,log,1776944616919000
+"Listening on http://localhost:9999/
+",Log,22508fee-c41c-40c7-aa9a-02646d2ffa81,6085dae9-7976-41e8-b25a-5f270f869c5c,cbfc712e-a3f4-4061-bfd0-9d2e96a9efcd,info,1776944616749000
+booted (time: 27ms),Boot,22508fee-c41c-40c7-aa9a-02646d2ffa81,6085dae9-7976-41e8-b25a-5f270f869c5c,b70492b0-c3e9-4edb-b3f6-dc54a26ff307,log,1776944616744000
