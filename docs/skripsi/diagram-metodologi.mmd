@@ -1,0 +1,53 @@
+flowchart TD
+    ROOT["Metodologi Pengembangan Sistem"]:::root
+
+    ROOT --> T1["3.3 Tahap Observasi"]:::h2
+    ROOT --> T2["3.4 Tahap Analisis Kebutuhan Sistem"]:::h2
+    ROOT --> T3["3.5 Tahap Perancangan Sistem"]:::h2
+    ROOT --> T4["3.6 Tahap Implementasi Sistem"]:::h2
+    ROOT --> T5["3.7 Tahap Penerapan Sistem"]:::h2
+    ROOT --> T6["3.8 Tahap Pengujian Sistem"]:::h2
+
+    %% 3.3 Observasi
+    T1 --> T1A["3.3.1 Studi Lapangan"]:::h3
+    T1 --> T1B["3.3.2 Studi Pustaka"]:::h3
+    T1A --> T1A1["3.3.1.1 Identifikasi Akun Studi Kasus"]:::h4
+    T1A --> T1A2["3.3.1.2 Pengumpulan Data Unggahan Konten"]:::h4
+
+    %% 3.4 Analisis
+    T2 --> T2A["3.4.1 Analisis Masalah"]:::h3
+    T2 --> T2B["3.4.2 Kebutuhan Fungsional"]:::h3
+    T2 --> T2C["3.4.3 Kebutuhan Non-Fungsional"]:::h3
+    T2 --> T2D["3.4.4 Kebutuhan Pengguna"]:::h3
+    T2 --> T2E["3.4.5 Kebutuhan Data"]:::h3
+    T2A --> T2A1["3.4.1.1 Identifikasi Permasalahan Pengguna"]:::h4
+    T2A --> T2A2["3.4.1.2 Identifikasi Celah Penelitian"]:::h4
+
+    %% 3.5 Perancangan
+    T3 --> T3A["3.5.1 Arsitektur Sistem"]:::h3
+    T3 --> T3B["3.5.2 Proses Bisnis"]:::h3
+    T3 --> T3C["3.5.3 Basis Data"]:::h3
+    T3 --> T3D["3.5.4 Struktur Navigasi"]:::h3
+    T3 --> T3E["3.5.5 Antarmuka Pengguna"]:::h3
+
+    %% 3.6 Implementasi
+    T4 --> T4A["3.6.1 Penyiapan Lingkungan Pengembangan"]:::h3
+    T4 --> T4B["3.6.2 Pengkodean Antarmuka Pengguna"]:::h3
+    T4 --> T4C["3.6.3 Pengkodean Logika Aplikasi"]:::h3
+    T4 --> T4D["3.6.4 Pengkodean Layanan Basis Data"]:::h3
+    T4 --> T4E["3.6.5 Pengkodean Layanan Kecerdasan Buatan"]:::h3
+
+    %% 3.7 Penerapan
+    T5 --> T5A["3.7.1 Penyiapan Lingkungan Produksi"]:::h3
+    T5 --> T5B["3.7.2 Penerapan Sistem ke Lingkungan Produksi"]:::h3
+
+    %% 3.8 Pengujian
+    T6 --> T6A["3.8.1 Pengujian Kotak Hitam"]:::h3
+    T6 --> T6B["3.8.2 Pengujian Penerimaan Pengguna"]:::h3
+    T6A --> T6A1["3.8.1.1 Penyusunan Skenario Pengujian"]:::h4
+    T6A --> T6A2["3.8.1.2 Pelaksanaan Pengujian Modul"]:::h4
+
+    classDef root fill:#1f2937,stroke:#0f172a,stroke-width:2px,color:#ffffff,font-weight:bold
+    classDef h2 fill:#2563eb,stroke:#1e3a8a,stroke-width:2px,color:#ffffff,font-weight:bold
+    classDef h3 fill:#9333ea,stroke:#581c87,stroke-width:1.5px,color:#ffffff
+    classDef h4 fill:#f97316,stroke:#9a3412,stroke-width:1.5px,color:#ffffff
