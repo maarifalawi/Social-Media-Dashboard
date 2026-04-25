@@ -1,12 +1,24 @@
 # 3. METODOLOGI PENELITIAN
 
-> Catatan: Bagian ini hanya berisi naskah sub-bagian 3.3 hingga 3.8 sesuai revisi terbaru. Sub-bagian 3.1 (Objek Penelitian) dan 3.2 (Metode Pengembangan Sistem) yang telah disetujui sebelumnya tetap dipertahankan.
+> Catatan: Berkas ini berisi naskah sub-bagian 3.1 Tahapan Penelitian beserta sub-bagian 3.3 hingga 3.8 sesuai revisi terbaru. Sub-bagian 3.2 Objek Penelitian yang telah disetujui sebelumnya tetap dipertahankan.
+
+---
+
+## 3.1 Tahapan Penelitian
+
+Penelitian ini disusun ke dalam enam tahap yang dilaksanakan secara berurutan, yaitu tahap observasi, tahap analisis kebutuhan sistem, tahap perancangan sistem, tahap implementasi sistem, tahap penerapan sistem, dan tahap pengujian sistem. Setiap tahap menghasilkan keluaran yang menjadi masukan bagi tahap berikutnya, sehingga rangkaian tahap tersebut membentuk alur penelitian yang utuh dari pengumpulan data awal hingga pengukuran tingkat penerimaan sistem oleh pengguna. Gambaran umum keenam tahap penelitian disajikan pada Gambar 3.1.
+
+**Gambar 3.1** Tahapan Penelitian secara Umum
+
+Gambar 3.1 memperlihatkan urutan keenam tahap penelitian yang disusun secara linier mengikuti pendekatan model air terjun. Tahap pertama adalah tahap observasi yang berfungsi untuk mengumpulkan data primer dan data sekunder. Tahap kedua adalah tahap analisis kebutuhan sistem yang menerjemahkan hasil observasi menjadi spesifikasi kebutuhan. Tahap ketiga adalah tahap perancangan sistem yang menerjemahkan spesifikasi kebutuhan menjadi rancangan sistem yang siap diimplementasikan. Tahap keempat adalah tahap implementasi sistem yang menerjemahkan rancangan menjadi kode program yang dapat dieksekusi. Tahap kelima adalah tahap penerapan sistem yang memindahkan sistem dari lingkungan pengembangan ke lingkungan produksi. Tahap keenam adalah tahap pengujian sistem yang memverifikasi pemenuhan kebutuhan dan mengukur tingkat penerimaan sistem oleh pengguna. Penjabaran rinci setiap tahap beserta sub-tahapnya disajikan pada bagian-bagian berikut.
 
 ---
 
 ## 3.3 Tahap Observasi
 
-Tahap observasi merupakan tahap awal dari rangkaian penelitian yang bertujuan untuk mengumpulkan data primer dan data sekunder yang akan menjadi dasar bagi tahap analisis kebutuhan sistem. Pengumpulan data dilakukan melalui dua pendekatan, yaitu studi lapangan dan studi pustaka, agar data yang diperoleh memiliki landasan empiris dari kondisi nyata di lapangan sekaligus landasan ilmiah dari penelitian-penelitian terdahulu.
+Tahap observasi merupakan tahap awal dari rangkaian penelitian yang bertujuan untuk mengumpulkan data primer dan data sekunder yang akan menjadi dasar bagi tahap analisis kebutuhan sistem. Pengumpulan data dilakukan melalui dua pendekatan, yaitu studi lapangan dan studi pustaka, agar data yang diperoleh memiliki landasan empiris dari kondisi nyata di lapangan sekaligus landasan ilmiah dari penelitian-penelitian terdahulu. Rincian sub-tahap pada tahap observasi disajikan pada Gambar 3.2.
+
+**Gambar 3.2** Rincian Tahap Observasi
 
 ### 3.3.1 Studi Lapangan
 
@@ -28,7 +40,9 @@ Studi pustaka dilakukan untuk memperoleh data sekunder berupa landasan teori dan
 
 ## 3.4 Tahap Analisis Kebutuhan Sistem
 
-Tahap analisis kebutuhan sistem dilakukan untuk menerjemahkan hasil observasi menjadi spesifikasi kebutuhan yang akan menjadi acuan pada tahap perancangan. Tahap ini dibagi menjadi lima bagian, yaitu analisis masalah, analisis kebutuhan fungsional, analisis kebutuhan non-fungsional, analisis kebutuhan pengguna, dan analisis kebutuhan data. Pembagian ini bertujuan agar setiap aspek kebutuhan sistem dapat dianalisis secara terstruktur dan tidak ada kebutuhan yang terlewat.
+Tahap analisis kebutuhan sistem dilakukan untuk menerjemahkan hasil observasi menjadi spesifikasi kebutuhan yang akan menjadi acuan pada tahap perancangan. Tahap ini dibagi menjadi lima bagian, yaitu analisis masalah, analisis kebutuhan fungsional, analisis kebutuhan non-fungsional, analisis kebutuhan pengguna, dan analisis kebutuhan data. Pembagian ini bertujuan agar setiap aspek kebutuhan sistem dapat dianalisis secara terstruktur dan tidak ada kebutuhan yang terlewat. Rincian sub-tahap pada tahap analisis kebutuhan sistem disajikan pada Gambar 3.3.
+
+**Gambar 3.3** Rincian Tahap Analisis Kebutuhan Sistem
 
 ### 3.4.1 Analisis Masalah
 
@@ -62,7 +76,9 @@ Analisis kebutuhan data dilakukan untuk mengidentifikasi entitas-entitas utama y
 
 ## 3.5 Tahap Perancangan Sistem
 
-Tahap perancangan sistem dilakukan untuk menerjemahkan hasil analisis kebutuhan menjadi rancangan yang siap diimplementasikan. Perancangan dibagi menjadi lima bagian, yaitu perancangan arsitektur sistem, perancangan proses bisnis, perancangan basis data, perancangan struktur navigasi, dan perancangan antarmuka pengguna. Pembagian ini mengikuti praktik standar dalam pengembangan perangkat lunak yang memisahkan rancangan struktural, rancangan perilaku, dan rancangan visual agar setiap aspek dapat dirancang secara fokus.
+Tahap perancangan sistem dilakukan untuk menerjemahkan hasil analisis kebutuhan menjadi rancangan yang siap diimplementasikan. Perancangan dibagi menjadi lima bagian, yaitu perancangan arsitektur sistem, perancangan proses bisnis, perancangan basis data, perancangan struktur navigasi, dan perancangan antarmuka pengguna. Pembagian ini mengikuti praktik standar dalam pengembangan perangkat lunak yang memisahkan rancangan struktural, rancangan perilaku, dan rancangan visual agar setiap aspek dapat dirancang secara fokus. Rincian sub-tahap pada tahap perancangan sistem disajikan pada Gambar 3.4.
+
+**Gambar 3.4** Rincian Tahap Perancangan Sistem
 
 ### 3.5.1 Perancangan Arsitektur Sistem
 
@@ -88,7 +104,9 @@ Perancangan antarmuka pengguna dilakukan dengan pendekatan *mobile first* agar t
 
 ## 3.6 Tahap Implementasi Sistem
 
-Tahap implementasi sistem dilakukan untuk menerjemahkan hasil perancangan menjadi kode program yang dapat dieksekusi. Implementasi dibagi menjadi lima bagian, yaitu penyiapan lingkungan pengembangan, pengkodean antarmuka pengguna, pengkodean logika aplikasi, pengkodean layanan basis data, dan pengkodean layanan kecerdasan buatan. Pembagian ini bertujuan agar setiap modul sistem dikembangkan secara terstruktur dan mudah ditelusuri pada tahap pengujian.
+Tahap implementasi sistem dilakukan untuk menerjemahkan hasil perancangan menjadi kode program yang dapat dieksekusi. Implementasi dibagi menjadi lima bagian, yaitu penyiapan lingkungan pengembangan, pengkodean antarmuka pengguna, pengkodean logika aplikasi, pengkodean layanan basis data, dan pengkodean layanan kecerdasan buatan. Pembagian ini bertujuan agar setiap modul sistem dikembangkan secara terstruktur dan mudah ditelusuri pada tahap pengujian. Rincian sub-tahap pada tahap implementasi sistem disajikan pada Gambar 3.5.
+
+**Gambar 3.5** Rincian Tahap Implementasi Sistem
 
 ### 3.6.1 Penyiapan Lingkungan Pengembangan
 
@@ -114,7 +132,9 @@ Pengkodean layanan kecerdasan buatan dilakukan untuk mengintegrasikan model baha
 
 ## 3.7 Tahap Penerapan Sistem
 
-Tahap penerapan sistem dilakukan untuk memindahkan sistem dari lingkungan pengembangan ke lingkungan produksi yang dapat diakses oleh pengguna akhir. Penerapan dibagi menjadi dua bagian, yaitu penyiapan lingkungan produksi dan penerapan sistem ke lingkungan produksi.
+Tahap penerapan sistem dilakukan untuk memindahkan sistem dari lingkungan pengembangan ke lingkungan produksi yang dapat diakses oleh pengguna akhir. Penerapan dibagi menjadi dua bagian, yaitu penyiapan lingkungan produksi dan penerapan sistem ke lingkungan produksi. Rincian sub-tahap pada tahap penerapan sistem disajikan pada Gambar 3.6.
+
+**Gambar 3.6** Rincian Tahap Penerapan Sistem
 
 ### 3.7.1 Penyiapan Lingkungan Produksi
 
@@ -128,7 +148,9 @@ Penerapan sistem ke lingkungan produksi dilakukan dengan membangun antarmuka pen
 
 ## 3.8 Tahap Pengujian Sistem
 
-Tahap pengujian sistem dilakukan untuk memverifikasi bahwa sistem yang dibangun telah memenuhi seluruh kebutuhan fungsional dan non-fungsional yang telah dirumuskan pada tahap analisis. Pengujian dibagi menjadi dua bagian, yaitu pengujian kotak hitam dan pengujian penerimaan pengguna.
+Tahap pengujian sistem dilakukan untuk memverifikasi bahwa sistem yang dibangun telah memenuhi seluruh kebutuhan fungsional dan non-fungsional yang telah dirumuskan pada tahap analisis. Pengujian dibagi menjadi dua bagian, yaitu pengujian kotak hitam dan pengujian penerimaan pengguna. Rincian sub-tahap pada tahap pengujian sistem disajikan pada Gambar 3.7.
+
+**Gambar 3.7** Rincian Tahap Pengujian Sistem
 
 ### 3.8.1 Pengujian Kotak Hitam
 
