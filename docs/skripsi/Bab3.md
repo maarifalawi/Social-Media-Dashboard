@@ -1,4 +1,4 @@
-# 3. METODOLOGI PENELITIAN
+# 3. METODE PENELITIAN
 
 > Catatan: Berkas ini berisi naskah seluruh sub-bagian Bab 3 sesuai revisi terbaru. Sub-bagian 3.2 Studi Literatur disertakan untuk kelengkapan; jika sub-bagian tersebut sudah ada di berkas Word, naskah ini dapat dijadikan rujukan atau pengganti sesuai kebutuhan.
 
