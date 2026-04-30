@@ -1,28 +1,24 @@
 # 2. LANDASAN TEORI
 
-## 2.1 Landasan Teori
-
-Sub-bagian ini memuat konsep dan teori yang melandasi penelitian, mulai dari konsep usaha mikro, kecil, dan menengah sebagai subjek penelitian, konsep media sosial dan analitik media sosial sebagai konteks penelitian, konsep kecerdasan buatan generatif sebagai pendukung utama sistem, hingga konsep metode pengembangan dan pengujian perangkat lunak yang digunakan dalam penelitian.
-
-### 2.1.1 Usaha Mikro, Kecil, dan Menengah
+## 2.1 Usaha Mikro, Kecil, dan Menengah
 
 Usaha mikro, kecil, dan menengah merupakan kategori usaha yang ditetapkan berdasarkan kriteria modal usaha dan hasil penjualan tahunan. Berdasarkan Undang-Undang Republik Indonesia Nomor 20 Tahun 2008 tentang Usaha Mikro, Kecil, dan Menengah yang ketentuannya kemudian diperbarui melalui Peraturan Pemerintah Republik Indonesia Nomor 7 Tahun 2021, usaha mikro adalah usaha dengan modal usaha sampai dengan satu miliar rupiah tidak termasuk tanah dan bangunan tempat usaha, usaha kecil adalah usaha dengan modal usaha lebih dari satu miliar rupiah sampai dengan lima miliar rupiah, dan usaha menengah adalah usaha dengan modal usaha lebih dari lima miliar rupiah sampai dengan sepuluh miliar rupiah.
 
 Usaha mikro, kecil, dan menengah memegang peran penting dalam perekonomian nasional. Berdasarkan data Kementerian Koperasi dan Usaha Kecil dan Menengah Republik Indonesia, sektor usaha mikro, kecil, dan menengah memberikan kontribusi sebesar enam puluh satu persen terhadap produk domestik bruto nasional dan menyerap sekitar sembilan puluh tujuh persen dari total tenaga kerja nasional. Karakteristik usaha mikro, kecil, dan menengah yang umumnya dimiliki oleh perorangan dengan keterbatasan sumber daya menjadikan adopsi teknologi pemasaran digital sebagai kebutuhan strategis yang dapat membantu pelaku usaha menjangkau pasar yang lebih luas dengan biaya operasional yang relatif rendah.
 
-### 2.1.2 Media Sosial dan Instagram
+## 2.2 Media Sosial dan Instagram
 
 Kaplan dan Haenlein (2010) mendefinisikan media sosial sebagai sekelompok aplikasi berbasis internet yang dibangun di atas dasar ideologi dan teknologi *Web 2.0* yang memungkinkan pembuatan dan pertukaran konten yang dihasilkan oleh pengguna. Definisi tersebut menjelaskan bahwa karakteristik utama media sosial terletak pada partisipasi aktif pengguna sebagai pencipta konten, bukan sekadar konsumen pasif sebagaimana yang berlaku pada media tradisional. Karakteristik tersebut menjadikan media sosial sebagai saluran pemasaran dua arah yang memungkinkan pelaku usaha berinteraksi langsung dengan audiensnya.
 
 Instagram merupakan salah satu platform media sosial yang berfokus pada konten visual berupa foto dan video. Sejak diluncurkan pada tahun 2010, Instagram telah berkembang menjadi salah satu platform media sosial dengan jumlah pengguna aktif terbesar di dunia. Di Indonesia, Instagram menjadi salah satu platform media sosial dengan adopsi tertinggi di kalangan pelaku usaha mikro, kecil, dan menengah karena karakteristiknya yang sesuai dengan kebutuhan pemasaran produk berbasis visual, biaya operasional yang rendah, serta tersedianya fitur bawaan untuk berdagang dan berinteraksi dengan calon pembeli.
 
-### 2.1.3 Analitik Media Sosial
+## 2.3 Analitik Media Sosial
 
 Analitik media sosial merupakan kegiatan pengumpulan, pengukuran, dan analisis terhadap data yang dihasilkan oleh aktivitas pengguna pada platform media sosial dengan tujuan menghasilkan wawasan yang dapat digunakan sebagai dasar pengambilan keputusan. Saura (2021) menyebutkan bahwa analitik media sosial dapat dipandang sebagai bentuk khusus dari ilmu data yang diterapkan pada konteks pemasaran digital, dengan fokus pada pengenalan pola perilaku audiens dan pengukuran kinerja konten yang diunggah oleh pelaku usaha.
 
 Aktivitas analitik media sosial pada umumnya melibatkan empat tahap utama, yaitu pengumpulan data, pengolahan data, analisis data, dan penyajian wawasan. Pengumpulan data dilakukan melalui ekstraksi metrik kinerja konten dari fitur bawaan platform atau melalui antarmuka pemrograman aplikasi resmi. Pengolahan data dilakukan untuk membersihkan data dari kekeliruan dan mengubahnya menjadi format yang siap dianalisis. Analisis data dilakukan untuk menemukan pola dan tren yang relevan dengan tujuan pengguna. Penyajian wawasan dilakukan dengan menggunakan visualisasi data dalam bentuk grafik, tabel, dan ringkasan tekstual agar mudah dipahami oleh pengguna akhir.
 
-### 2.1.4 Tingkat Keterlibatan
+## 2.4 Tingkat Keterlibatan
 
 Tingkat keterlibatan (*engagement rate*) merupakan salah satu metrik utama yang digunakan untuk mengukur tingkat interaksi audiens terhadap konten yang diunggah oleh pelaku usaha pada platform media sosial. Elango dkk. (2023) menjelaskan bahwa tingkat keterlibatan merupakan indikator kualitas konten yang lebih representatif dibandingkan jumlah pengikut, karena tingkat keterlibatan secara langsung mencerminkan respons aktif audiens terhadap konten, bukan sekadar jumlah audiens yang berpotensi menerima konten.
 
@@ -32,97 +28,67 @@ Tingkat keterlibatan dihitung menggunakan beberapa formula yang berbeda tergantu
 
 Hasil perhitungan tingkat keterlibatan kemudian dapat diinterpretasikan untuk mengetahui kualitas konten secara relatif. Interpretasi tersebut menjadi dasar bagi pelaku usaha untuk menentukan jenis konten yang perlu diperbanyak atau dievaluasi pada periode unggahan berikutnya.
 
-### 2.1.5 Kecerdasan Buatan Generatif
+## 2.5 Kecerdasan Buatan Generatif
 
 Kecerdasan buatan generatif (*generative artificial intelligence*) merupakan cabang dari kecerdasan buatan yang berfokus pada pembangkitan keluaran baru, baik berupa teks, gambar, audio, maupun video, berdasarkan pola-pola yang dipelajari dari data pelatihan. Inti dari kecerdasan buatan generatif modern terletak pada model bahasa besar (*large language model*) yang dilatih dengan korpus teks berskala besar, sehingga mampu menghasilkan teks yang menyerupai tulisan manusia dengan tingkat kewajaran yang tinggi.
 
 Dwivedi dkk. (2023) menyatakan bahwa kemajuan kecerdasan buatan generatif telah membuka peluang baru bagi pelaku usaha untuk memanfaatkan kecerdasan buatan sebagai pendamping dalam aktivitas pemasaran, antara lain untuk menyusun ringkasan wawasan dari data kinerja konten, menggali pola perilaku audiens, dan menyusun teks pendukung konten seperti keterangan unggahan atau judul artikel. Pemanfaatan kecerdasan buatan generatif pada konteks pelaku usaha mikro, kecil, dan menengah memberikan keuntungan berupa penghematan waktu dan biaya yang signifikan dibandingkan dengan menyewa jasa profesional kreatif. Salah satu model bahasa besar yang dapat diakses melalui antarmuka pemrograman aplikasi adalah Gemini yang dikembangkan oleh Google, yang menyediakan kemampuan pembangkitan teks dengan kualitas yang setara dengan model-model lain di kelasnya.
 
-### 2.1.6 Model Air Terjun
+## 2.6 Model Air Terjun
 
 Model air terjun (*waterfall*) merupakan salah satu model siklus hidup pengembangan perangkat lunak yang paling klasik dan paling banyak digunakan dalam pengembangan sistem berskala kecil hingga menengah. Sommerville (2016) menjelaskan bahwa model air terjun mengelola pengembangan perangkat lunak melalui serangkaian tahap yang dilaksanakan secara berurutan, di mana keluaran setiap tahap menjadi masukan bagi tahap berikutnya, dan setiap tahap diselesaikan secara tuntas sebelum berpindah ke tahap berikutnya.
 
 Tahap-tahap pada model air terjun secara umum meliputi analisis kebutuhan, perancangan sistem, implementasi, pengujian, penerapan, dan pemeliharaan. Karakteristik linier dari model air terjun memberikan keunggulan berupa dokumentasi yang lengkap pada setiap tahap, kemudahan dalam pengelolaan proyek, dan kesesuaian untuk proyek yang memiliki kebutuhan yang relatif stabil. Karakteristik tersebut menjadikan model air terjun sebagai pilihan yang sesuai untuk pengembangan platform analitik media sosial pada penelitian ini.
 
-### 2.1.7 Pengujian Kotak Hitam
+## 2.7 Pengujian Kotak Hitam
 
 Pengujian kotak hitam (*black box testing*) merupakan salah satu metode pengujian perangkat lunak yang berfokus pada pemeriksaan fungsionalitas sistem dari sudut pandang pengguna tanpa memperhatikan struktur kode internal sistem. Pressman (2014) menjelaskan bahwa pada pengujian kotak hitam, penguji hanya berkepentingan dengan masukan yang diberikan kepada sistem dan keluaran yang dihasilkan oleh sistem, tanpa perlu mengetahui logika pemrosesan yang terjadi di dalam sistem.
 
 Pengujian kotak hitam dilakukan dengan menyusun skenario pengujian yang merepresentasikan setiap kebutuhan fungsional yang telah dirumuskan pada tahap analisis. Setiap skenario memuat informasi modul yang diuji, langkah-langkah pengujian, masukan yang diberikan, dan keluaran yang diharapkan. Hasil pengujian kemudian dibandingkan dengan keluaran yang diharapkan untuk menentukan apakah modul yang diuji telah berfungsi dengan benar.
 
-### 2.1.8 *System Usability Scale*
+## 2.8 *System Usability Scale*
 
 *System Usability Scale* merupakan instrumen pengukuran kebergunaan perangkat lunak yang dikembangkan oleh Brooke (1996) dan menjadi salah satu instrumen yang paling banyak digunakan dalam penelitian rekayasa kebergunaan perangkat lunak. Instrumen ini terdiri atas sepuluh pernyataan yang harus dijawab oleh responden menggunakan skala Likert dengan rentang jawaban dari satu sampai dengan lima, di mana satu menyatakan sangat tidak setuju dan lima menyatakan sangat setuju.
 
 Skor akhir *System Usability Scale* dihitung dengan formula khusus yang menghasilkan rentang nilai dari nol sampai dengan seratus. Hasil perhitungan kemudian diinterpretasikan menggunakan skala penerimaan baku, di mana skor di bawah lima puluh satu dikategorikan sebagai *not acceptable*, skor antara lima puluh satu sampai dengan enam puluh delapan dikategorikan sebagai *marginal*, dan skor di atas enam puluh delapan dikategorikan sebagai *acceptable*. Skor di atas tujuh puluh dipandang sebagai indikasi sistem yang memiliki kebergunaan yang baik, sedangkan skor di atas delapan puluh dipandang sebagai indikasi sistem yang memiliki kebergunaan yang sangat baik.
 
----
-
-## 2.2 Perangkat Pendukung
-
-Sub-bagian ini memuat penjelasan singkat mengenai perangkat lunak dan pustaka yang digunakan sebagai pendukung utama dalam pengembangan platform analitik media sosial pada penelitian ini.
-
-### 2.2.1 React
+## 2.9 React
 
 React merupakan pustaka *JavaScript* sumber terbuka yang dikembangkan oleh Meta untuk membangun antarmuka pengguna berbasis komponen. React memperkenalkan konsep *virtual document object model* yang memungkinkan pembaruan tampilan secara efisien hanya pada bagian antarmuka yang berubah, sehingga aplikasi yang dibangun memiliki kinerja yang baik bahkan ketika menampilkan data dalam jumlah besar. React menjadi salah satu pustaka antarmuka pengguna yang paling banyak digunakan dalam pengembangan aplikasi web modern karena dukungan komunitas yang besar dan ekosistem komponen siap pakai yang sangat kaya.
 
-### 2.2.2 TypeScript
+## 2.10 TypeScript
 
 TypeScript merupakan bahasa pemrograman yang dikembangkan oleh Microsoft sebagai perluasan dari bahasa *JavaScript* dengan tambahan sistem tipe data statis. Berbeda dengan *JavaScript* yang melakukan pemeriksaan tipe pada saat eksekusi, TypeScript melakukan pemeriksaan tipe pada saat kompilasi, sehingga kekeliruan tipe dapat ditemukan lebih awal pada tahap pengembangan. Penggunaan TypeScript dapat mengurangi jumlah kekeliruan pada saat eksekusi, meningkatkan keterbacaan kode, dan mempermudah pemeliharaan kode pada proyek yang berskala besar.
 
-### 2.2.3 Vite
+## 2.11 Vite
 
 Vite merupakan perkakas *bundler* dan *development server* generasi baru yang dikembangkan oleh komunitas sumber terbuka untuk menggantikan perkakas lama seperti *Webpack*. Vite memanfaatkan teknologi *native ECMAScript modules* pada peramban modern untuk mempercepat proses pemuatan ulang ketika kode diubah, sehingga waktu tunggu pengembang menjadi sangat singkat. Vite juga menyediakan proses *build* yang dioptimalkan untuk produksi dengan menghasilkan berkas hasil *build* yang berukuran kecil dan cepat dimuat oleh peramban.
 
-### 2.2.4 Tailwind CSS
+## 2.12 Tailwind CSS
 
 Tailwind CSS merupakan kerangka kerja *Cascading Style Sheets* yang menerapkan pendekatan *utility first* dengan menyediakan kelas-kelas pemformatan kecil yang dapat dikomposisikan langsung pada penanda *HyperText Markup Language*. Pendekatan tersebut memungkinkan pengembang untuk merancang antarmuka dengan cepat tanpa perlu menulis berkas *Cascading Style Sheets* terpisah. Tailwind CSS juga menyediakan dukungan bawaan untuk perancangan antarmuka responsif, mode gelap, dan animasi sederhana, sehingga sangat sesuai untuk pengembangan antarmuka aplikasi web modern.
 
-### 2.2.5 Supabase
+## 2.13 Supabase
 
 Supabase merupakan layanan *backend as a service* sumber terbuka yang menyediakan layanan basis data, otentikasi pengguna, penyimpanan berkas, dan eksekusi fungsi sisi peladen dalam satu paket terintegrasi. Layanan basis data Supabase dibangun di atas PostgreSQL, sebuah sistem manajemen basis data relasional sumber terbuka yang dikenal andal dan kaya fitur. Supabase juga menyediakan fitur *Edge Function* yang berjalan pada lingkungan eksekusi Deno di sisi peladen, yang dapat digunakan untuk mengeksekusi logika sisi peladen yang sensitif seperti pemanggilan layanan kecerdasan buatan dengan kunci API yang tidak boleh terekspos pada sisi peramban. Penggunaan Supabase memberikan keuntungan berupa kecepatan pengembangan yang tinggi karena pengembang tidak perlu membangun layanan *backend* dari awal.
 
-### 2.2.6 Gemini
+## 2.14 Gemini
 
 Gemini merupakan keluarga model bahasa besar yang dikembangkan oleh Google sebagai bagian dari ekosistem layanan kecerdasan buatan Google. Gemini dirancang sebagai model multimoda yang mampu memproses masukan dalam bentuk teks, gambar, audio, dan video, serta menghasilkan keluaran teks yang berkualitas tinggi. Gemini dapat diakses melalui antarmuka pemrograman aplikasi resmi Google AI yang tersedia secara publik, sehingga memungkinkan integrasi dengan aplikasi pihak ketiga. Pada penelitian ini, Gemini digunakan sebagai mesin penghasil ringkasan wawasan kinerja konten dan penyusun keterangan unggahan otomatis.
 
----
+## 2.15 Penelitian Terdahulu
 
-## 2.3 Penelitian Terdahulu
+Bagian ini memuat tinjauan terhadap lima penelitian terdahulu yang relevan dengan topik penelitian, masing-masing dijabarkan berdasarkan tujuan, metode, temuan, dan keterkaitannya dengan penelitian ini. Pada akhir bagian disajikan tabel rekapitulasi perbandingan kelima penelitian terdahulu beserta posisi penelitian ini.
 
-Sub-bagian ini memuat tinjauan terhadap lima penelitian terdahulu yang relevan dengan topik penelitian, masing-masing dijabarkan berdasarkan tujuan, metode, temuan, dan keterkaitannya dengan penelitian ini. Pada akhir sub-bagian disajikan tabel rekapitulasi perbandingan kelima penelitian terdahulu beserta posisi penelitian ini.
+Dwivedi dkk. (2021) menyusun sebuah agenda penelitian masa depan untuk bidang pemasaran digital dan media sosial dalam artikel berjudul *"Setting the future of digital and social media marketing research: Perspectives and research propositions"* yang diterbitkan pada *International Journal of Information Management*. Penelitian tersebut dilakukan melalui kajian sistematis terhadap publikasi-publikasi terkini di bidang pemasaran digital dan diskusi panel dengan peneliti-peneliti terkemuka di bidang tersebut. Penelitian tersebut menyimpulkan bahwa transformasi digital pada bidang pemasaran menuntut pelaku usaha untuk tidak hanya hadir di kanal digital, tetapi juga mampu memanfaatkan data yang dihasilkan oleh aktivitas digital tersebut sebagai dasar pengambilan keputusan. Penelitian tersebut juga mengidentifikasi sejumlah celah penelitian yang membutuhkan perhatian lebih lanjut, antara lain adopsi teknologi pemasaran digital pada usaha berskala kecil, integrasi kecerdasan buatan dalam alur kerja pemasaran, dan pengukuran efektivitas strategi konten media sosial. Penelitian ini menjadi acuan utama untuk menjustifikasi pentingnya membangun platform analitik media sosial yang mendukung pelaku usaha mikro, kecil, dan menengah dalam memanfaatkan data kinerja konten secara lebih sistematis.
 
-### 2.3.1 Dwivedi dkk. (2021)
+Saura (2021) menyusun kerangka kerja pemanfaatan ilmu data pada pemasaran digital dalam artikel berjudul *"Using data sciences in digital marketing: Framework, methods, and performance metrics"* yang diterbitkan pada *Journal of Innovation and Knowledge*. Penelitian tersebut bertujuan untuk menyusun kerangka kerja yang dapat digunakan oleh praktisi pemasaran digital dalam memilih metode analisis data dan metrik kinerja yang sesuai dengan tujuan analisis. Penelitian tersebut mengidentifikasi empat jenis pola utama yang dapat dianalisis menggunakan ilmu data, yaitu *clustering*, *association rule mining*, *anomaly detection*, dan *prediction patterns*, serta menyusun daftar metrik kinerja yang relevan untuk masing-masing jenis pola tersebut. Penelitian ini menjadi acuan utama dalam pemilihan tujuh metrik kinerja konten yang dianalisis sistem pada penelitian ini, sebagaimana telah dijabarkan pada metode penelitian.
 
-Dwivedi dkk. (2021) menyusun sebuah agenda penelitian masa depan untuk bidang pemasaran digital dan media sosial dalam artikel berjudul *"Setting the future of digital and social media marketing research: Perspectives and research propositions"* yang diterbitkan pada *International Journal of Information Management*. Penelitian tersebut dilakukan melalui kajian sistematis terhadap publikasi-publikasi terkini di bidang pemasaran digital dan diskusi panel dengan peneliti-peneliti terkemuka di bidang tersebut.
+Dwivedi dkk. (2023) menyusun artikel pendapat berjudul *"Opinion Paper: 'So what if ChatGPT wrote it?' Multidisciplinary perspectives on opportunities, challenges and implications of generative conversational AI for research, practice and policy"* yang diterbitkan pada *International Journal of Information Management*. Penelitian tersebut membahas peluang, tantangan, dan implikasi dari kemajuan kecerdasan buatan generatif pada berbagai bidang, termasuk bidang pemasaran. Penelitian tersebut menyoroti bahwa kecerdasan buatan generatif dapat berperan sebagai pendamping kreatif yang membantu pelaku usaha menyusun ringkasan wawasan, menggali pola perilaku audiens, dan menghasilkan teks pendukung konten dengan biaya yang jauh lebih rendah dibandingkan menyewa jasa profesional. Penelitian tersebut juga mengingatkan pentingnya pengaturan etika dan tata kelola dalam penggunaan kecerdasan buatan generatif. Penelitian ini menjadi acuan untuk menjustifikasi integrasi model bahasa Gemini ke dalam platform yang dibangun sebagai pendukung fitur ringkasan wawasan dan penyusun keterangan unggahan.
 
-Penelitian tersebut menyimpulkan bahwa transformasi digital pada bidang pemasaran menuntut pelaku usaha untuk tidak hanya hadir di kanal digital, tetapi juga mampu memanfaatkan data yang dihasilkan oleh aktivitas digital tersebut sebagai dasar pengambilan keputusan. Penelitian tersebut juga mengidentifikasi sejumlah celah penelitian yang membutuhkan perhatian lebih lanjut, antara lain adopsi teknologi pemasaran digital pada usaha berskala kecil, integrasi kecerdasan buatan dalam alur kerja pemasaran, dan pengukuran efektivitas strategi konten media sosial. Penelitian ini menjadi acuan utama untuk menjustifikasi pentingnya membangun platform analitik media sosial yang mendukung pelaku usaha mikro, kecil, dan menengah dalam memanfaatkan data kinerja konten secara lebih sistematis.
+White (2022) menyusun disertasi doktoral berjudul *"Social Media Analytics Adoption in Small and Medium-Sized Enterprises"* yang diterbitkan oleh Walden University. Penelitian tersebut bertujuan untuk mengidentifikasi faktor-faktor yang mempengaruhi adopsi analitik media sosial pada usaha berskala kecil dan menengah di Amerika Serikat melalui pendekatan studi kasus kualitatif terhadap sejumlah pelaku usaha kecil. Penelitian tersebut menemukan bahwa keterbatasan keahlian teknis, keterbatasan waktu, dan keterbatasan anggaran menjadi tiga hambatan utama yang menyebabkan pelaku usaha kecil tidak melakukan analisis kinerja konten secara berkelanjutan, meskipun data kinerja konten telah tersedia melalui fitur bawaan platform. Penelitian tersebut juga merekomendasikan pengembangan perkakas analitik yang lebih mudah digunakan dan terjangkau bagi pelaku usaha kecil. Penelitian ini menjadi acuan utama untuk menjustifikasi kebutuhan pembangunan platform analitik media sosial yang dirancang khusus untuk pelaku usaha mikro, kecil, dan menengah.
 
-### 2.3.2 Saura (2021)
-
-Saura (2021) menyusun kerangka kerja pemanfaatan ilmu data pada pemasaran digital dalam artikel berjudul *"Using data sciences in digital marketing: Framework, methods, and performance metrics"* yang diterbitkan pada *Journal of Innovation and Knowledge*. Penelitian tersebut bertujuan untuk menyusun kerangka kerja yang dapat digunakan oleh praktisi pemasaran digital dalam memilih metode analisis data dan metrik kinerja yang sesuai dengan tujuan analisis.
-
-Penelitian tersebut mengidentifikasi empat jenis pola utama yang dapat dianalisis menggunakan ilmu data, yaitu *clustering*, *association rule mining*, *anomaly detection*, dan *prediction patterns*, serta menyusun daftar metrik kinerja yang relevan untuk masing-masing jenis pola tersebut. Penelitian ini menjadi acuan utama dalam pemilihan tujuh metrik kinerja konten yang dianalisis sistem pada penelitian ini, sebagaimana telah dijabarkan pada metodologi penelitian.
-
-### 2.3.3 Dwivedi dkk. (2023)
-
-Dwivedi dkk. (2023) menyusun artikel pendapat berjudul *"Opinion Paper: 'So what if ChatGPT wrote it?' Multidisciplinary perspectives on opportunities, challenges and implications of generative conversational AI for research, practice and policy"* yang diterbitkan pada *International Journal of Information Management*. Penelitian tersebut membahas peluang, tantangan, dan implikasi dari kemajuan kecerdasan buatan generatif pada berbagai bidang, termasuk bidang pemasaran.
-
-Penelitian tersebut menyoroti bahwa kecerdasan buatan generatif dapat berperan sebagai pendamping kreatif yang membantu pelaku usaha menyusun ringkasan wawasan, menggali pola perilaku audiens, dan menghasilkan teks pendukung konten dengan biaya yang jauh lebih rendah dibandingkan menyewa jasa profesional. Penelitian tersebut juga mengingatkan pentingnya pengaturan etika dan tata kelola dalam penggunaan kecerdasan buatan generatif. Penelitian ini menjadi acuan untuk menjustifikasi integrasi model bahasa Gemini ke dalam platform yang dibangun sebagai pendukung fitur ringkasan wawasan dan penyusun keterangan unggahan.
-
-### 2.3.4 White (2022)
-
-White (2022) menyusun disertasi doktoral berjudul *"Social Media Analytics Adoption in Small and Medium-Sized Enterprises"* yang diterbitkan oleh Walden University. Penelitian tersebut bertujuan untuk mengidentifikasi faktor-faktor yang mempengaruhi adopsi analitik media sosial pada usaha berskala kecil dan menengah di Amerika Serikat melalui pendekatan studi kasus kualitatif terhadap sejumlah pelaku usaha kecil.
-
-Penelitian tersebut menemukan bahwa keterbatasan keahlian teknis, keterbatasan waktu, dan keterbatasan anggaran menjadi tiga hambatan utama yang menyebabkan pelaku usaha kecil tidak melakukan analisis kinerja konten secara berkelanjutan, meskipun data kinerja konten telah tersedia melalui fitur bawaan platform. Penelitian tersebut juga merekomendasikan pengembangan perkakas analitik yang lebih mudah digunakan dan terjangkau bagi pelaku usaha kecil. Penelitian ini menjadi acuan utama untuk menjustifikasi kebutuhan pembangunan platform analitik media sosial yang dirancang khusus untuk pelaku usaha mikro, kecil, dan menengah.
-
-### 2.3.5 Elango dkk. (2023)
-
-Elango, Sithambalam, dan Haque (2023) menyusun artikel berjudul *"A Comparative Study on Engagement Metrics of Social Media Platforms"* yang diterbitkan pada *MAHSA International Journal of Business and Social Sciences*. Penelitian tersebut bertujuan untuk membandingkan metrik keterlibatan pada beberapa platform media sosial utama dan mengidentifikasi metrik yang paling representatif untuk mengukur kualitas konten.
-
-Penelitian tersebut menyimpulkan bahwa tingkat keterlibatan merupakan metrik yang lebih representatif untuk mengukur kualitas konten dibandingkan jumlah pengikut, karena tingkat keterlibatan mencerminkan respons aktif audiens terhadap konten. Penelitian tersebut juga merekomendasikan formula perhitungan tingkat keterlibatan yang berbasis pengikut sebagai formula standar yang dapat diterapkan pada berbagai platform media sosial. Penelitian ini menjadi acuan untuk mengadopsi formula perhitungan tingkat keterlibatan yang diterapkan pada platform yang dibangun.
-
-### Posisi Penelitian Ini terhadap Penelitian Terdahulu
+Elango, Sithambalam, dan Haque (2023) menyusun artikel berjudul *"A Comparative Study on Engagement Metrics of Social Media Platforms"* yang diterbitkan pada *MAHSA International Journal of Business and Social Sciences*. Penelitian tersebut bertujuan untuk membandingkan metrik keterlibatan pada beberapa platform media sosial utama dan mengidentifikasi metrik yang paling representatif untuk mengukur kualitas konten. Penelitian tersebut menyimpulkan bahwa tingkat keterlibatan merupakan metrik yang lebih representatif untuk mengukur kualitas konten dibandingkan jumlah pengikut, karena tingkat keterlibatan mencerminkan respons aktif audiens terhadap konten. Penelitian tersebut juga merekomendasikan formula perhitungan tingkat keterlibatan yang berbasis pengikut sebagai formula standar yang dapat diterapkan pada berbagai platform media sosial. Penelitian ini menjadi acuan untuk mengadopsi formula perhitungan tingkat keterlibatan yang diterapkan pada platform yang dibangun.
 
 Berdasarkan tinjauan terhadap kelima penelitian terdahulu di atas, dapat disimpulkan bahwa kelima penelitian tersebut secara umum berfokus pada aspek konseptual atau aspek pengukuran analitik media sosial, tetapi belum secara langsung menghasilkan platform analitik media sosial yang siap pakai untuk pelaku usaha mikro, kecil, dan menengah. Penelitian ini bermaksud untuk menjawab celah tersebut dengan merancang dan membangun platform analitik media sosial berbasis web yang dilengkapi dengan dukungan kecerdasan buatan generatif dan dirancang khusus untuk karakteristik pelaku usaha mikro, kecil, dan menengah. Rekapitulasi perbandingan kelima penelitian terdahulu beserta posisi penelitian ini disajikan pada Tabel 2.1.
 
