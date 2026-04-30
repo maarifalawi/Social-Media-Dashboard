@@ -110,18 +110,53 @@ const Dashboard = () => {
       if (!selectedProject || !activeDataset) return;
 
       try {
-        const { data: posts, error } = await supabase
-          .from("postingan")
-          .select("*, platform(kode_platform, nama_platform), jenis_konten(kode_jenis_konten, nama_jenis_konten)")
-          .eq("id_proyek", selectedProject.id_proyek)
-          .eq("id_dataset", activeDataset.id_dataset)
-          .order("waktu_diposting", { ascending: true });
+        // Fetch raw posts (still needed for trend/distribution charts)
+        // and aggregated KPI via RPC in parallel. RPC pushes the heavy
+        // averaging/median work to PostgreSQL so the client doesn't recompute it.
+        const [{ data: posts, error }, kpiRpc] = await Promise.all([
+          supabase
+            .from("postingan")
+            .select("*, platform(kode_platform, nama_platform), jenis_konten(kode_jenis_konten, nama_jenis_konten)")
+            .eq("id_proyek", selectedProject.id_proyek)
+            .eq("id_dataset", activeDataset.id_dataset)
+            .order("waktu_diposting", { ascending: true }),
+          supabase.rpc("dashboard_kpi", {
+            p_id_proyek: selectedProject.id_proyek,
+            p_id_dataset: activeDataset.id_dataset,
+          }),
+        ]);
 
         if (error) throw error;
 
         setHasPosts(!!posts && posts.length > 0);
-        if (posts && posts.length > 0) {
-          setKpiData(computeKpi(posts as any));
+        if (!posts || posts.length === 0) {
+          // Clear state so stale data from a previous dataset doesn't persist.
+          setKpiData({ totalPosts: 0, avgER: 0, medianReach: 0, followersNow: 0, saveRate: 0, shareRate: 0 });
+          setWeeklyERTrend([]);
+          setPlatformDist([]);
+          setContentTypeDist([]);
+          setInsights({ erTrend: "", platform: "", contentType: "" });
+          return;
+        }
+        {
+          // Prefer RPC-aggregated KPI when available; fall back to client compute.
+          const rpcRow = !kpiRpc.error && kpiRpc.data && kpiRpc.data.length > 0 ? kpiRpc.data[0] : null;
+          if (rpcRow) {
+            const totalReach = Number(rpcRow.total_reach) || 1;
+            setKpiData({
+              totalPosts: Number(rpcRow.total_posts) || 0,
+              avgER: Number(rpcRow.avg_er) || 0,
+              medianReach: Math.round(Number(rpcRow.median_reach) || 0),
+              followersNow: Number(rpcRow.followers_now) || 0,
+              saveRate: Number((((Number(rpcRow.total_saves) || 0) / totalReach) * 100).toFixed(2)),
+              shareRate: Number((((Number(rpcRow.total_shares) || 0) / totalReach) * 100).toFixed(2)),
+            });
+          } else {
+            if (kpiRpc.error) {
+              console.warn("[Dashboard] dashboard_kpi RPC unavailable, falling back to client compute:", kpiRpc.error.message);
+            }
+            setKpiData(computeKpi(posts as any));
+          }
 
           const weeklyTrend = weeklyEngagementTrend(posts as any);
           setWeeklyERTrend(weeklyTrend);

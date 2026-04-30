@@ -734,6 +734,22 @@ export type Database = {
       has_project_access: { Args: { project_id: string }; Returns: boolean }
       is_admin: { Args: never; Returns: boolean }
       is_project_admin: { Args: { p_project_id: string }; Returns: boolean }
+      dashboard_kpi: {
+        Args: { p_id_proyek: string; p_id_dataset: string }
+        Returns: {
+          total_posts: number
+          avg_er: number
+          median_reach: number
+          followers_now: number
+          total_reach: number
+          total_saves: number
+          total_shares: number
+        }[]
+      }
+      dashboard_platform_distribution: {
+        Args: { p_id_proyek: string; p_id_dataset: string }
+        Returns: { name: string; count: number }[]
+      }
     }
     Enums: {
       app_role: "admin" | "user"

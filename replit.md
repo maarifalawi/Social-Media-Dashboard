@@ -25,6 +25,7 @@ Platform analitik media sosial untuk UMKM. React + TypeScript + Vite + Tailwind 
 - Skema database memakai nama kolom Bahasa Indonesia (`id_proyek`, `id_dataset`, `engagement_rate_persen`, dst). Hormati ini di kode baru.
 - Cleanup setelah gagal import harus selalu pakai ID spesifik (`id_dataset` + `id_proyek`), jangan pakai filter berbasis nama saja.
 - Semua catch sebaiknya pakai `logAndToast` agar pesan ke user konsisten.
+- `Dashboard.tsx` memanggil RPC `dashboard_kpi` paralel dengan `SELECT postingan`; jika RPC gagal (mis. migration belum di-apply), otomatis fallback ke `computeKpi()` client-side. SQL `dashboard_kpi` di-COALESCE NULL-engagement-rate ke 0 supaya hasil identik dengan fallback.
 
 ## Workflow
 - `Start application`: `npm run dev` (Vite di port 5000).

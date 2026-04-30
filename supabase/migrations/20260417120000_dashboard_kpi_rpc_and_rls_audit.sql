@@ -54,7 +54,9 @@ AS $$
   )
   SELECT
     COUNT(*)::bigint AS total_posts,
-    COALESCE(ROUND(AVG(engagement_rate_persen)::numeric, 2), 0) AS avg_er,
+    -- Treat NULL engagement rates as 0 to match the client-side fallback (computeKpi)
+    -- so KPI cards show identical values whether the RPC is used or not.
+    COALESCE(ROUND(AVG(COALESCE(engagement_rate_persen, 0))::numeric, 2), 0) AS avg_er,
     COALESCE(
       PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY jumlah_reach)::numeric,
       0
