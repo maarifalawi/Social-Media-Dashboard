@@ -30,7 +30,7 @@ Saura, J.R. (2021) 'Using data sciences in digital marketing: Framework, methods
 
 Undang-Undang Republik Indonesia Nomor 20 Tahun 2008 tentang Usaha Mikro, Kecil, dan Menengah (2008). Jakarta: Sekretariat Negara Republik Indonesia.
 
-White, M. (2022) *Social Media Analytics Adoption in Small and Medium-Sized Enterprises*. Doctoral dissertation. Walden University. Available at: [URL ProQuest/Walden Repository: VERIFIKASI] (Accessed: 30 April 2026). `[VERIFIKASI]`
+White, M. (2022) *Social Media Analytics Use Among Small Business Owners*. Doctoral dissertation. Walden University. Available at: https://scholarworks.waldenu.edu/dissertations/12593/ (Accessed: 30 April 2026).
 
 ---
 
