@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { logAndToast } from "@/lib/errors";
 
 const ProjectNew = () => {
   const navigate = useNavigate();
@@ -52,9 +53,8 @@ const ProjectNew = () => {
       await refreshProjects();
       setSelectedProject(data);
       navigate("/import");
-    } catch (error: any) {
-      console.error("Error creating project:", error);
-      toast.error(error.message || "Gagal membuat project");
+    } catch (error) {
+      logAndToast("ProjectNew create", error, "Gagal membuat project");
     } finally {
       setLoading(false);
     }

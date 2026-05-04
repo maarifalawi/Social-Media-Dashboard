@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { logAndToast } from "@/lib/errors";
 
 const Platform = () => {
   const navigate = useNavigate();
@@ -58,8 +59,7 @@ const Platform = () => {
       if (error) throw error;
       setPlatforms(data || []);
     } catch (error) {
-      console.error("Error fetching platforms:", error);
-      toast.error("Gagal memuat platform");
+      logAndToast("Platform fetch", error, "Gagal memuat platform");
     } finally {
       setLoading(false);
     }
@@ -97,8 +97,7 @@ const Platform = () => {
       });
       fetchPlatforms();
     } catch (error) {
-      console.error("Error saving platform:", error);
-      toast.error("Gagal menyimpan platform");
+      logAndToast("Platform save", error, "Gagal menyimpan platform");
     } finally {
       setLoading(false);
     }
@@ -129,8 +128,7 @@ const Platform = () => {
       toast.success("Platform berhasil dihapus");
       fetchPlatforms();
     } catch (error) {
-      console.error("Error deleting platform:", error);
-      toast.error("Gagal menghapus platform. Mungkin masih digunakan.");
+      logAndToast("Platform delete", error, "Gagal menghapus platform");
     } finally {
       setLoading(false);
     }
@@ -147,8 +145,7 @@ const Platform = () => {
       toast.success("Status platform berhasil diubah");
       fetchPlatforms();
     } catch (error) {
-      console.error("Error toggling platform:", error);
-      toast.error("Gagal mengubah status");
+      logAndToast("Platform toggle", error, "Gagal mengubah status");
     }
   };
 

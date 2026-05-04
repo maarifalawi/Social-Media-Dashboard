@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useApp } from "@/contexts/AppContext";
 import { supabase } from "@/integrations/supabase/client";
+import { logAndToast } from "@/lib/errors";
 import AppLayout from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -213,8 +214,7 @@ const AnggotaProyek = () => {
 
       setAvailableUsers(usersData || []);
     } catch (error) {
-      console.error("Error fetching project data:", error);
-      toast.error("Gagal memuat data anggota proyek");
+      logAndToast("AnggotaProyek fetch", error, "Gagal memuat data anggota proyek");
     } finally {
       setLoading(false);
     }
@@ -245,8 +245,7 @@ const AnggotaProyek = () => {
       setSelectedUserId("");
       fetchProjectData();
     } catch (error) {
-      console.error("Error adding member:", error);
-      toast.error("Gagal menambahkan anggota");
+      logAndToast("AnggotaProyek add", error, "Gagal menambahkan anggota");
     } finally {
       setAddingMember(false);
     }
@@ -273,8 +272,7 @@ const AnggotaProyek = () => {
       setEditRole("");
       fetchProjectData();
     } catch (error) {
-      console.error("Error updating role:", error);
-      toast.error("Gagal mengubah peran");
+      logAndToast("AnggotaProyek update", error, "Gagal mengubah peran");
     } finally {
       setUpdatingRole(false);
     }
@@ -296,8 +294,7 @@ const AnggotaProyek = () => {
       setDeletingMember(null);
       fetchProjectData();
     } catch (error) {
-      console.error("Error removing member:", error);
-      toast.error("Gagal menghapus anggota");
+      logAndToast("AnggotaProyek remove", error, "Gagal menghapus anggota");
     } finally {
       setDeletingMemberId(false);
     }

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, Printer } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { logAndToast } from "@/lib/errors";
 import * as XLSX from "xlsx";
 import {
   Table,
@@ -83,12 +84,7 @@ const UATReport = () => {
         description: `File ${filename} berhasil diunduh`,
       });
     } catch (error) {
-      console.error("Error exporting to Excel:", error);
-      toast({
-        title: "Export Gagal",
-        description: "Terjadi kesalahan saat export ke Excel",
-        variant: "destructive",
-      });
+      logAndToast("UATReport export", error, "Terjadi kesalahan saat export ke Excel");
     }
   };
 

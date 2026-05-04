@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { ExportButton } from "@/components/ExportButton";
+import { logAndToast } from "@/lib/errors";
 import {
   Select,
   SelectContent,
@@ -167,12 +168,7 @@ const KompetitorAnalysis = () => {
         await fetchComparisonData(data.map(c => c.id_kompetitor));
       }
     } catch (error) {
-      console.error("Error fetching competitors:", error);
-      toast({
-        title: "Error",
-        description: "Gagal memuat data kompetitor",
-        variant: "destructive",
-      });
+      logAndToast("Kompetitor fetch", error, "Gagal memuat data kompetitor");
     } finally {
       setLoading(false);
     }
@@ -207,7 +203,7 @@ const KompetitorAnalysis = () => {
       
       setComparisonData(Object.values(grouped));
     } catch (error) {
-      console.error("Error fetching comparison data:", error);
+      logAndToast("Kompetitor comparison", error, "Gagal memuat data perbandingan");
     }
   };
 
@@ -237,12 +233,7 @@ const KompetitorAnalysis = () => {
       resetForm();
       fetchCompetitors();
     } catch (error) {
-      console.error("Error saving competitor:", error);
-      toast({
-        title: "Error",
-        description: "Gagal menyimpan kompetitor",
-        variant: "destructive",
-      });
+      logAndToast("Kompetitor save", error, "Gagal menyimpan kompetitor");
     }
   };
 
@@ -259,12 +250,7 @@ const KompetitorAnalysis = () => {
       toast({ title: "Sukses", description: "Kompetitor berhasil dihapus" });
       fetchCompetitors();
     } catch (error) {
-      console.error("Error deleting competitor:", error);
-      toast({
-        title: "Error",
-        description: "Gagal menghapus kompetitor",
-        variant: "destructive",
-      });
+      logAndToast("Kompetitor delete", error, "Gagal menghapus kompetitor");
     }
   };
 
@@ -331,12 +317,7 @@ const KompetitorAnalysis = () => {
       setDataDialogOpen(false);
       fetchCompetitors();
     } catch (error) {
-      console.error("Error saving competitor data:", error);
-      toast({
-        title: "Error",
-        description: "Gagal menyimpan data kompetitor",
-        variant: "destructive",
-      });
+      logAndToast("Kompetitor data save", error, "Gagal menyimpan data kompetitor");
     }
   };
 
@@ -627,7 +608,7 @@ const KompetitorAnalysis = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div ref={chartRef1} className="h-[350px]">
+                    <div ref={chartRef1} className="h-[350px]" role="img" aria-label={`Diagram garis perbandingan followers antar ${competitors.length} kompetitor. ${comparisonData.length} titik data.`}>
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={comparisonData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                           <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
@@ -675,7 +656,7 @@ const KompetitorAnalysis = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div ref={chartRef2} className="h-[350px]">
+                    <div ref={chartRef2} className="h-[350px]" role="img" aria-label={`Diagram batang perbandingan engagement rate antar ${competitors.length} kompetitor. ${comparisonData.length} titik data.`}>
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={comparisonData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                           <CartesianGrid strokeDasharray="3 3" className="opacity-30" />

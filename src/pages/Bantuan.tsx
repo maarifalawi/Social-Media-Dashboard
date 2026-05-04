@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { logAndToast } from "@/lib/errors";
 import { MessageSquare, CheckCircle, Clock, Star, Pencil, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
@@ -127,8 +128,7 @@ const Bantuan = () => {
 
       setQuestions(questionsWithRelations);
     } catch (error) {
-      console.error("Error fetching questions:", error);
-      toast.error("Gagal memuat pertanyaan");
+      logAndToast("Bantuan fetch", error, "Gagal memuat pertanyaan");
     } finally {
       setLoading(false);
     }
@@ -186,8 +186,7 @@ const Bantuan = () => {
           .eq("id_profil", user?.id);
 
         if (profileError) {
-          console.error("Error updating profile:", profileError);
-          toast.error("Gagal mengupdate nama profil");
+          logAndToast("Bantuan profile", profileError, "Gagal mengupdate nama profil");
           throw profileError;
         }
       }
@@ -206,8 +205,7 @@ const Bantuan = () => {
         .single();
 
       if (error) {
-        console.error("Error inserting question:", error);
-        toast.error(`Gagal menambah pertanyaan: ${error.message}`);
+        logAndToast("Bantuan submit", error, "Gagal menambah pertanyaan");
         throw error;
       }
 
@@ -238,8 +236,7 @@ const Bantuan = () => {
       setPertanyaan("");
       fetchQuestions(); // Refresh list
     } catch (error) {
-      console.error("Error submitting question:", error);
-      toast.error("Gagal mengirim pertanyaan");
+      logAndToast("Bantuan submit", error, "Gagal mengirim pertanyaan");
     } finally {
       setSubmitting(false);
     }
@@ -275,9 +272,8 @@ const Bantuan = () => {
 
       toast.success("Pertanyaan berhasil dihapus");
       fetchQuestions();
-    } catch (error: any) {
-      console.error("Error deleting question:", error);
-      toast.error("Gagal menghapus pertanyaan");
+    } catch (error) {
+      logAndToast("Bantuan delete", error, "Gagal menghapus pertanyaan");
     } finally {
       setDeletingQuestionId(null);
     }

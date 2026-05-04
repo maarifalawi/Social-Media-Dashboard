@@ -11,10 +11,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Plus, Pencil, Trash2, CheckCircle2, Clock } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { logAndToast } from "@/lib/errors";
+import { EmptyState } from "@/components/EmptyState";
 
 const Kampanye = () => {
   const navigate = useNavigate();
@@ -57,8 +58,7 @@ const Kampanye = () => {
       if (error) throw error;
       setCampaigns(data || []);
     } catch (error) {
-      console.error("Error fetching campaigns:", error);
-      toast.error("Gagal memuat kampanye");
+      logAndToast("Kampanye fetch", error, "Gagal memuat kampanye");
     } finally {
       setLoading(false);
     }
@@ -123,8 +123,7 @@ const Kampanye = () => {
       resetForm();
       fetchCampaigns();
     } catch (error) {
-      console.error("Error saving campaign:", error);
-      toast.error("Gagal menyimpan kampanye");
+      logAndToast("Kampanye save", error, "Gagal menyimpan kampanye");
     }
   };
 
@@ -141,16 +140,15 @@ const Kampanye = () => {
       toast.success("Kampanye berhasil dihapus");
       fetchCampaigns();
     } catch (error) {
-      console.error("Error deleting campaign:", error);
-      toast.error("Gagal menghapus kampanye");
+      logAndToast("Kampanye delete", error, "Gagal menghapus kampanye");
     }
   };
 
   if (!selectedProject) {
     return (
       <AppLayout>
-        <div className="flex flex-col items-center justify-center h-64">
-          <p className="text-foreground text-lg">Silakan pilih project terlebih dahulu</p>
+        <div className="py-12">
+          <EmptyState title="Silakan pilih project terlebih dahulu" description="Pilih project aktif untuk mengelola kampanye." />
         </div>
       </AppLayout>
     );

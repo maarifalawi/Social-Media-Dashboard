@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { FileText, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { logAndToast } from "@/lib/errors";
 import { format } from "date-fns";
 import { computeKpi, bestPostingTimes, contentTypePerformance, type PostLike } from "@/lib/analytics";
 import { EmptyState } from "@/components/EmptyState";
@@ -95,8 +96,7 @@ const Laporan = () => {
 
       toast.success("Laporan berhasil dibuat");
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("Gagal membuat laporan");
+      logAndToast("Laporan generate", error, "Gagal membuat laporan");
     } finally {
       setGenerating(false);
     }

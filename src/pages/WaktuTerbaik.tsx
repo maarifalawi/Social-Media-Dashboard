@@ -11,6 +11,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Trophy, TrendingUp, TrendingDown } from "lucide-react";
+import { logAndToast } from "@/lib/errors";
 import { InsightCard } from "@/components/InsightCard";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -81,7 +82,7 @@ const WaktuTerbaik = () => {
         setPlatforms(platformsRes.data || []);
         setContentTypes(contentTypesRes.data || []);
       } catch (error) {
-        console.error("Error fetching filters:", error);
+        logAndToast("WaktuTerbaik filters", error, "Gagal memuat filter");
       }
     };
 
@@ -113,8 +114,7 @@ const WaktuTerbaik = () => {
         if (error) throw error;
         setPosts(data || []);
       } catch (error) {
-        console.error("Error fetching posts:", error);
-        toast.error("Gagal memuat data");
+        logAndToast("WaktuTerbaik fetch", error, "Gagal memuat data");
       } finally {
         setLoading(false);
       }
@@ -620,7 +620,7 @@ const WaktuTerbaik = () => {
             <CardDescription>Jumlah post yang dipublikasikan per jam</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-64">
+            <div className="h-64" role="img" aria-label={`Diagram batang frekuensi posting per jam. ${hourlyData.length} jam ditampilkan.`}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={hourlyData}>
                   <CartesianGrid strokeDasharray="3 3" />

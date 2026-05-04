@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { logAndToast } from "@/lib/errors";
 import { MessageSquare, CheckCircle, Clock, Star } from "lucide-react";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
@@ -88,8 +89,7 @@ const BantuanAdmin = () => {
 
       setQuestions(questionsWithRelations);
     } catch (error) {
-      console.error("Error fetching questions:", error);
-      toast.error("Gagal memuat pertanyaan");
+      logAndToast("BantuanAdmin fetch", error, "Gagal memuat pertanyaan");
     } finally {
       setLoading(false);
     }
@@ -147,8 +147,7 @@ const BantuanAdmin = () => {
       setAnswer("");
       fetchQuestions();
     } catch (error) {
-      console.error("Error submitting answer:", error);
-      toast.error("Gagal mengirim jawaban");
+      logAndToast("BantuanAdmin answer", error, "Gagal mengirim jawaban");
     } finally {
       setSubmitting(false);
     }

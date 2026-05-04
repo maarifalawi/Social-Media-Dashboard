@@ -11,8 +11,9 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Plus, Pencil, Trash2, CheckCircle2, XCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
+import { logAndToast } from "@/lib/errors";
+import { EmptyState } from "@/components/EmptyState";
 import { toast } from "sonner";
 import { format } from "date-fns";
 
@@ -59,8 +60,7 @@ const TargetKPI = () => {
       if (error) throw error;
       setTargets(data || []);
     } catch (error) {
-      console.error("Error fetching targets:", error);
-      toast.error("Gagal memuat target KPI");
+      logAndToast("TargetKPI fetch", error, "Gagal memuat target KPI");
     } finally {
       setLoading(false);
     }
@@ -131,8 +131,7 @@ const TargetKPI = () => {
       resetForm();
       fetchTargets();
     } catch (error) {
-      console.error("Error saving target:", error);
-      toast.error("Gagal menyimpan target KPI");
+      logAndToast("TargetKPI save", error, "Gagal menyimpan target KPI");
     }
   };
 
@@ -149,16 +148,15 @@ const TargetKPI = () => {
       toast.success("Target KPI berhasil dihapus");
       fetchTargets();
     } catch (error) {
-      console.error("Error deleting target:", error);
-      toast.error("Gagal menghapus target KPI");
+      logAndToast("TargetKPI delete", error, "Gagal menghapus target KPI");
     }
   };
 
   if (!selectedProject) {
     return (
       <AppLayout>
-        <div className="flex flex-col items-center justify-center h-64">
-          <p className="text-foreground text-lg">Silakan pilih project terlebih dahulu</p>
+        <div className="py-12">
+          <EmptyState title="Silakan pilih project terlebih dahulu" description="Pilih project aktif untuk mengelola target KPI." />
         </div>
       </AppLayout>
     );

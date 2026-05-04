@@ -16,6 +16,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { InsightCard } from "@/components/InsightCard";
+import { logAndToast } from "@/lib/errors";
 import { SaveFilterDialog } from "@/components/SaveFilterDialog";
 import { NotesDialog } from "@/components/NotesDialog";
 import { ExportButton } from "@/components/ExportButton";
@@ -255,8 +256,7 @@ const Performa = () => {
         if (error) throw error;
         setPosts(data || []);
       } catch (error) {
-        console.error("Error fetching posts:", error);
-        toast.error("Gagal memuat data performa");
+        logAndToast("Performa fetch", error, "Gagal memuat data performa");
       } finally {
         setLoading(false);
       }

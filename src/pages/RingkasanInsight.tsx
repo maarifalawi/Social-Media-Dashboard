@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { logAndToast } from "@/lib/errors";
 import { InsightCard } from "@/components/InsightCard";
 import { EmptyState } from "@/components/EmptyState";
 import {
@@ -80,8 +80,7 @@ const RingkasanInsight = () => {
 
       generateAllInsights(posts);
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("Gagal memuat insight");
+      logAndToast("RingkasanInsight fetch", error, "Gagal memuat insight");
     } finally {
       setLoading(false);
     }

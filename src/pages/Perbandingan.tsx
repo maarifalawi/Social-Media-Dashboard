@@ -10,6 +10,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { TrendingUp, Users, Eye } from "lucide-react";
+import { logAndToast } from "@/lib/errors";
 import { InsightCard } from "@/components/InsightCard";
 
 const Perbandingan = () => {
@@ -121,8 +122,7 @@ const Perbandingan = () => {
         setChartData(chart);
         generateInsight(validComparisons);
       } catch (error) {
-        console.error("Error fetching comparison:", error);
-        toast.error("Gagal memuat perbandingan");
+        logAndToast("Perbandingan fetch", error, "Gagal memuat perbandingan");
       } finally {
         setLoading(false);
       }
@@ -293,7 +293,7 @@ const Perbandingan = () => {
                   <CardTitle className="text-base">Rata-rata ER (%)</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={250}>
+                  <div role="img" aria-label={`Diagram batang rata-rata engagement rate. ${comparison.length} dataset dibandingkan.`}><ResponsiveContainer width="100%" height={250}>
                     <BarChart data={comparison.map(c => ({ name: c.datasetName.length > 15 ? c.datasetName.substring(0, 15) + '...' : c.datasetName, value: c.avgER, fullName: c.datasetName }))}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                       <XAxis dataKey="name" stroke="hsl(var(--foreground))" tick={{ fontSize: 10 }} />
@@ -309,7 +309,7 @@ const Perbandingan = () => {
                       />
                       <Bar dataKey="value" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                     </BarChart>
-                  </ResponsiveContainer>
+                  </ResponsiveContainer></div>
                 </CardContent>
               </Card>
 
@@ -319,7 +319,7 @@ const Perbandingan = () => {
                   <CardTitle className="text-base">Median Jangkauan</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={250}>
+                  <div role="img" aria-label={`Diagram batang median jangkauan. ${comparison.length} dataset dibandingkan.`}><ResponsiveContainer width="100%" height={250}>
                     <BarChart data={comparison.map(c => ({ name: c.datasetName.length > 15 ? c.datasetName.substring(0, 15) + '...' : c.datasetName, value: c.medianReach, fullName: c.datasetName }))}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                       <XAxis dataKey="name" stroke="hsl(var(--foreground))" tick={{ fontSize: 10 }} />
@@ -335,7 +335,7 @@ const Perbandingan = () => {
                       />
                       <Bar dataKey="value" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
                     </BarChart>
-                  </ResponsiveContainer>
+                  </ResponsiveContainer></div>
                 </CardContent>
               </Card>
 
@@ -345,7 +345,7 @@ const Perbandingan = () => {
                   <CardTitle className="text-base">Total Postingan</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={250}>
+                  <div role="img" aria-label={`Diagram batang total postingan. ${comparison.length} dataset dibandingkan.`}><ResponsiveContainer width="100%" height={250}>
                     <BarChart data={comparison.map(c => ({ name: c.datasetName.length > 15 ? c.datasetName.substring(0, 15) + '...' : c.datasetName, value: c.totalPosts, fullName: c.datasetName }))}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                       <XAxis dataKey="name" stroke="hsl(var(--foreground))" tick={{ fontSize: 10 }} />
@@ -361,7 +361,7 @@ const Perbandingan = () => {
                       />
                       <Bar dataKey="value" fill="hsl(var(--chart-3))" radius={[4, 4, 0, 0]} />
                     </BarChart>
-                  </ResponsiveContainer>
+                  </ResponsiveContainer></div>
                 </CardContent>
               </Card>
             </div>

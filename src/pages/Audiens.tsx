@@ -6,10 +6,11 @@ import AppLayout from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { LineChart, Line, BarChart, Bar, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 import { format } from "date-fns";
 import { InsightCard } from "@/components/InsightCard";
 import { SaveFilterDialog } from "@/components/SaveFilterDialog";
+import { EmptyState } from "@/components/EmptyState";
+import { logAndToast } from "@/lib/errors";
 
 const Audiens = () => {
   const navigate = useNavigate();
@@ -65,8 +66,7 @@ const Audiens = () => {
           generateInsight(posts, trend, weekly, r * r);
         }
       } catch (error) {
-        console.error("Error:", error);
-        toast.error("Gagal memuat data");
+        logAndToast("Audiens fetch", error, "Gagal memuat data");
       } finally {
         setLoading(false);
       }
@@ -108,7 +108,7 @@ const Audiens = () => {
     setInsight(insightText);
   };
 
-  if (!selectedProject || !activeDataset) return <AppLayout><div className="flex items-center justify-center h-64"><p className="text-foreground">Silakan pilih project dan dataset</p></div></AppLayout>;
+  if (!selectedProject || !activeDataset) return <AppLayout><div className="py-12"><EmptyState title="Silakan pilih project dan dataset" description="Pilih project dan dataset aktif untuk melihat data audiens." /></div></AppLayout>;
 
   return (
     <AppLayout>
@@ -122,8 +122,8 @@ const Audiens = () => {
         </div>
         {loading ? <Card><CardContent className="py-12 text-center text-muted-foreground">Loading...</CardContent></Card> : (
           <>
-            <Card><CardHeader><CardTitle>Tren Followers Harian</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={300}><LineChart data={followersTrend}><CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" /><XAxis dataKey="date" stroke="hsl(var(--foreground))" tickFormatter={(d) => format(new Date(d), "dd MMM")} /><YAxis stroke="hsl(var(--foreground))" /><Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} /><Line type="monotone" dataKey="followers" stroke="hsl(var(--primary))" strokeWidth={2} /></LineChart></ResponsiveContainer></CardContent></Card>
-            <Card><CardHeader><CardTitle>Frekuensi Posting Mingguan</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={300}><BarChart data={weeklyPosts}><CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" /><XAxis dataKey="week" stroke="hsl(var(--foreground))" /><YAxis stroke="hsl(var(--foreground))" /><Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} /><Bar dataKey="count" fill="hsl(var(--primary))" /></BarChart></ResponsiveContainer></CardContent></Card>
+            <Card><CardHeader><CardTitle>Tren Followers Harian</CardTitle></CardHeader><CardContent><div role="img" aria-label={`Diagram garis tren followers harian. ${followersTrend.length} titik data.`}><ResponsiveContainer width="100%" height={300}><LineChart data={followersTrend}><CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" /><XAxis dataKey="date" stroke="hsl(var(--foreground))" tickFormatter={(d) => format(new Date(d), "dd MMM")} /><YAxis stroke="hsl(var(--foreground))" /><Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} /><Line type="monotone" dataKey="followers" stroke="hsl(var(--primary))" strokeWidth={2} /></LineChart></ResponsiveContainer></div></CardContent></Card>
+            <Card><CardHeader><CardTitle>Frekuensi Posting Mingguan</CardTitle></CardHeader><CardContent><div role="img" aria-label={`Diagram batang frekuensi posting mingguan. ${weeklyPosts.length} minggu.`}><ResponsiveContainer width="100%" height={300}><BarChart data={weeklyPosts}><CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" /><XAxis dataKey="week" stroke="hsl(var(--foreground))" /><YAxis stroke="hsl(var(--foreground))" /><Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.5rem" }} /><Bar dataKey="count" fill="hsl(var(--primary))" /></BarChart></ResponsiveContainer></div></CardContent></Card>
             <Card>
               <CardHeader>
                 <CardTitle>Korelasi Reach vs Engagement</CardTitle>
@@ -136,7 +136,7 @@ const Audiens = () => {
                   <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-3 rounded-full bg-orange-400"></span> Reach 5.000–7.500</span>
                   <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-3 rounded-full bg-red-400"></span> Reach &gt; 7.500</span>
                 </div>
-                <ResponsiveContainer width="100%" height={400}>
+                <div role="img" aria-label={`Scatter plot korelasi reach vs engagement. ${scatterData.length} titik data. R² = ${correlation.toFixed(3)}.`}><ResponsiveContainer width="100%" height={400}>
                   <ScatterChart>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                     <XAxis type="number" dataKey="reach" name="Reach" stroke="hsl(var(--foreground))" />
@@ -153,7 +153,7 @@ const Audiens = () => {
                       })}
                     </Scatter>
                   </ScatterChart>
-                </ResponsiveContainer>
+                </ResponsiveContainer></div>
               </CardContent>
             </Card>
 
