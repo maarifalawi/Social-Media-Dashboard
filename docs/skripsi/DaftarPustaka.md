@@ -31,6 +31,8 @@ Qadir, A. & Ramli, M.R. (2024) 'Media Sosial (Definisi, Sejarah dan Jenis-Jenisn
 
 Saura, J.R. (2021) 'Using data sciences in digital marketing: Framework, methods, and performance metrics', *Journal of Innovation and Knowledge*, 6(2), pp. 92–102. Available at: https://doi.org/10.1016/j.jik.2020.08.001 (Accessed: 30 April 2026).
 
+Septrian, A.A. & Nirmala, A. (2025) 'Analisis Isi Konten Sosial Media dalam Meningkatkan Engagement pada Akun Instagram @mercurymediagroup.id', *RELASI: Jurnal Penelitian Komunikasi*, 5(04), pp. 1–13. Available at: https://doi.org/10.69957/relasi.v5i04.1841 (Accessed: 4 Mei 2026).
+
 Undang-Undang Republik Indonesia Nomor 20 Tahun 2008 tentang Usaha Mikro, Kecil, dan Menengah (2008). Jakarta: Sekretariat Negara Republik Indonesia.
 
 White, M. (2022) *Social Media Analytics Use Among Small Business Owners*. Doctoral dissertation. Walden University. Available at: https://scholarworks.waldenu.edu/dissertations/12593/ (Accessed: 30 April 2026).
